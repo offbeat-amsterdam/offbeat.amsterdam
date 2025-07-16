@@ -39,9 +39,9 @@ cp config.example.json config.json
 ./node_modules/.bin/sequelize db:migrate
 ```
 
-5. Create a first admin user  
+5. Create a first admin user (see the [CLI documentation for `users`](/usage/cli#create-a-new-user))  
 ```bash
-./server/cli.js users create admin secretpassword admin
+./server/cli.js users create admin@example.org thisisthepassword --role admin
 ```
 
 6. Hacking
