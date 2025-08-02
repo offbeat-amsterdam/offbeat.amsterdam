@@ -205,7 +205,9 @@
         "import_description": "Pode importar eventos de outras plataformas e de outros domínios via formatos padrão (ICS e H-Event)",
         "address_geocoded_disclaimer": "Se não conseguir encontrar o <strong>endereço da rua</strong> ou a <strong>porta da casa</strong> que procura nos resultados da geocodificação, pode inseri-los manualmente no campo “Endereço” sem perder as coordenadas. Considere também que o projeto <a target=\"_blank\" href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> está aberto a contribuições. Se tiver Android, recomendamos o <a target=\"_blank\" href=\"https://f-droid.org/en/packages/de.westnordost.streetcomplete/\">StreetComplete</a>. ",
         "online_locations_help": "URL de uma sala de videoconferência ou URL para confirmação de presença (máx. 3)",
-        "each_year": "Anualmente"
+        "each_year": "Anualmente",
+        "recurrent_1y_days": "{months} {days} anualmente",
+        "recurrent_1y_ordinal": "O {n} {days} em {months} anualmente"
     },
     "admin": {
         "user_create_ok": "Utilizador criado",
@@ -357,7 +359,12 @@
         "past_unconfirmed_events": "Passados eventos não confirmados",
         "new_page": "Adicionar uma nova página personalizada",
         "delete_page_confirm": "Tem certeza que deseja remover a página \"<strong>{title}</strong>\"?",
-        "receive_confirm_notification": "Obter e-mail de confirmação do utilizador/evento"
+        "receive_confirm_notification": "Obter e-mail de confirmação do utilizador/evento",
+        "smtp_password_description": "Deixe em branco se não quiser alterar a palavra-passe",
+        "page_description": "Nesta secção, você poderá gerir páginas personalizadas (e.g. termos de uso, howtos). Estas páginas não irão aparecer automaticamente em nenhum lugar, mas pode referenciá-las no rodapé, a partir da página de sobre ou de qualquer outro lugar através da ligação de pré-visualização.",
+        "calendar_first_day_of_week": "Primeiro dia da semana",
+        "calendar_first_day_of_week_description": "Escolha o dia da semana que os calendários devem exibir como o primeiro dia da semana. O valor padrão é definido conforme a localização do cliente.",
+        "calendar_first_day_of_week_default": "Padrão (localização do cliente)"
     },
     "settings": {
         "password_updated": "Palavra-passe alterada.",
@@ -417,7 +424,8 @@
         "email": "Insira um e-mail válido",
         "latitude": "Insira uma latitude válida (90 < latitude < 90)",
         "longitude": "Insira uma longitude válida (-180 < longitude < 180)",
-        "required": "{fieldName} é obrigatório"
+        "required": "{fieldName} é obrigatório",
+        "url": "Forneça uma URL válida (http:// or https://)"
     },
     "error": {
         "nick_taken": "Este nome de utilizador já está em uso.",
