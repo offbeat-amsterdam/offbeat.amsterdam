@@ -1,1 +1,9 @@
-{}
+{
+    "common": {
+        "enabled": "활성",
+        "add_event": "이벤트 추가",
+        "next": "다음",
+        "export": "내보내기",
+        "sent": "전송됨"
+    }
+}
