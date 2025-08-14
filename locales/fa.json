@@ -226,8 +226,8 @@
     },
     "setup": {
         "https_warning": "شما با HTTP بازدید می‌کنید، به یاد داشته باشید که اگر به HTTPS تغییر دهید، باید baseurl را در config.json تغییر دهید!",
-        "completed_description": "<p>اکنون می‌توانید با نام‌کاربری زیر وارد شوید:<br/><br/>کاربر: <b>{email}</b><br/>رمز عبور: <b>{password}</b></p>",
-        "completed": "نصب کامل شد.",
+        "completed_description": "<p>اکنون می‌توانید با نام‌ کاربری زیر وارد شوید:<br/><br/>کاربر: <b>{email}</b><br/>رمز عبور: <b>{password}</b></p>",
+        "completed": "نصب کامل شد",
         "start": "آغاز",
         "copy_password_dialog": "بله، باید رمز عبور را رونوشت کنید!"
     },
