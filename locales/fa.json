@@ -141,7 +141,7 @@
         "list_description": "اگر شما یک وب‌سایت دارید و می‌خواهید فهرستی از رویدادها را نمایش دهید، از کد زیر استفاده کنید",
         "filter_description": "شما می‌توانید در اینجا برون‌ریزی خود را بر اساس برچسب‌ها و مکان یا یک مجموعه از پیش تعیین‌شده پالایش کنید",
         "ical_description": "کامپیوترها و گوشی‌های هوشمند معمولاً با یک برنامه تقویم مجهز هستند که قادر به وارد کردن یک تقویم از راه دور است.",
-        "ical_title": "فایل ics/ical",
+        "ical_title": "ics/ical",
         "feed_description": "برای دریافت به‌روزرسانی‌ها از طریق کامپیوتر یا گوشی هوشمند، بدون نیاز به باز کردن دوره‌ای این سایت، از فیدهای RSS استفاده کنید\n\n<p>با استفاده از فیدهای RSS می‌توانید با کمک یک برنامه خاص، به‌روزرسانی‌های سایت‌های مورد علاقه خود را دریافت کنید. این روشی عالی برای دنبال کردن سریع چندین سایت است، بدون نیاز به ساخت حساب کاربری یا سایر پیچیدگی‌ها.</p>\n\n<li>اگر دستگاه شما اندروید است، ما <a href=\"https://f-droid.org/en/packages/net.frju.flym/\">Flym</a> یا Feeder را پیشنهاد می‌کنیم</li>\n<li>برای آیفون/آیپد می‌توانید از <a href=\"https://itunes.apple.com/ua/app/feeds4u/id1038456442?mt=8\">Feed4U</a> استفاده کنید</li>\n<li>برای کامپیوترهای دسکتاپ/لپ‌تاپ، نصب Feedbro روی <a href=\"https://addons.mozilla.org/en-GB/firefox/addon/feedbroreader/\">Firefox</a> یا <a href=\"https://chrome.google.com/webstore/detail/feedbro/mefgmmbdailogpfhfblcnnjfmnpnmdfa\">Chrome</a> را توصیه می‌کنیم</li>\n<br/>\nبا افزودن این لینک به برنامه خواننده RSS خود، همیشه به‌روز خواهید ماند."
     },
     "register": {
@@ -208,7 +208,7 @@
         "interact_with_me_at": "با من در فدیورس به نشانی زیر تعامل داشته باشید",
         "message": "پیام",
         "recurrent_1y_days": "{ماه} {روز} هر سال",
-        "follow_me_description": "یکی از راه‌های دنبال کردن رویدادهای منتشر شده در {title}،\nدنبال کردن حساب <u>{account}</u> از فدیورس است، مثلاً از طریق مستودون. همچنین می‌توانید منابعی را از آنجا به رویدادها اضافه کنید.\n\nاگر تا به حال چیزی درباره مستودون و فدیورس نشنیده‌اید، پیشنهاد می‌کنیم\n<a href='https://www.savjee.be/videos/simply-explained/mastodon-and-fediverse-explained/'>این مقاله</a> را مطالعه کنید.",
+        "follow_me_description": "یکی از راه‌های دنبال کردن رویدادهای منتشر شده در {title}،\nدنبال کردن حساب <u>{account}</u> از فدیورس است، مثلاً از طریق مستودون. همچنین می‌توانید منابعی را از آنجا به رویدادها اضافه کنید.<br/><br/>\nاگر تا به حال چیزی درباره مستودون و فدیورس نشنیده‌اید، پیشنهاد می‌کنیم<a href='https://www.savjee.be/videos/simply-explained/mastodon-and-fediverse-explained/'>این مقاله<br/><br/></a> را مطالعه کنید(e.g. mastodon.social)",
         "online_locations": "مکان‌های برخط",
         "where_advanced_options": "مکان - گزینه‌های پیشرفته",
         "send_to_admins": "ارسال به مدیران",
