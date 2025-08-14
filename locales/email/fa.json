@@ -9,7 +9,7 @@
     },
     "user_confirm": {
         "subject": "شما اکنون می‌توانید شروع به انتشار رویدادها کنید.",
-        "content": "سلام، حساب شما در {{config.title}} ایجاد شده است. آن را تأیید کنید و یک گذرواژه انتخاب کنید"
+        "content": "سلام، حساب شما در <a href='{{{config.baseurl}}}'>{{config.title}}</a>ایجاد شده است. <a href='{{{config.baseurl}}}/user_confirm/{{user.recover_code}}'> آن را تأیید کنید و یک گذرواژه انتخاب کنید</a>"
     },
     "recover": {
         "subject": "بازنشانی گذرواژه",
@@ -20,7 +20,7 @@
         "content": "{{user.email}} درخواست ثبت‌نام در {{config.title}} را داده است: <br/><pre>{{user.description}}</pre><br/> آن را <a href='{{{config.baseurl}}}/admin'>اینجا</a> تأیید کنید."
     },
     "event_confirm": {
-        "content": "می‌توانید این رویداد را در <a href='{{{url}}}'>این صفحه</a> تأیید کنید"
+        "content": "می‌توانید این رویداد را در <a href='{{{url>این صفحه</a> تأیید کنید"
     },
     "test": {
         "subject": "پیکربندی SMTP شما به درستی کار می‌کند",
@@ -30,6 +30,6 @@
         "subject": "مدیریت رویداد [{{event.title}}]",
         "content_ADMIN": "یکی از مدیران در مورد این رویداد نظر داد <strong>{{event.title}}</strong>:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>باز کردن مدیریت</a>",
         "content_ANON": "یک بازدیدکننده این رویداد را گزارش کرد <strong>{{event.title}}</strong>:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>باز کردن مدیریت</a>",
-        "content_AUTHOR": "نویسنده رویداد <strong>{{event.title}}</strong> نوشت:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>باز کردن مدیریت</a>"
+        "content_AUTHOR": "نویسنده این رویداد <strong>{{event.title}}</strong> نوشت:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>باز کردن مدیریت</a>"
     }
 }
