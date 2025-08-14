@@ -20,7 +20,7 @@
         "content": "{{user.email}} درخواست نام‌نویسی در {{config.title}} را داده است: <br/><pre>{{user.description}}</pre><br/> آن را <a href='{{{config.baseurl}}}/admin'>اینجا</a> تأیید کنید."
     },
     "event_confirm": {
-        "content": "می‌توانید این رویداد را در <'{{{a href='{{{url>این صفحه</a> تأیید کنید"
+        "content": "می‌توانید این رویداد را در <a href='{{{url}}}'> این صفحه</a> تأیید کنید"
     },
     "test": {
         "subject": "پیکربندی SMTP شما به درستی کار می‌کند",
@@ -28,7 +28,7 @@
     },
     "report": {
         "subject": "مدیریت رویداد [{{event.title}}]",
-        "content_ADMIN": "یک مدیر در مورد این رویداد (X35X{{event.title}}</strong> اظهار نظر کرد: <br/><blockquote>{{message}}<br/>[x]<br/>[x]<a href='{{{url}}}'> باز کردن اعتدال </a>",
+        "content_ADMIN": "یک ادمین درباره این رویداد نظر داد <strong>{{event.title}}</strong><br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>بازکردن مدیریت</a>",
         "content_ANON": "یک بازدیدکننده این رویداد را گزارش کرد <strong>{{event.title}}</strong>:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>باز کردن مدیریت</a>",
         "content_AUTHOR": "نویسنده این رویداد <strong>{{event.title}}</strong> نوشت:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>باز کردن مدیریت</a>"
     }
