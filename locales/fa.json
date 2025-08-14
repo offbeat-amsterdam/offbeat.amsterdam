@@ -1,9 +1,9 @@
 {
     "common": {
-        "enabled": "فعال شده",
+        "enabled": "به کار انداخته شده",
         "add_event": "اضافه کردن رویداد",
         "next": "بعدی",
-        "export": "خارج کردن",
+        "export": "برون‌ریزی",
         "send": "ارسال",
         "sent": "ارسال شده",
         "where": "کجا",
@@ -16,12 +16,12 @@
         "password": "گذرواژه",
         "register": "نام‌نویسی",
         "description": "توضیحات",
-        "remove": "حذف",
+        "remove": "برداشتن",
         "hide": "پنهان",
         "search": "جست‌و‌جو",
         "edit": "ویرایش",
         "info": "اطلاعات",
-        "confirm": "تایید",
+        "confirm": "تأیید",
         "admin": "مدیر",
         "users": "کاربران",
         "events": "رویدادها",
@@ -29,7 +29,7 @@
         "settings": "گزینه‌ها",
         "actions": "اقدامات",
         "deactivate": "خاموش کردن",
-        "remove_admin": "حذف مدیر",
+        "remove_admin": "برداشتن مدیر",
         "activate": "فعال‌سازی",
         "save": "ذخیره",
         "preview": "پیش‌نمایش",
@@ -226,14 +226,14 @@
     },
     "setup": {
         "https_warning": "شما با HTTP بازدید می‌کنید، به یاد داشته باشید که اگر به HTTPS تغییر دهید، باید baseurl را در config.json تغییر دهید!",
-        "completed_description": "<p>اکنون می‌توانید با نام‌ کاربری زیر وارد شوید:<br/><br/>کاربر: <b>{email}</b><br/>رمز عبور: <b>{password}</b></p>",
+        "completed_description": "<p>اکنون می‌توانید با نام‌‌کاربری زیر وارد شوید:<br/><br/>کاربر: <b>{email}</b><br/>گذرواژه: <b>{password}</b></p>",
         "completed": "نصب کامل شد",
         "start": "آغاز",
-        "copy_password_dialog": "بله، باید رمز عبور را رونوشت کنید!"
+        "copy_password_dialog": "بله، باید گذرواژه را رونوشت کنید!"
     },
     "admin": {
         "delete_page_confirm": "آیا مطمئن هستید، که می‌خواهید صفحه «<strong>{title}</strong>» را بردارید؟",
-        "delete_tag_confirm": "آیا مطمئن هستید که می‌خواهید برچسب \"{tag}\" را حذف کنید؟ این برچسب از {n} رویداد حذف خواهد شد.",
+        "delete_tag_confirm": "آیا مطمئن هستید که می‌خواهید برچسب \"{tag}\" را بردارید؟ این برچسب از {n} رویداد برداشته خواهد شد.",
         "smtp_test_success": "یک رایانامه آزمایشی به نشانی {admin_email} ارسال شد، لطفاً صندوق ورودی خود را بررسی کنید",
         "tilelayer_provider_attribution": "نسبت‌دهی",
         "block": "مسدود کردن",
@@ -251,7 +251,7 @@
         "default_fedi_hashtags": "برچسب‌های پیش‌فرض فدیورس",
         "default_images": "عکس‌های پیش‌فرض",
         "instance_locale": "زبان پیش‌فرض",
-        "delete_resource": "حذف منبع",
+        "delete_resource": "برداشتن منبع",
         "show_download_media_hint": "نمایش دکمه دانلود رسانه در صفحه رویداد",
         "domain": "دامنه",
         "delete_trusted_source_confirm": "آیا واقعاً می‌خواهید این منبع معتبر را بردارید؟",
@@ -298,7 +298,7 @@
         "past_unconfirmed_events": "رویدادهای گذشته تأیید نشده",
         "config_plugin": "پیکربندی افزونه",
         "plugins_description": "افزونه‌ها قطعات کوچک کدی هستند که ویژگی‌های اضافی را به برنامه اصلی اضافه می‌کنند. آن‌ها معمولاً توسط توسعه‌دهندگان خارج از پروژه نوشته می‌شوند که از <a href=\"https://gancio.org/dev/plugins\">سیستم افزونه</a>، عمدتاً برای ارسال رویدادها به پلتفرم‌ها و کانال‌های دیگر، بهره می‌برند.",
-        "instance_locale_description": "زبان ترجیحی کاربر برای صفحات. گاهی اوقات پیام‌ها باید برای همه به یک زبان نمایش داده شوند (برای مثال هنگام انتشار از طریق اکتیویتی‌پاب یا هنگام ارسال برخی ایمیل‌ها). در این موارد، زبان انتخاب شده در بالا استفاده خواهد شد.",
+        "instance_locale_description": "زبان ترجیحی کاربر برای صفحات. گاهی اوقات پیام‌ها باید برای همه به یک زبان نمایش داده شوند (برای مثال هنگام انتشار از طریق اکتیویتی‌پاب یا هنگام ارسال برخی رایانامه‌ها). در این موارد، زبان انتخاب شده در بالا استفاده خواهد شد.",
         "delete_user": "برداشتن",
         "remove_admin": "برداشتن مدیر",
         "resources": "منابع",
@@ -310,7 +310,7 @@
         "show_resource": "نمایش منبع",
         "smtp_hostname": "نام میزبان SMTP",
         "smtp_port": "درگاه SMTP",
-        "delete_footer_link_confirm": "مطمئنی که این پیودٔ را حذف می‌کنی؟",
+        "delete_footer_link_confirm": "مطمئنی که این پیوندٔ را بر‌میداری؟",
         "tag_renamed": "برچسب \"{oldTag}\" به \"{newTag}\" تغییر نام داد",
         "geocoding_test_button": "آزمایش کد جغرافیایی",
         "tilelayer_test_button": "آزمایش لایه‌نقشه",
@@ -321,10 +321,10 @@
         "event_confirm_description": "شما می‌توانید رویدادهای وارد شده توسط کاربران ناشناس را در اینجا تأیید کنید",
         "change_role_confirm": "آیا مطمئن هستید که نقش <strong>{user}</strong> را از <strong>{from_role}</strong> به <strong>{to_role}</strong> تغییر می‌دهید",
         "disable_user_confirm": "آیا مطمئنید که می‌خواهید <strong>{user}</strong> را غیرفعال کنید؟",
-        "delete_user_confirm": "آیا مطمئنید که می‌خواهید <strong>{user}</strong> را حذف کنید؟",
-        "disable_admin_user_confirm": "آیا مطمئن هستید که مجوزهای مدیر را از <strong>{user}</strong> حذف می‌کنید؟",
+        "delete_user_confirm": "آیا مطمئنید که می‌خواهید <strong>{user}</strong> را بردارید؟",
+        "disable_admin_user_confirm": "آیا مطمئن هستید که مجوزهای مدیر را از <strong>{user}</strong> بر‌میدارید؟",
         "enable_admin_user_confirm": "آیا مطمئن هستید که مجوزهای مدیر را به <strong>{user}</strong> اضافه می‌کنید؟",
-        "user_remove_ok": "کاربر حذف شد",
+        "user_remove_ok": "کاربر برداشته شد",
         "user_create_ok": "کاربر ایجاد شده",
         "allow_registration_description": "آیا اجازه می‌دهید ثبت‌نام‌های عمومی انجام شود؟",
         "allow_anon_event": "آیا اجازه می‌دهید رویدادهای ناشناس (که باید تأیید شوند) ایجاد شوند؟",
@@ -342,17 +342,17 @@
         "enable_resources_help": "اجازه می‌دهد که صدا، تصاویر و نظرات به رویداد از فدیورس اضافه شوند",
         "unblock": "رفع انسداد",
         "user_add_help": "رایانامه‌ای حاوی دستورالعمل‌های تأیید اشتراک و انتخابگذرواژه برای کاربر جدید ارسال خواهد شد",
-        "delete_resource_confirm": "آیا از حذف این منبع مطمئن هستید؟",
+        "delete_resource_confirm": "آیا از برداشتن این منبع مطمئن هستید؟",
         "user_blocked": "کاربر {user} مسدود شد",
         "user_block_confirm": "آیا مطمئن هستید که می‌خواهید کاربر {user} را مسدود کنید؟",
         "delete_announcement_confirm": "آیا مطمئن هستید که می‌خواهید آگاهی را حذف کنید؟",
-        "announcement_remove_ok": "آگاهی حذف شد",
+        "announcement_remove_ok": "آگاهی برداشته شد",
         "description_description": "در بالای صفحه بعد از عنوان نمایش داده می‌شود (HTML پشتیبانی میشود)",
         "instance_name_help": "حساب اکتیوتی‌پاب برای دنبال کردن: {ap_handler} (لطفاً با دقت زیاد بررسی کنید!)",
         "trusted_sources_label_help": "برچسب پیش‌فرض 'مکان‌های دیگر' است",
         "add_trusted_source": "یک منبع فدیورس مورد اعتماد اضافه کنید",
         "add_trusted_source_help": "از یکی از تنظیمات زیر استفاده کنید: <br/><ul><li>آدرس وب یک گانسیو دیگر یا نرم‌افزاری که از یک Application Actor پشتیبانی می‌کند / <a href='https://codeberg.org/fediverse/fep/src/branch/main/fep/2677/fep-2677.md'>FEP-2677</a> (مثلاً <u>https://demo.gancio.org</u>)</li><li>یک شناسه ActivityPub مانند <u>@gancio@mastodon.cisti.org</u></li><li>آدرس اینترنتی یک حساب کاربری مانند <u>https://instance.tld/actor</u>.</li></ul><br/>رویدادهای منتشر شده یا تقویت شده از این منابع وارد خواهند شد.",
-        "trusted_source_removed": "منبع معتبر حذف شد",
+        "trusted_source_removed": "منبع معتبر برداشته شد",
         "add_link": "افزودن پیوندٔ",
         "edit_tag_help": "شما می‌توانید برچسب را با جایگزینی آن با یک برچسب جدید یا ادغام آن با یک برچسب موجود تغییر دهید. رویدادهای {n} مرتبط نیز تغییر خواهند کرد.",
         "smtp_secure": "SMTP امن (TLS یا STARTTLS)",
@@ -379,12 +379,12 @@
         "default_fedi_hashtags_help": "برچسب‌های مشخص شده به رویدادهای ارسال شده به فدیورس اضافه خواهند شد"
     },
     "settings": {
-        "remove_account": "با فشردن دکمه‌ی زیر، حساب کاربری شما حذف خواهد شد. رویدادهایی که منتشر کرده‌اید، حذف نخواهند شد.",
+        "remove_account": "با فشردن دکمه‌ی زیر، حساب کاربری شما حذف خواهد شد. رویدادهایی که منتشر کرده‌اید، برداشته نخواهند شد.",
         "change_password": "گذرواژه خود را تغییر دهید",
         "danger_section": "منطقهٔ خطر",
         "update_confirm": "آیا می‌خواهید تغییرات خود را ذخیره کنید؟",
         "password_updated": "گذرواژه تغییر کرد.",
-        "remove_account_confirm": "شما در شرف حذف دائمی حساب کاربری خود هستید"
+        "remove_account_confirm": "شما در شرف برداشتن دائمی حساب کاربری خود هستید"
     },
     "auth": {
         "fail": "نمی‌توانم وارد شوم. آیا مطمئن هستید که گذرواژه صحیح است؟",
@@ -392,7 +392,7 @@
     },
     "validators": {
         "required": "{قسمت‌ نام} مورد نیاز است",
-        "email": "ایمیل معتبر وارد کنید",
+        "email": "رایانامه معتبر وارد کنید",
         "latitude": "عرض جغرافیایی معتبری وارد کنید (-90 < عرض جغرافیایی < 90)",
         "longitude": "یک طول جغرافیایی معتبر وارد کنید (-180 < طول جغرافیایی < 180)",
         "url": "یک آدرس اینترنتی معتبر (http:// یا https://) ارائه دهید"
@@ -412,7 +412,7 @@
         "valid": "حساب کاربری شما تأیید شد، اکنون می‌توانید <a href=\"/login\">وارد شوید</a>"
     },
     "oauth": {
-        "authorization_request": "برنامه <code>{app}</code> درخواست مجوز زیر را در <code>{instance_name}</code> می‌کند:",
+        "authorization_request": "کارهٔ <code>{app}</code> درخواست مجوز زیر را در <code>{instance_name}</code> می‌کند:",
         "redirected_to": "پس از تأیید، به <code>{url}</code> هدایت خواهید شد",
         "scopes": {
             "event:write": "رویدادهای خود را اضافه و ویرایش کنید"
