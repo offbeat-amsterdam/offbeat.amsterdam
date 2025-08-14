@@ -361,7 +361,19 @@
         "admin_email": "رایانامه مدیر",
         "instance_block_confirm": "شما مطمعنید که میخواهید {instance} بلاک کنید؟",
         "widget": "ابزارک",
-        "delete_collection_confirm": "شما مطمعنید که میخواهید .. پاک کنید از مجموعه <u>{collection}</u> ؟"
+        "delete_collection_confirm": "شما مطمعنید که میخواهید .. پاک کنید از مجموعه <u>{collection}</u> ؟",
+        "default_images_help": "شما بایید <a href='/admin?tab=theme'> تازه سازی</a> کنید صفحه رو تا تغییراتو ببینید.",
+        "geocoding_provider_type": "نرم‌افزار ژئوکودینگ",
+        "geocoding_provider_type_help": "نرم افزار پیشفرضNominatim",
+        "geocoding_provider_help": "تامین کننده پیشفرض Nominatim می‌باشد",
+        "geocoding_countrycodes_help": "به شما این امکان را میدهدکه براساس کد منطقه برای جستجو فیلتر تایین کنید",
+        "geocoding_test_success": "سرویس ژئوکدینگ درحال اجراست در {service_name}",
+        "geocoding_test_error": "سرویس ژئوکدینگ در {service_name} قابل دسترسی نیست",
+        "tilelayer_provider": "Tilelayer تامین کننده",
+        "tilelayer_provider_help": "تا‌مین کننده پیشفرض..OpenStreetMap است",
+        "tilelayer_test_success": "سرویس چینش موزاییکی در{service_name}درحال کاراست",
+        "tilelayer_test_error": "سرویس چینش موزاییکی در{service_name}دردسترس نیست",
+        "custom_css_help": "شمامیتوانید فایل سبک رو شخصی سازی کنید , برای خواندن بعضی از مثال ها <a href='https://gancio.org/usage/custom_css'>اینجاکلیک کنید</a>"
     },
     "settings": {
         "remove_account": "با فشردن دکمه‌ی زیر، حساب کاربری شما حذف خواهد شد. رویدادهایی که منتشر کرده‌اید، حذف نخواهند شد.",
