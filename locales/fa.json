@@ -141,7 +141,7 @@
         "list_description": "اگر شما یک وب‌سایت دارید و می‌خواهید فهرستی از رویدادها را نمایش دهید، از کد زیر استفاده کنید",
         "filter_description": "شما می‌توانید در اینجا برون‌ریزی خود را بر اساس برچسب‌ها و مکان یا یک مجموعه از پیش تعیین‌شده پالایش کنید",
         "ical_description": "کامپیوترها و گوشی‌های هوشمند معمولاً با یک برنامه تقویم مجهز هستند که قادر به وارد کردن یک تقویم از راه دور است.",
-        "ical_title": "ics/ical",
+        "ical_title": "فایل ics/ical",
         "feed_description": "برای دریافت به‌روزرسانی‌ها از طریق کامپیوتر یا گوشی هوشمند، بدون نیاز به باز کردن دوره‌ای این سایت، از فیدهای RSS استفاده کنید\n\n<p>با استفاده از فیدهای RSS می‌توانید با کمک یک برنامه خاص، به‌روزرسانی‌های سایت‌های مورد علاقه خود را دریافت کنید. این روشی عالی برای دنبال کردن سریع چندین سایت است، بدون نیاز به ساخت حساب کاربری یا سایر پیچیدگی‌ها.</p>\n\n<li>اگر دستگاه شما اندروید است، ما <a href=\"https://f-droid.org/en/packages/net.frju.flym/\">Flym</a> یا Feeder را پیشنهاد می‌کنیم</li>\n<li>برای آیفون/آیپد می‌توانید از <a href=\"https://itunes.apple.com/ua/app/feeds4u/id1038456442?mt=8\">Feed4U</a> استفاده کنید</li>\n<li>برای کامپیوترهای دسکتاپ/لپ‌تاپ، نصب Feedbro روی <a href=\"https://addons.mozilla.org/en-GB/firefox/addon/feedbroreader/\">Firefox</a> یا <a href=\"https://chrome.google.com/webstore/detail/feedbro/mefgmmbdailogpfhfblcnnjfmnpnmdfa\">Chrome</a> را توصیه می‌کنیم</li>\n<br/>\nبا افزودن این لینک به برنامه خواننده RSS خود، همیشه به‌روز خواهید ماند."
     },
     "register": {
@@ -159,7 +159,7 @@
         "same_day": "در همان روز",
         "what_description": "عنوان",
         "description_description": "توضیح",
-        "tag_description": "برچسب",
+        "tag_description": "تگ",
         "media_description": "می‌توانید یک بروشور اضافه کنید (اختیاری)",
         "added": "رویداد اضافه شد",
         "saved": "رویداد ذخیره شد",
@@ -279,7 +279,7 @@
         "hide_boost_bookmark_help": "پنهان کردن آیکون‌های کوچک که تعداد تقویت‌ها و نشانه‌گذاری‌های مربوط به فدیوورس را نشان می‌دهند",
         "hide_thumbs": "پنهان کردن تصاویر کوچک",
         "place_description": "اگر آدرس یا مکان را اشتباه وارد کرده‌اید، می‌توانید آن را تغییر دهید.<br/>تمام رویدادهای جاری و گذشته مرتبط با این مکان به آدرس جدید تغییر خواهند کرد.",
-        "federated_events_in_home_help": "رویدادهای ورودی از منابع فدیورس معتبر به طور پیش‌فرض در صفحه اصلی نمایش داده می‌شوند. برای نمایش برخی از رویدادها می‌توانید از مجموعه‌ها استفاده کنید.",
+        "federated_events_in_home_help": "رویدادهای ورودی از منابع فدیورس معتبر به طور پیش‌فرض در صفحه اصلی نمایش داده می‌شوند. برای نمایش برخی از رویدادها می‌توانید از مجموعه‌ها استفاده کنید",
         "instance_place": "مکان شاخص این نمونه",
         "instance_name": "نام نمونه",
         "announcement_description": "در این بخش می‌توانید اعلان‌هایی را وارد کنید که در صفحه اصلی باقی بمانند",
@@ -373,7 +373,10 @@
         "tilelayer_provider_help": "تا‌مین کننده پیشفرض..OpenStreetMap است",
         "tilelayer_test_success": "سرویس چینش موزاییکی در{service_name}درحال کاراست",
         "tilelayer_test_error": "سرویس چینش موزاییکی در{service_name}دردسترس نیست",
-        "custom_css_help": "شمامیتوانید فایل سبک رو شخصی سازی کنید , برای خواندن بعضی از مثال ها <a href='https://gancio.org/usage/custom_css'>اینجاکلیک کنید</a>"
+        "custom_css_help": "شمامیتوانید فایل سبک رو شخصی سازی کنید , برای خواندن بعضی از مثال ها <a href='https://gancio.org/usage/custom_css'>اینجاکلیک کنید</a>.",
+        "geolocation_description": "<b>۱. یک ارائه‌دهنده برای سرویس جغرافیایی تعریف کنید</b>.<br>در حال حاضر، از بین گزینه‌های فهرست شده در <a href=\"https://wiki.openstreetmap.org/wiki/Nominatim#Alternatives_.2F_Third-party_providers\">ویکی OpenStreetMap</a>، نرم‌افزارهای <a href=\"https://github.com/osm-search/Nominatim\">Nominatim</a> و <a href=\"https://github.com/komoot/photon\">Photon</a> پشتیبانی می‌شوند.<br>می‌توانید از یکی از دموهای رسمی مرتبط با کپی کردن لینک در فیلد 'ارائه‌دهنده جغرافیایی' استفاده کنید:<ul><li>https://nominatim.openstreetmap.org/search (<a href=\"https://operations.osmfoundation.org/policies/nominatim/\">شرایط استفاده</a>)</li><li>https://photon.komoot.io/api/ (<a href=\"https://photon.komoot.io/\">شرایط استفاده</a>)</li></ul><br><b>۲. یک ارائه‌دهنده برای لایه‌های نقشه تعریف کنید.</b><br>می‌توانید فهرستی از آنها را اینجا بیابید: <a href=\"https://leaflet-extras.github.io/leaflet-providers/preview/\">https://leaflet-extras.github.io/leaflet-providers/preview/</a>",
+        "custom_js_help": "شما می‌توانید با نوشتن در کادر متنی زیر، کد جاوااسکریپتی را اضافه کنید که برای هر کاربر بارگذاری خواهد شد. احتمالاً بهتر است ابتدا <a href='https://gancio.org/usage/custom_js'>مستندات</a> را مطالعه کنید.",
+        "default_fedi_hashtags_help": "برچسب‌های مشخص شده به رویدادهای ارسال شده به فدیورس اضافه خواهند شد"
     },
     "settings": {
         "remove_account": "با فشردن دکمه‌ی زیر، حساب کاربری شما حذف خواهد شد. رویدادهایی که منتشر کرده‌اید، حذف نخواهند شد.",
@@ -410,7 +413,7 @@
     },
     "oauth": {
         "authorization_request": "برنامه <code>{app}</code> درخواست مجوز زیر را در <code>{instance_name}</code> می‌کند:",
-        "redirected_to": "پس از تأیید، به <code>{url}</code> هدایت خواهید شد.",
+        "redirected_to": "پس از تأیید، به <code>{url}</code> هدایت خواهید شد",
         "scopes": {
             "event:write": "رویدادهای خود را اضافه و ویرایش کنید"
         }
