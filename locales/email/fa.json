@@ -12,11 +12,11 @@
         "content": "سلام، حساب شما در <a href='{{{config.baseurl}}}'>{{config.title}}</a>ایجاد شده است. <a href='{{{config.baseurl}}}/user_confirm/{{user.recover_code}}'> آن را تأیید کنید و یک گذرواژه انتخاب کنید</a>"
     },
     "recover": {
-        "subject": "بازنشانی گذرواژه",
+        "subject": "بازگرداندن رمز",
         "content": "سلام، شما درخواست بازنشانی گذرواژه در {{config.title}} را داده‌اید. <a href='{{{config.baseurl}}}/recover/{{user.recover_code}}'>اینجا کلیک کنید</a> تا تأیید شود."
     },
     "admin_register": {
-        "subject": "نام‌نویسی جدید",
+        "subject": "ثبت نام جدید",
         "content": "{{user.email}} درخواست ثبت‌نام در {{config.title}} را داده است: <br/><pre>{{user.description}}</pre><br/> آن را <a href='{{{config.baseurl}}}/admin'>اینجا</a> تأیید کنید."
     },
     "event_confirm": {
