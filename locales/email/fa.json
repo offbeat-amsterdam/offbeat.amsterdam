@@ -1,0 +1,35 @@
+{
+    "register": {
+        "subject": "درخواست نام‌نویسی دریافت شد",
+        "content": "ما درخواست نام‌نویسی را دریافت کردیم. به زودی آن را تأیید خواهیم کرد."
+    },
+    "confirm": {
+        "subject": "شما اکنون می‌توانید شروع به انتشار رویدادها کنید",
+        "content": "سلام، حساب شما در <a href='{{{config.baseurl}}}'>{{config.title}}</a> تأیید شده است. برای هرگونه اطلاعات با ما در {{config.admin_email}} تماس بگیرید."
+    },
+    "user_confirm": {
+        "subject": "شما اکنون می‌توانید شروع به انتشار رویدادها کنید",
+        "content": "سلام، حساب شما در <a href='{{{config.baseurl}}}'>{{config.title}}</a>ایجاد شده است. <a href='{{{config.baseurl}}}/user_confirm/{{user.recover_code}}'> آن را تأیید کنید و یک گذرواژه انتخاب کنید</a>."
+    },
+    "recover": {
+        "subject": "بازیابی گذرواژه",
+        "content": "سلام، شما درخواست بازیابی گذرواژه در {{config.title}} را داده‌اید. <a href='{{{config.baseurl}}}/recover/{{user.recover_code}}'>اینجا کلیک کنید</a> تا تأیید شود."
+    },
+    "admin_register": {
+        "subject": "نام‌نویسی جدید",
+        "content": "{{user.email}} درخواست نام‌نویسی در {{config.title}} را داده است: <br/><pre>{{user.description}}</pre><br/> آن را <a href='{{{config.baseurl}}}/admin'>اینجا</a> تأیید کنید."
+    },
+    "event_confirm": {
+        "content": "می‌توانید این رویداد را در <a href='{{{url}}}'> این صفحه</a> تأیید کنید"
+    },
+    "test": {
+        "subject": "پیکربندی SMTP شما به درستی کار می‌کند",
+        "content": "این یک رایانامه آزمایشی است. اگر شما این را می‌خوانید، به این معنی است که پیکربندی شما به درستی کار می‌کند."
+    },
+    "report": {
+        "subject": "مدیریت رویداد [{{event.title}}]",
+        "content_ADMIN": "یک ادمین درباره این رویداد نظر داد <strong>{{event.title}}</strong><br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>بازکردن مدیریت</a>",
+        "content_ANON": "یک بازدیدکننده این رویداد را گزارش کرد <strong>{{event.title}}</strong>:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>باز کردن مدیریت</a>",
+        "content_AUTHOR": "نویسنده این رویداد <strong>{{event.title}}</strong> نوشت:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>باز کردن مدیریت</a>"
+    }
+}
