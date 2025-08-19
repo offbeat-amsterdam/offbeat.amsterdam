@@ -34,6 +34,7 @@ nav_order: 7
 - [lamanifestive.fr](https://lamanifestive.fr/) (Social and cultural events of south-alsace, France)
 - [agenda.rouen-luttes.org](https://agenda.rouen-luttes.org/) (Rouen)
 - [www.not-quite-there-yet.net](https://www.not-quite-there-yet.net/) (Toulouse)
+- [https://villemorte.fr/agenda-2-0/](https://villemorte.fr/agenda-2-0/) (Lyon, France)
 - [events.rheinmain.social](https://events.rheinmain.social/) (Rheinmain)
 - [calndr.de](https://calndr.de/)
 - [bonn.jetzt](https://bonn.jetzt/) (Digital-Events aus Bonn, Rhein-Sieg und der Region)
