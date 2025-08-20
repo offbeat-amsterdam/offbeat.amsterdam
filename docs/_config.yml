@@ -31,6 +31,10 @@ plugins:
   - premonition
   - jekyll-default-layout
 
+callouts:
+  warning:
+    color: red
+
 search_enabled: true
 
 aux_links:
