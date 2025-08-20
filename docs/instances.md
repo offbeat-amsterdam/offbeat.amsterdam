@@ -67,6 +67,6 @@ nav_order: 7
 - [pelumpen.com](https://eventos.pelumpen.com) (Red de eventos del Valle de Pelumpén; Limache y Olmué, V Región, Chile)
 
 
-You can also check federated instances on [fedidb.org](https://fedidb.org/software/gancio) or on [fediverse.observer](https://gancio.fediverse.observer/list)
+You can also check federated instances on [fedilist.com](https://fedilist.com/instance?q=&ip=&software=gancio&registrations=&onion=), [fedidb.org](https://fedidb.org/software/gancio), [fediverse.observer](https://gancio.fediverse.observer/list)
 
 <small>Do you want your instance to appear here or to be removed? [Write us]({% link contact.md %}).</small>
