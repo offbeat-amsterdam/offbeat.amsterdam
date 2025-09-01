@@ -13,7 +13,7 @@ const plugin = {
     settings: {
       refresh_minutes: {
         type: 'NUMBER',
-        description: 'Refresh the feed each n. minutes',
+        description: 'Refresh the feed each N minutes, if 0 refreshes only at startup',
         required: true,
         hint: '60 minutes?'
       },
@@ -54,8 +54,11 @@ const plugin = {
     plugin.log.debug(`[FEED Plugin] Using API base: ${plugin.apiBaseUrl}`)
 
     // TODO: could use the TaskManager?
-    plugin.interval = setInterval(this._tick, settings.refresh_minutes*1000*60)
-    // this._tick()
+    if (settings.refresh_minutes > 0) {
+      plugin.interval = setInterval(this._tick, settings.refresh_minutes*1000*60)
+    } else {
+      this._tick()
+    }
   },
 
   unload () {
