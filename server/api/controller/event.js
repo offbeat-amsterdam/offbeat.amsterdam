@@ -703,7 +703,7 @@ const eventController = {
         eventDetails.media = [{ ...event.media[0], focalpoint }] // [0].focalpoint = focalpoint
       }
 
-      if (body.image_name && event.media.length && event.media[0].name !== body.image_name) {
+      if (body.image_name && event.media?.length && event.media[0].name !== body.image_name) {
         eventDetails.media[0].name = body.image_name || body.title || ''
       }
 
