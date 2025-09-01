@@ -113,12 +113,15 @@ const plugin = {
 
           plugin.log.debug(`[FEED Plugin] Adding event: ${evt.title} `)
 
-          const address = evt.location?.trim()
-          if (!address) {
+          const loc = evt.location?.trim()
+          if (loc) {
+            plugin.log.debug(`[FEED Plugin] Event address: ${loc}`)
+          } else {
             plugin.log.debug(`[FEED Plugin] No location found in this event ${evt.title}`)
-            continue
           }
-          plugin.log.debug(`[FEED Plugin] Event address: ${address}`)
+          const pos = loc?.indexOf(',')
+          const placeName = loc?.substring(0, pos === -1 ? undefined : pos).trim() || 'Unknown Place'
+          const address = loc?.substring(pos === -1 ? 0 : pos + 1).trim() || placeName
 
           // Create a new event
           // TODO [image]: ics could not embed images (ok you can use ATTACH but it is not supported by the used library, see https://github.com/adamgibbons/ics/issues/194,
@@ -127,15 +130,13 @@ const plugin = {
             // TODO [place]: how we should create a place? in ics the location field is just a string, should we query nominatim?
 
             let place = await plugin.db.models.place.findOne({
-              where: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('name')), Sequelize.Op.eq, address.toLocaleLowerCase()),
+              where: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('name')), Sequelize.Op.eq, placeName.toLocaleLowerCase()),
             })
             if (place) {
               plugin.log.debug(`[FEED Plugin] Place ${place.name} already exists, do not add it`)
-            }
-            if (!place) {
-              plugin.log.info(`[FEED Plugin] Create a new place: ${address}`)
-              const placeName = evt.organizer?.name?.trim() || evt.location?.split(',')[0]?.trim() || 'Unknown Place';
-              place = await plugin.db.models.place.create({ name: placeName, address });
+            } else {
+              plugin.log.info(`[FEED Plugin] Create a new place: ${placeName}`)
+              place = await plugin.db.models.place.create({ name: placeName, address: address });
             }
             const dbEvent = await plugin.db.models.event.create(evt)
             plugin.log.debug(`[FEED Plugin] Create event ${dbEvent.title} @ ${place.name}`)
