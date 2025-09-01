@@ -63,7 +63,7 @@ const plugin = {
   },
 
   unload () {
-    plugin.log.debug('[FEED Plugin] Clear interval an unload plugin')
+    plugin.log.debug('[FEED Plugin] Clear interval and unload plugin')
     clearInterval(plugin.interval)
   },
 
@@ -114,11 +114,6 @@ const plugin = {
           plugin.log.debug(`[FEED Plugin] Adding event: ${evt.title} `)
 
           const loc = evt.location?.trim()
-          if (loc) {
-            plugin.log.debug(`[FEED Plugin] Event address: ${loc}`)
-          } else {
-            plugin.log.debug(`[FEED Plugin] No location found in this event ${evt.title}`)
-          }
           const pos = loc?.indexOf(',')
           const placeName = loc?.substring(0, pos === -1 ? undefined : pos).trim() || 'Unknown Place'
           const address = loc?.substring(pos === -1 ? 0 : pos + 1).trim() || placeName
@@ -135,14 +130,14 @@ const plugin = {
             if (place) {
               plugin.log.debug(`[FEED Plugin] Place ${place.name} already exists, do not add it`)
             } else {
-              plugin.log.info(`[FEED Plugin] Create a new place: ${placeName}`)
+              plugin.log.debug(`[FEED Plugin] Create a new place: ${placeName}`)
               place = await plugin.db.models.place.create({ name: placeName, address: address });
             }
             const dbEvent = await plugin.db.models.event.create(evt)
-            plugin.log.debug(`[FEED Plugin] Create event ${dbEvent.title} @ ${place.name}`)
             await dbEvent.setPlace(place)
+            plugin.log.info(`[FEED Plugin] Created event ${dbEvent.title} @ ${place.name}`)
           } catch (e) {
-            console.error(e, String(e))
+            plugin.log.error(`[FEED Plugin] Error creating event: ${String(e)}`)
           }
         }
       } catch (e) {
