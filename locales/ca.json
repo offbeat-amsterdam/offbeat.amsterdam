@@ -155,7 +155,7 @@
     },
     "event": {
         "anon": "Anònim",
-        "anon_description": "Pots afegir activitats sense haver de crear un compte o iniciar sessió, però a canvi hauràs d'esperar que algun/a admin la llegeixi i l'aprovi,\n confirmant que és adequada. Demana més feina humana i no podrà ser modificada.<br/><br/>\n Pots <a href='/login'>iniciar sessió</a> o <a href='/register'>crear un compte</a>, però si ho necessites, endavant! Procurarem trigar poc. ",
+        "anon_description": "Pots afegir activitats sense haver de crear un compte o iniciar sessió, però a canvi hauràs d'esperar que algun/a admin la llegeixi i l'aprovi,\nconfirmant que és adequada. Demana més feina humana i no podrà ser modificada.<br/><br/>\nTambé pots <a href='/login'>iniciar sessió</a> o <a href='/register'>soŀlicitar un compte</a>. Altrament, publica-ho de forma anònima, procurarem trigar poc en revisar-lo. ",
         "same_day": "al mateix dia",
         "what_description": "Títol",
         "description_description": "Descripció",
@@ -223,7 +223,11 @@
         "send_to_admins": "Envia a lis admins",
         "send_to_author_too": "Envia a lis admins i a l'autori",
         "disable_author": "Deshabilita l'autori",
-        "disable_author_confirm": "Segur que vols desactivar l'autori de l'activitat?"
+        "disable_author_confirm": "Segur que vols desactivar l'autori de l'activitat?",
+        "anon_description_without_registration": "Pots afegir una activitat, però s'haurà de revisar per confirmar que és adequada per aquesta agenda.\nNo la podràs modificar després d'haver-la penjada.<br/><br/>\nEndavant! La revisarem de seguida que puguem.",
+        "recurrent_1y_days": "Cada {days} de {months} de cada any",
+        "each_year": "Cada any",
+        "recurrent_1y_ordinal": "El {n} {days} de {months} de cada any"
     },
     "admin": {
         "place_description": "En el cas que un lloc és incorrecte o l'adreça ha de canviar, pots arreglar-ho.<br/>Tingues en compte que totes les activitats passades i futures associades amb aquest lloc també canviaran d'adreça.",
@@ -376,11 +380,16 @@
         "federated_events_in_home_help": "Per defecte, les activitats provinents de fonts federades de confiança es mostres a la pàgina principal. Per mostrar-ne només alguns, es pot aconseguir amb les coŀleccions",
         "delete_trusted_source_confirm": "De debò que vols esborrar aquesta font de confiança?",
         "add_trusted_source_help": "Fes servir una d'aquestes sintaxis: <br/><ul><li>l'adreça web normal d'un altre Gancio o altre software compatible amb la \"Application Actor\" / <a href='https://codeberg.org/fediverse/fep/src/branch/main/fep/2677/fep-2677.md'>FEP-2677</a> (ex: <u>https://demo.gancio.org</u>)</li><li>una adreça ActivityPub de l'estil <u>@gancio@mastodon.cisti.org</u></li><li>la url d'un compte, com <u>https://instance.tld/actor</u>.</li></ul><br/>S'importaran totes les activitats publicades o impulsades d'aquestes fonts.",
-        "page_description": "A aquesta secció pots administrar pàgines customitzades (p.ex. polítiques, articles tutorials)",
+        "page_description": "En aquesta secció pots administrar pàgines personalitzades (p.ex. polítiques de contingut, tutorials). Aquestes pàgines no apareixeran automàticament enlloc, però les pots enllaçar en el menú de peu de pàgina, des de la pàgina \"Sobre aquesta agenda\" o des de qualsevol lloc extern fent servir l'enllaç de previsualització.",
         "unconfirmed_events": "Events encara no confirmats",
         "past_unconfirmed_events": "Events passats no confirmats",
         "new_page": "Afegeix una pàgina customitzada nova",
-        "delete_page_confirm": "Estàs seguri que vols esborrar la pàgina \"<strong>{title}</strong>\"?"
+        "delete_page_confirm": "Estàs seguri que vols esborrar la pàgina \"<strong>{title}</strong>\"?",
+        "smtp_password_description": "Deixa-ho en blanc si no vols modificar la contrasenya",
+        "receive_confirm_notification": "Rep mails de confirmació d'usuàries i activitats",
+        "calendar_first_day_of_week": "Primer dia de la setmana del calendari",
+        "calendar_first_day_of_week_description": "Tria el dia de la setmana que els calendaris han de mostrar com a primer dia. Per defecte, es segueix la configuració regional del navegador.",
+        "calendar_first_day_of_week_default": "Per defecte (configuració regional de cada navegador)"
     },
     "auth": {
         "not_confirmed": "Encara no s'ha confirmat…",
@@ -423,7 +432,8 @@
         "email": "Escriu una adreça de correu vàlida",
         "required": "Cal omplir el camp {fieldName} és",
         "latitude": "Insereix una latitud vàlida (entre -90 i 90)",
-        "longitude": "Insereix una longitud vàlida (entre -180 i 180)"
+        "longitude": "Insereix una longitud vàlida (entre -180 i 180)",
+        "url": "Introdueix una URL vàlida (http:// o https://)"
     },
     "setup": {
         "completed": "S'ha completat la configuració inicial",
