@@ -140,7 +140,7 @@ const plugin = {
             }
             const dbEvent = await plugin.db.models.event.create(evt)
             plugin.log.debug(`[FEED Plugin] Create event ${dbEvent.title} @ ${place.name}`)
-            dbEvent.setPlace(place)
+            await dbEvent.setPlace(place)
           } catch (e) {
             console.error(e, String(e))
           }
