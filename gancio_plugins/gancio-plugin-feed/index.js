@@ -31,7 +31,7 @@ const plugin = {
       },
       add_tag: {
         type: 'TEXT',
-        description: 'Add this tag to each imported event',
+        description: 'Add tag(s) to each imported event (comma-separated)',
         required: false,
       }
     }
@@ -86,6 +86,28 @@ const plugin = {
         clearInterval(plugin.interval)
         return
       }
+
+      const add_tags = plugin.settings.add_tag?.split(',')
+        .map((tag) => tag.trim())
+        .filter((tag) => tag.length > 0)
+      let tags = []
+      if (add_tags?.length) {
+        plugin.log.debug(`[FEED Plugin] Adding tags to imported events: ${add_tags}`)
+        for (tagName of add_tags) {
+          const exists = await plugin.db.models.tag.findOne({
+            where: {
+              tag: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('tag')), Sequelize.Op.eq, tagName.toLocaleLowerCase()),
+            }
+          })
+          if (exists) {
+            tags.push(exists)
+            continue
+          }
+          tags.push(await plugin.db.models.tag.create({ tag: tagName }))
+          plugin.log.debug(`[FEED Plugin] Created tag: ${tagName}`)
+        }
+      }
+
       try {
         plugin.log.debug(`[FEED Plugin] Fetching ${plugin.settings?.feed_URL}`)
 
@@ -135,6 +157,7 @@ const plugin = {
             }
             const dbEvent = await plugin.db.models.event.create(evt)
             await dbEvent.setPlace(place)
+            await dbEvent.setTags(tags)
             plugin.log.info(`[FEED Plugin] Created event ${dbEvent.title} @ ${place.name}`)
           } catch (e) {
             plugin.log.error(`[FEED Plugin] Error creating event: ${String(e)}`)
