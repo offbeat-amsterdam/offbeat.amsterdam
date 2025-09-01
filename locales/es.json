@@ -155,7 +155,7 @@
     },
     "event": {
         "anon": "Anónimo",
-        "anon_description": "Puedes ingresar un evento sin registrarte o iniciar sesión, pero en este caso tendrás que esperar a que alguien lo lea para confirmar que es un evento adecuado para este espacio,\ndelegando esta elección. Además, no será posible modificarlo. <br/> <br/>\nSi no te gusta, puedes <a href='/login'> iniciar sesión </a> o <a href='/register'> registrarte </a>. De lo contrario, continúa y recibirás una respuesta lo antes posible. ",
+        "anon_description": "Puedes ingresar un evento sin registrarte o iniciar sesión, pero en este caso tendrás que esperar a que alguien lo lea para confirmar que es un evento adecuado para este espacio,\ndelegando esta elección. Además, no será posible modificarlo. <br/> <br/>\nSi no te gusta, puedes <a href='/login'> iniciar sesión </a> o <a href='/register'> registrarte </a>. De lo contrario, continúa y sube tu evento, lo revisaremos lo antes posible. ",
         "same_day": "Mismo día",
         "what_description": "Nombre evento",
         "description_description": "Descripción, puedes copiar y pegar",
@@ -226,7 +226,8 @@
         "assign_to_user_description": "Puede asignar un evento anónimo a un usuario. Esto permitirá al usuario seleccionado modificar el evento.",
         "recurrent_1y_days": "{months} {days} todo año",
         "recurrent_1y_ordinal": "Los {n} {days} en {months} todo año",
-        "each_year": "Todo año"
+        "each_year": "Todo año",
+        "anon_description_without_registration": "Puedes añadir un evento, pero tendrá que ser revisado para confirmar que es adecuado.\nNo será posible modificarlo una vez enviado.<br/><br/>\nContinua y sube tu evento, lo revisaremos lo antes posible."
     },
     "admin": {
         "place_description": "En el caso de que un lugar sea incorrecto o cambie de dirección, puedes cambiarlo. <br/> Todos los eventos presentes y pasados asociados con este lugar cambiarán de dirección.",
@@ -370,7 +371,7 @@
         "add_trusted_source_help": "Usa una de las siguientes sintaxis: <br/><ul><li>la dirección web de otro Gancio o software que soporte un Application Actor / <a href='https://codeberg.org/fediverse/fep/src/branch/main/fep/2677/fep-2677.md'>FEP-2677</a> (e.g. <u>https://demo.gancio.org</u>)</li><li>un handle ActivityPub handle como <u>@gancio@mastodon.cisti.org</u></li><li>la url de una cuenta como <u>https://instance.tld/actor</u>.</li></ul><br/>Los eventos publicados o republicados por estas fuentes serán importados.",
         "new_page": "Añade una nueva página customizada",
         "federated_events_in_home_help": "Los eventos entrantes de fuentes federadas confiables serán mostrados por defecto en la página home. Para mostrar solo algunos de ellos puedes utilizar las colecciones.",
-        "page_description": "En esta sección puedes administrar páginas customizadas (p.ej. políticas, tutoriales)",
+        "page_description": "En esta sección puedes administrar páginas customizadas (p.ej. políticas, tutoriales). Estas páginas no aparecerán automáticamente en ningún lugar, pero puedes referenciarlas en el pie de página, desde la página «acerca de» o desde cualquier lugar a través del enlace de vista previa.",
         "trusted_sources_label": "Etiqueta de navegación para las fuentes federadas confiables",
         "trusted_source_removed": "Fuente confiable borrada",
         "federated_events_in_home": "Muestra eventos federados en la página home",
@@ -383,7 +384,10 @@
         "add_trusted_source": "Añade una fuente federada confiable",
         "delete_page_confirm": "Estás segure de querer borrar la página \"<strong>{title}</strong>\"?",
         "calendar_first_day_of_week": "Primero dia de la semana",
-        "receive_confirm_notification": "Obtener e-mail de confirmación de usuário/evento"
+        "receive_confirm_notification": "Obtener e-mail de confirmación de usuário/evento",
+        "smtp_password_description": "Déjalo en blanco si no quieres cambiar la contraseña",
+        "calendar_first_day_of_week_description": "Selecciona el día de la semana que los calendarios deben mostrar como el primer día de la semana. La configuración predeterminada se basa en la configuración regional del cliente.",
+        "calendar_first_day_of_week_default": "Predeterminado (configuración regional del cliente)"
     },
     "auth": {
         "not_confirmed": "Todavía no hemos confirmado este email…",
@@ -426,7 +430,8 @@
         "email": "Introduce un correo electrónico valido",
         "required": "{fieldName} es requerido",
         "longitude": "Introduce una longitud válida (-180 < longitud < 180)",
-        "latitude": "Introduce una latitud válida (-90 < latitud < 90)"
+        "latitude": "Introduce una latitud válida (-90 < latitud < 90)",
+        "url": "Proporciona una URL válida (http:// o https://)"
     },
     "setup": {
         "completed": "Configuración completada",
