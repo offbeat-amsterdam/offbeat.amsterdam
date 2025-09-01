@@ -3,6 +3,7 @@
  */
 
 const axios = require('axios')
+const Sequelize = require('sequelize')
 
 const plugin = {
   configuration: {
@@ -99,8 +100,11 @@ const plugin = {
           // Check if an event with the same title and start_datetime already exists
           // TODO: Ideally this should use the ICS UID, but database does not have it
           const exists = await plugin.db.models.event.findOne({
-            where: { title: evt.title, start_datetime: evt.start_datetime }
-          })
+            where: {
+              title: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('title')), Sequelize.Op.eq, evt.title.toLocaleLowerCase()),
+              start_datetime: evt.start_datetime,
+            }
+          });
 
           if (exists) {
             plugin.log.debug(`[FEED Plugin] Event ${evt.title} already exists, do not add it`);
@@ -122,7 +126,9 @@ const plugin = {
           try {
             // TODO [place]: how we should create a place? in ics the location field is just a string, should we query nominatim?
 
-            let place = await plugin.db.models.place.findOne({ where: { address }})
+            let place = await plugin.db.models.place.findOne({
+              where: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('name')), Sequelize.Op.eq, address.toLocaleLowerCase()),
+            })
             if (place) {
               plugin.log.debug(`[FEED Plugin] Place ${place.name} already exists, do not add it`)
             }
