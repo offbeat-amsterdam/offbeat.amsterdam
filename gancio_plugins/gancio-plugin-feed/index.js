@@ -90,7 +90,7 @@ const plugin = {
 
         const response = await axios.post(`${plugin.apiBaseUrl}/ics-import/url`, {
           url: plugin.settings.feed_URL,
-          includePastEvents: plugin.settings.include_past,
+          includePastEvents: plugin.settings.include_past
         })
 
         const events = response.data.events || []
@@ -105,15 +105,6 @@ const plugin = {
 
           if (exists) {
             plugin.log.debug(`[FEED Plugin] Event ${evt.title} already exists, do not add it`);
-            continue;
-          }
-
-          // Time check:
-          // Skip event only if it has fully ended in the past.
-          // That means: both start_datetime AND end_datetime must be less than 'now'.
-          // -> Events that are currently ongoing (start < now && end > now) should still be imported.
-          if (! plugin.settings.include_past && evt.start_datetime < now && evt.end_datetime < now) {
-            plugin.log.info(`[FEED Plugin] Event ${evt.title} is in the past, skipping it`);
             continue;
           }
 
