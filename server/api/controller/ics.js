@@ -1,4 +1,3 @@
-const express = require('express')
 const fetch = require('node-fetch')
 const { parseIcsData } = require('../../helpers/icsparser')
 const log = require('../../log')
@@ -22,16 +21,14 @@ const icsController = {
   },
 
   // POST /ics-import  mit { icsText: '...raw text...' }
-  async importICSFile (req, res) {
+  importICSFile (req, res) {
     log.debug('[ICS-IMPORT] POST /api/ics-import ')
-    //log.debug(`[ICS-IMPORT] ICS-Text empfangen – Länge: ${req.body.icsText?.length || 0}`)
 
     const { icsText, includePastEvents } = req.body
 
     if (!icsText) {
       log.error('[ICS-IMPORT] No ICS text received')
       return res.status(400).json({ success: false, error: 'No ICS text received' })
-
     }
 
     try {
@@ -44,6 +41,5 @@ const icsController = {
     }
   }
 }
-
 
 module.exports = icsController

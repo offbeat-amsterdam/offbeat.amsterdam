@@ -2,7 +2,6 @@
  * This is a beta ics feed importer
  */
 
-const get = require('lodash/get')
 const axios = require('axios')
 
 const plugin = {
@@ -78,8 +77,6 @@ const plugin = {
     plugin._isTickRunning = true
 
     try {
-
-
       if (!plugin.settings?.feed_URL) {
         plugin.log.warn('[FEED Plugin] feed URL is required!')
         clearInterval(plugin.interval)
@@ -95,13 +92,12 @@ const plugin = {
 
         const events = response.data.events || []
 
-        const now = Math.floor(Date.now() / 1000); // beware ics timestamps are in seconds
         for (const evt of events) {
           // Check if an event with the same title and start_datetime already exists
           // TODO: Ideally this should use the ICS UID, but database does not have it
           const exists = await plugin.db.models.event.findOne({
             where: { title: evt.title, start_datetime: evt.start_datetime }
-          });
+          })
 
           if (exists) {
             plugin.log.debug(`[FEED Plugin] Event ${evt.title} already exists, do not add it`);
@@ -140,9 +136,8 @@ const plugin = {
           }
         }
       } catch (e) {
-          plugin.log.error(`[FEED Plugin] Error fetching ics "${plugin.settings?.feed_URL}": ${String(e)}`)
+        plugin.log.error(`[FEED Plugin] Error fetching ics "${plugin.settings?.feed_URL}": ${String(e)}`)
       }
-
     } catch (e) {
       plugin.log.error(`[FEED Plugin] Uncaught error in _tick: ${String(e)}`)
     } finally {
