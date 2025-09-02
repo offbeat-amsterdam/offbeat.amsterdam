@@ -109,7 +109,7 @@ describe('ICS API (/api/ics-parser)', () => {
   test('should return 1 event from valid input', async () => {
     const res = await request(app)
       .post('/api/ics-import')
-      .send({ icsText: singleEventIcs })
+      .send({ icsText: singleEventIcs, includePastEvents: true })
 
     expect(res.statusCode).toBe(200)
     expect(res.body.success).toBe(true)
@@ -125,5 +125,18 @@ describe('ICS API (/api/ics-parser)', () => {
 
     expect(res.statusCode).toBe(400)
     expect(res.body.success).toBe(false)
+  })
+
+  test('should skip events when no includePastEvents flag provided', async () => {
+    const events = parseIcsData(multipleEventsIcs, false)
+    expect(events.length).toBe(0)
+
+    const res = await request(app)
+      .post('/api/ics-import')
+      .send({ icsText: singleEventIcs })
+
+    expect(res.statusCode).toBe(200)
+    expect(res.body.success).toBe(true)
+    expect(res.body.events.length).toBe(0)
   })
 })
