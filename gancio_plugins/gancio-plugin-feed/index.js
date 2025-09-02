@@ -2,7 +2,6 @@
  * This is a beta ics feed importer
  */
 
-const get = require('lodash/get')
 const axios = require('axios')
 
 const plugin = {
@@ -23,6 +22,11 @@ const plugin = {
         description: 'ICS feed URL',
         required: true,
         hint: 'Check it before'
+      },
+      include_past: {
+        type: 'CHECK',
+        description: 'Include events in the past',
+        required: true,
       },
       add_tag: {
         type: 'TEXT',
@@ -73,8 +77,6 @@ const plugin = {
     plugin._isTickRunning = true
 
     try {
-
-
       if (!plugin.settings?.feed_URL) {
         plugin.log.warn('[FEED Plugin] feed URL is required!')
         clearInterval(plugin.interval)
@@ -84,30 +86,21 @@ const plugin = {
         plugin.log.debug(`[FEED Plugin] Fetching ${plugin.settings?.feed_URL}`)
 
         const response = await axios.post(`${plugin.apiBaseUrl}/ics-import/url`, {
-          url: plugin.settings.feed_URL
+          url: plugin.settings.feed_URL,
+          includePastEvents: plugin.settings.include_past
         })
 
         const events = response.data.events || []
 
-        const now = Math.floor(Date.now() / 1000); // beware ics timestamps are in seconds
         for (const evt of events) {
           // Check if an event with the same title and start_datetime already exists
           // TODO: Ideally this should use the ICS UID, but database does not have it
           const exists = await plugin.db.models.event.findOne({
             where: { title: evt.title, start_datetime: evt.start_datetime }
-          });
+          })
 
           if (exists) {
             plugin.log.debug(`[FEED Plugin] Event ${evt.title} already exists, do not add it`);
-            continue;
-          }
-
-          // Time check:
-          // Skip event only if it has fully ended in the past.
-          // That means: both start_datetime AND end_datetime must be less than 'now'.
-          // -> Events that are currently ongoing (start < now && end > now) should still be imported.
-          if (evt.start_datetime < now && evt.end_datetime < now) {
-            plugin.log.info(`[FEED Plugin] Event ${evt.title} is in the past, skipping it`);
             continue;
           }
 
@@ -143,9 +136,8 @@ const plugin = {
           }
         }
       } catch (e) {
-          plugin.log.error(`[FEED Plugin] Error fetching ics "${plugin.settings?.feed_URL}": ${String(e)}`)
+        plugin.log.error(`[FEED Plugin] Error fetching ics "${plugin.settings?.feed_URL}": ${String(e)}`)
       }
-
     } catch (e) {
       plugin.log.error(`[FEED Plugin] Uncaught error in _tick: ${String(e)}`)
     } finally {
