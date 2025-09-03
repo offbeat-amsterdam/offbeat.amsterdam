@@ -3,6 +3,7 @@
  */
 
 const axios = require('axios')
+const Sequelize = require('sequelize')
 
 const plugin = {
   configuration: {
@@ -13,7 +14,7 @@ const plugin = {
     settings: {
       refresh_minutes: {
         type: 'NUMBER',
-        description: 'Refresh the feed each n. minutes',
+        description: 'Refresh the feed each N minutes, if 0 refreshes only at startup',
         required: true,
         hint: '60 minutes?'
       },
@@ -54,12 +55,15 @@ const plugin = {
     plugin.log.debug(`[FEED Plugin] Using API base: ${plugin.apiBaseUrl}`)
 
     // TODO: could use the TaskManager?
-    plugin.interval = setInterval(this._tick, settings.refresh_minutes*1000*60)
-    // this._tick()
+    if (settings.refresh_minutes > 0) {
+      plugin.interval = setInterval(this._tick, settings.refresh_minutes*1000*60)
+    } else {
+      this._tick()
+    }
   },
 
   unload () {
-    plugin.log.debug('[FEED Plugin] Clear interval an unload plugin')
+    plugin.log.debug('[FEED Plugin] Clear interval and unload plugin')
     clearInterval(plugin.interval)
   },
 
@@ -96,8 +100,11 @@ const plugin = {
           // Check if an event with the same title and start_datetime already exists
           // TODO: Ideally this should use the ICS UID, but database does not have it
           const exists = await plugin.db.models.event.findOne({
-            where: { title: evt.title, start_datetime: evt.start_datetime }
-          })
+            where: {
+              title: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('title')), Sequelize.Op.eq, evt.title.toLocaleLowerCase()),
+              start_datetime: evt.start_datetime,
+            }
+          });
 
           if (exists) {
             plugin.log.debug(`[FEED Plugin] Event ${evt.title} already exists, do not add it`);
@@ -106,12 +113,10 @@ const plugin = {
 
           plugin.log.debug(`[FEED Plugin] Adding event: ${evt.title} `)
 
-          const address = evt.location?.trim()
-          if (!address) {
-            plugin.log.debug(`[FEED Plugin] No location found in this event ${evt.title}`)
-            continue
-          }
-          plugin.log.debug(`[FEED Plugin] Event address: ${address}`)
+          const loc = evt.location?.trim()
+          const pos = loc?.indexOf(',')
+          const placeName = loc?.substring(0, pos === -1 ? undefined : pos).trim() || 'Unknown Place'
+          const address = loc?.substring(pos === -1 ? 0 : pos + 1).trim() || placeName
 
           // Create a new event
           // TODO [image]: ics could not embed images (ok you can use ATTACH but it is not supported by the used library, see https://github.com/adamgibbons/ics/issues/194,
@@ -119,20 +124,20 @@ const plugin = {
           try {
             // TODO [place]: how we should create a place? in ics the location field is just a string, should we query nominatim?
 
-            let place = await plugin.db.models.place.findOne({ where: { address }})
+            let place = await plugin.db.models.place.findOne({
+              where: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('name')), Sequelize.Op.eq, placeName.toLocaleLowerCase()),
+            })
             if (place) {
               plugin.log.debug(`[FEED Plugin] Place ${place.name} already exists, do not add it`)
-            }
-            if (!place) {
-              plugin.log.info(`[FEED Plugin] Create a new place: ${address}`)
-              const placeName = evt.organizer?.name?.trim() || evt.location?.split(',')[0]?.trim() || 'Unknown Place';
-              place = await plugin.db.models.place.create({ name: placeName, address });
+            } else {
+              plugin.log.debug(`[FEED Plugin] Create a new place: ${placeName}`)
+              place = await plugin.db.models.place.create({ name: placeName, address: address });
             }
             const dbEvent = await plugin.db.models.event.create(evt)
-            plugin.log.debug(`[FEED Plugin] Create event ${dbEvent.title} @ ${place.name}`)
-            dbEvent.setPlace(place)
+            await dbEvent.setPlace(place)
+            plugin.log.info(`[FEED Plugin] Created event ${dbEvent.title} @ ${place.name}`)
           } catch (e) {
-            console.error(e, String(e))
+            plugin.log.error(`[FEED Plugin] Error creating event: ${String(e)}`)
           }
         }
       } catch (e) {
