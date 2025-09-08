@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.28.0](https://framagit.org/les/gancio/compare/v1.27.0...v1.28.0) (2025-09-08)
+
+
+### Features
+
+* new bluesky bridge plugin ([a31f447](https://framagit.org/les/gancio/commit/a31f447e34c273efee15f4bbd55b88f0e79c474d))
+* new language Latvian, Latviešu ([f522d19](https://framagit.org/les/gancio/commit/f522d19e2b1b202451aba730df68b8f33d034d20))
+* new languages Greek, Farsi, Korean ([cd34e89](https://framagit.org/les/gancio/commit/cd34e89327111d22b82cb21883d3c1638ece7d83))
+* new plugin discord bridge ([e349a3f](https://framagit.org/les/gancio/commit/e349a3f0ba09a6e989c5cbf1e8e101fb157adf6d))
+
+
+### Bug Fixes
+
+* add some more custom css example in documentation, fix [#536](https://framagit.org/les/gancio/issues/536) ([1098785](https://framagit.org/les/gancio/commit/1098785e4d1d08165738e50f5f17b42ba3d71066))
+* document API auth and update event, fix [#594](https://framagit.org/les/gancio/issues/594) ([3caf4bb](https://framagit.org/les/gancio/commit/3caf4bbbf409b57d466beafb0232f2c9594fce6d))
+* Duplicate events with a slow internet connection, fix [#590](https://framagit.org/les/gancio/issues/590) ([3ba2dfd](https://framagit.org/les/gancio/commit/3ba2dfdf71802037b51e8ec22e08242c9ed9b25c))
+* **ics:** implement includePastEvents in ics parser ([0eb92d7](https://framagit.org/les/gancio/commit/0eb92d7b8b54a612bfa9e67add185cdcc5955956))
+* update telegram plugin to v1.0.6, fix [#589](https://framagit.org/les/gancio/issues/589) ([7f20aac](https://framagit.org/les/gancio/commit/7f20aacbcc82036c1e6db378dbbeb9dd866b3474))
+* update yarn.lock, fix [#418](https://framagit.org/les/gancio/issues/418) ([4e43ffd](https://framagit.org/les/gancio/commit/4e43ffd69f3a98497c0ff257049608f5c05be16b))
+* use includePastEvents logic from backend in feed plugin ([2b610d0](https://framagit.org/les/gancio/commit/2b610d033758309c6a8a85bb60fc716d41e2fb47))
+
 ## [1.27.0](https://framagit.org/les/gancio/compare/v1.26.1...v1.27.0) (2025-06-21)
 
 
