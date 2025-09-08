@@ -1,0 +1,35 @@
+{
+    "register": {
+        "subject": "Η αίτηση εγγραφής ελήφθη",
+        "content": "Λάβαμε την αίτηση εγγραφής. Θα την επιβεβαιώσουμε το συντομότερο δυνατόν."
+    },
+    "confirm": {
+        "subject": "Πλέον μπορείτε να δημοσιεύσετε εκδηλώσεις",
+        "content": "Γειά, ο λογαριασμός σου στο <a href='{{{config.baseurl}}}'>{{config.title}}</a> έχει εγκριθεί. Γράψε μας στο {{config.admin_email}} για πληροφορίες."
+    },
+    "user_confirm": {
+        "subject": "Μπορείς πλέον να δημοσιεύσεις εκδηλώσεις",
+        "content": "Γειά, ο λογαριασμός σου στο <a href='{{{config.baseurl}}}'>{{config.title}}</a> έχει δημιουργηθεί. <a href='{{{config.baseurl}}}/user_confirm/{{user.recover_code}}'>Πάτα εδώ για επιβεβαίωση και επιλογή κωδικού πρόσβασης.</a>."
+    },
+    "recover": {
+        "subject": "Επαναφορά κωδικού",
+        "content": "Γειά, ζήτησες επαναφορά του κωδικού πρόσβασης σου στο {{config.title}}.<a href='{{{config.baseurl}}}/recover/{{user.recover_code}}'>Πάτα εδώ</a> για επιβεβαίωση."
+    },
+    "admin_register": {
+        "subject": "Νέα εγγραφή",
+        "content": "Το email {{user.email}} έχει αιτηθεί εγγραφή στο {{config.title}}: <br/><pre>{{user.description}}</pre><br/> Επιβεβαιώστε την <a href='{{{config.baseurl}}}/admin'>εδώ</a>."
+    },
+    "event_confirm": {
+        "content": "Μπορείτε να επιβεβαιώσετε αυτή την εκδήλωση <a href='{{{url}}}'>εδώ</a>"
+    },
+    "test": {
+        "subject": "Οι ρυθμίσεις SMTP σας λειτουργούν",
+        "content": "Αυτό είναι ένα δοκιμαστικό email, αν το διαβάζετε οι ρυθμίσεις σας δουλεύουν."
+    },
+    "report": {
+        "subject": "Διαχείριση εκδήλωσης {{event.title}}",
+        "content_ADMIN": "Ένας διαχειριστής έκανε σχόλιο για την εκδήλωση <strong>{{event.title}}</strong>:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>Άνοιγμα διαχείρισης</a>",
+        "content_ANON": "Ένας επισκέπτης έκανε αναφορά της εκδήλωσης <strong>{{event.title}}</strong>:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>Άνοιγμα διαχείρισης</a>",
+        "content_AUTHOR": "Ο δημιουργός της εκδήλωσης <strong>{{event.title}}</strong> έγραψε:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>Άνοιγμα διαχείρισης</a>"
+    }
+}
