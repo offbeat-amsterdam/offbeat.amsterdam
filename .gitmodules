@@ -4,3 +4,6 @@
 [submodule "gancio_plugins/gancio-plugin-bluesky-bridge"]
 	path = gancio_plugins/gancio-plugin-bluesky-bridge
 	url = https://framagit.org/coegho/gancio-plugin-bluesky-bridge
+[submodule "gancio_plugins/gancio-plugin-discord-bridge"]
+	path = gancio_plugins/gancio-plugin-discord-bridge
+	url = https://git.gay/QueerResourcesRiga/gancio-plugin-discord
