@@ -1,3 +1,6 @@
 [submodule "gancio_plugins/gancio-plugin-telegram-bridge"]
 	path = gancio_plugins/gancio-plugin-telegram-bridge
 	url = https://framagit.org/bcn.convocala/gancio-plugin-telegram-bridge
+[submodule "gancio_plugins/gancio-plugin-bluesky-bridge"]
+	path = gancio_plugins/gancio-plugin-bluesky-bridge
+	url = https://framagit.org/coegho/gancio-plugin-bluesky-bridge
