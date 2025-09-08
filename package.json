@@ -98,11 +98,13 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
+    "@atproto/api": "^0.16.7",
     "@babel/core": "^7.27.1",
     "@babel/eslint-parser": "^7.27.1",
     "@nuxtjs/eslint-config": "^12.0.0",
     "@nuxtjs/vuetify": "^1.12.3",
     "@vue/language-plugin-pug": "^1.8.27",
+    "discord.js": "^14.22.1",
     "eslint": "8.57.1",
     "eslint-plugin-jest": "^28.11.0",
     "eslint-plugin-prettier": "^5.4.0",
