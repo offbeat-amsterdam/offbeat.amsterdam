@@ -117,8 +117,9 @@ const settingsController = {
   async set (key, value, is_secret = false) {
     // If the key is 'smtp', handle it specially
     if (key === 'smtp') {
-      if (!value.auth.pass) {
-        value.auth.pass = settingsController.settings.smtp.auth.pass
+      if (!value.auth?.pass) {
+        value.auth ||= {}
+        value.auth.pass = settingsController.settings.smtp?.auth?.pass
       }
       log.info(`SET SMTP: ${JSON.stringify({ host: value.host, port: value.port, user: value.auth.user })}`)
     } else {
@@ -177,7 +178,7 @@ const settingsController = {
 
   getSMTPSettings (_req, res) {
     const smtpSettings = clone(settingsController.settings.smtp)
-    delete smtpSettings.auth.pass
+    delete smtpSettings.auth?.pass
     return res.json(smtpSettings)
   },
 
