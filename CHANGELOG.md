@@ -4,13 +4,17 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [1.28.0](https://framagit.org/les/gancio/compare/v1.27.0...v1.28.0) (2025-09-08)
 
+Thanks to valuable contributions, we have three new translations (Farsi, Greek and Latvian), two new plugins, a bridge to Discord (@freefall) and to Bluesky (@coegho) and many improvements to the feed plugin and various fixes (@NightTsarina). Thanks to everyone who contributed.
+
+This will be the last release of version 1.x, so please do not write your contributions to `master` (the old branch) because the focus will be on stabilizing version 2.0 (it is the default branch `main`).
+
 
 ### Features
 
-* new bluesky bridge plugin ([a31f447](https://framagit.org/les/gancio/commit/a31f447e34c273efee15f4bbd55b88f0e79c474d))
+* add bluesky bridge plugin ([a31f447](https://framagit.org/les/gancio/commit/a31f447e34c273efee15f4bbd55b88f0e79c474d))
+* add plugin discord bridge ([e349a3f](https://framagit.org/les/gancio/commit/e349a3f0ba09a6e989c5cbf1e8e101fb157adf6d))
 * new language Latvian, Latviešu ([f522d19](https://framagit.org/les/gancio/commit/f522d19e2b1b202451aba730df68b8f33d034d20))
 * new languages Greek, Farsi, Korean ([cd34e89](https://framagit.org/les/gancio/commit/cd34e89327111d22b82cb21883d3c1638ece7d83))
-* new plugin discord bridge ([e349a3f](https://framagit.org/les/gancio/commit/e349a3f0ba09a6e989c5cbf1e8e101fb157adf6d))
 
 
 ### Bug Fixes
@@ -22,6 +26,7 @@ All notable changes to this project will be documented in this file. See [standa
 * update telegram plugin to v1.0.6, fix [#589](https://framagit.org/les/gancio/issues/589) ([7f20aac](https://framagit.org/les/gancio/commit/7f20aacbcc82036c1e6db378dbbeb9dd866b3474))
 * update yarn.lock, fix [#418](https://framagit.org/les/gancio/issues/418) ([4e43ffd](https://framagit.org/les/gancio/commit/4e43ffd69f3a98497c0ff257049608f5c05be16b))
 * use includePastEvents logic from backend in feed plugin ([2b610d0](https://framagit.org/les/gancio/commit/2b610d033758309c6a8a85bb60fc716d41e2fb47))
+
 
 ## [1.27.0](https://framagit.org/les/gancio/compare/v1.26.1...v1.27.0) (2025-06-21)
 
