@@ -118,7 +118,8 @@
         "enabled": "Abilitato",
         "pages": "Pagine",
         "pin": "Fissa",
-        "contact_user": "Contatta utente"
+        "contact_user": "Contatta utente",
+        "trusted_sources": "Fonti federate attendibili"
     },
     "login": {
         "description": "Entrando puoi pubblicare nuovi eventi.",
@@ -141,7 +142,8 @@
         "list_description": "Se hai un sito web e vuoi mostrare una lista di eventi, puoi usare il seguente codice",
         "filter_description": "Puoi filtrare gli eventi per tag, luoghi o per una collezione predefinita",
         "filter_title": "Filtra",
-        "ical_title": "ics/ical"
+        "ical_title": "ics/ical",
+        "list_title": "Elenco"
     },
     "register": {
         "description": "I movimenti hanno bisogno di organizzarsi e autofinanziarsi. <br/>\nUsatelo solo per eventi non commerciali, antifascisti, antisessisti, antirazzisti. <br/>Prima di poter pubblicare <strong>dobbiamo approvare l'account</strong>, considera che <strong>dietro questo sito ci sono delle persone</strong> di carne e sangue, scrivici quindi due righe per farci capire che eventi vorresti pubblicare.",
@@ -218,7 +220,11 @@
         "assign_to_user_description": "Puoi assegnare un evento senza autore ad una persona che potrà quindi modificarlo.",
         "message_hint": "Puoi inviare un messaggio a chi amministra e opzionalmente a chi ha inviato l'evento.",
         "message": "Messaggio",
-        "message_author_hint": "Scrivi un messaggio per chi amministra"
+        "message_author_hint": "Scrivi un messaggio per chi amministra",
+        "recurrent_1y_days": "{months} {days} ogni anno",
+        "recurrent_1y_ordinal": "I {n} {days} in {months} ogni anno",
+        "each_year": "Ogni anno",
+        "online_locations_fallback_urls": "Link di fallback"
     },
     "admin": {
         "place_description": "Nel caso in cui un luogo sia errato o cambi indirizzo, puoi modificarlo.<br/>Considera che tutti gli eventi associati a questo luogo cambieranno indirizzo (anche quelli passati).",
@@ -341,7 +347,32 @@
         "enable_report": "Attiva la segnalazione degli eventi",
         "enable_report_hint": "Chi visita potra' segnalare gli eventi e chi amministra riceverà una mail",
         "change_role_confirm": "Vuoi modificare il ruolo di <strong>{user}</strong> da <strong>{from_role}</strong> a <strong>{to_role}</strong>?",
-        "allow_event_without_end_time": "Permetti eventi senza un'orario di fine"
+        "allow_event_without_end_time": "Permetti eventi senza un'orario di fine",
+        "allow_geolocation_hint": "Imposta facoltativamente la posizione esatta di un evento su una mappa geografica",
+        "add_source": "Aggiungi fonte federata attendibile",
+        "trusted_sources_label": "Etichetta di navigazione per fonti federate attendibili",
+        "trusted_sources_label_default": "Altre posizioni",
+        "trusted_sources_label_help": "L'etichetta predefinita è 'Altre posizioni'",
+        "add_trusted_source": "Aggiungi una fonte federata attendibile",
+        "delete_trusted_source_confirm": "Vuoi davvero eliminare questa fonte attendibile?",
+        "trusted_source_removed": "Fonte attendibile rimossa",
+        "smtp_password_description": "Lasciare vuoto se non si vuole cambiare la password",
+        "not_reachable_warning": "Impossibile raggiungere me stesso ({baseurl}) dal server! Verificare che proxy, firewall e rete siano configurati correttamente.",
+        "tag_renamed": "Tag \"{oldTag}\" rinominato in \"{newTag}\"",
+        "stats": "{n_followers} \"attori\" stanno seguendo questa istanza, ci sono {n_events} eventi dal fediverso e {n_resources} commenti",
+        "show_download_media": "Mostra l'azione di download dei media",
+        "show_download_media_hint": "Visualizza un pulsante per scaricare i contenuti multimediali nella pagina dell'evento",
+        "custom_js": "Codice Javascript personalizzato",
+        "custom_css": "Stile CSS personalizzato",
+        "custom_css_help": "Si possono anche personalizzare alcuni fogli di stile, ecco alcuni esempi <a href='https://gancio.org/usage/custom_css'>qui</a>.",
+        "default_fedi_hashtags": "Hashtag predefiniti del fediverso",
+        "default_fedi_hashtags_help": "I tag specificati verranno aggiunti agli eventi inviati al fediverso",
+        "federated_events_in_home": "Mostra gli eventi federati nella home page",
+        "federated_events_in_home_help": "Gli eventi in arrivo da fonti federate attendibili verranno mostrati per impostazione predefinita nella home page. Per visualizzare solo alcuni eventi, è possibile utilizzare le collezioni.",
+        "unconfirmed_events": "Eventi non confermati",
+        "past_unconfirmed_events": "Eventi passati non confermati",
+        "page_description": "In questa sezione si possono gestire pagine personalizzate (ad esempio politica, guide, ecc.). Queste pagine non appariranno automaticamente da nessuna parte, ma si può farvi riferimento nel piè di pagina, dalla pagina \"Chi siamo\" o da qualsiasi punto tramite il link di anteprima.",
+        "new_page": "Aggiungi pagina personalizzata"
     },
     "auth": {
         "not_confirmed": "Non ancora confermato…",
