@@ -146,7 +146,7 @@
         "list_title": "Elenco"
     },
     "register": {
-        "description": "I movimenti hanno bisogno di organizzarsi e autofinanziarsi. <br/>\nUsatelo solo per eventi non commerciali, antifascisti, antisessisti, antirazzisti. <br/>Prima di poter pubblicare <strong>dobbiamo approvare l'account</strong>, considera che <strong>dietro questo sito ci sono delle persone</strong> di carne e sangue, scrivici quindi due righe per farci capire che eventi vorresti pubblicare.",
+        "description": "I movimenti sociali dovrebbero organizzarsi e autofinanziarsi.\nPrima di poter pubblicare, <strong>l'account deve essere approvato</strong>. Si consideri che <strong>dietro questo sito ci sono persone reali</strong>, quindi scrivere due righe per far sapere quali eventi si vorrebbe pubblicare.",
         "error": "Errore: ",
         "complete": "Confermeremo la registrazione quanto prima.",
         "first_user": "Amministratore creato e attivo"
@@ -184,8 +184,8 @@
         "normal_description": "Scegli il giorno.",
         "recurrent_1w_days": "Ogni {days}",
         "recurrent_2w_days": "Un {days} ogni due",
-        "recurrent_1m_days": "Il giorno {days} di ogni mese",
-        "recurrent_2m_days": "Il giorno {days} ogni due mesi",
+        "recurrent_1m_days": "I {days} di ogni mese",
+        "recurrent_2m_days": "I {days} di ogni due mesi",
         "recurrent_1m_ordinal": "Ogni {n} {days} del mese",
         "recurrent_2m_ordinal": "Ogni {n} {days} un mese sì e uno no",
         "each_week": "Ogni settimana",
@@ -274,8 +274,8 @@
         "instance_locale_description": "La lingua utilizzata per mostrare le pagine è quella preferita dall'utente. In alcuni casi però dobbiamo mostrare dei messaggi per tutti allo stesso modo (ad esempio quando pubblichiamo via ActivityPub o nell'invio di alcune e-mail). In questi casi useremo la lingua selezionata qui sopra.",
         "instance_place": "Luogo indicativo di questo nodo",
         "title_description": "Viene usato nel titolo della pagina, nell'oggetto delle e-mail, nell'esportazione dei flussi RSS e degli ICS.",
-        "description_description": "Compare nell'intestazione accanto al titolo",
-        "instance_name_help": "Nome dell'account ActivityPub da seguire",
+        "description_description": "Appare nell'intestazione accanto al titolo (è supportato l'HTML)",
+        "instance_name_help": "Account di ActivityPub da seguire: {ap_handler} (controllare attentamente!)",
         "enable_trusted_instances": "Abilita nodi fidati",
         "trusted_instances_help": "I nodi fidati compariranno nella barra di navigazione in cima alla pagina",
         "trusted_instances_label": "Etichetta di navigazione per i nodi fidati",
@@ -345,7 +345,7 @@
         "enable_moderation": "Attiva moderazione",
         "enable_moderation_hint": "Chi amministra puo' confrontarsi su un evento, includendo opzionalmente chi l'ha creato nella conversazione",
         "enable_report": "Attiva la segnalazione degli eventi",
-        "enable_report_hint": "Chi visita potra' segnalare gli eventi e chi amministra riceverà una mail",
+        "enable_report_hint": "Chi visita potrà segnalare gli eventi e chi amministra riceverà una email",
         "change_role_confirm": "Vuoi modificare il ruolo di <strong>{user}</strong> da <strong>{from_role}</strong> a <strong>{to_role}</strong>?",
         "allow_event_without_end_time": "Permetti eventi senza un'orario di fine",
         "allow_geolocation_hint": "Imposta facoltativamente la posizione esatta di un evento su una mappa geografica",
@@ -372,7 +372,15 @@
         "unconfirmed_events": "Eventi non confermati",
         "past_unconfirmed_events": "Eventi passati non confermati",
         "page_description": "In questa sezione si possono gestire pagine personalizzate (ad esempio politica, guide, ecc.). Queste pagine non appariranno automaticamente da nessuna parte, ma si può farvi riferimento nel piè di pagina, dalla pagina \"Chi siamo\" o da qualsiasi punto tramite il link di anteprima.",
-        "new_page": "Aggiungi pagina personalizzata"
+        "new_page": "Aggiungi pagina personalizzata",
+        "add_trusted_source_help": "Utilizzare una delle seguenti sintassi: <br/><ul><li>l'indirizzo web di un altro Gancio o di un software che supporta un Application Actor / <a href='https://codeberg.org/fediverse/fep/src/branch/main/fep/2677/fep-2677.md'>FEP-2677</a> (ad esempio <u>https://demo.gancio.org</u>)</li><li>un handle ActivityPub come <u>@gancio@mastodon.cisti.org</u></li><li>l'URL di un account come <u>https://instance.tld/actor</u>.</li></ul><br/>Gli eventi pubblicati o potenziati da queste fonti verranno importati.",
+        "plugins_description": "I plugin sono piccole porzioni di codice che forniscono funzionalità aggiuntive all'applicazione principale. Di solito sono scritti da sviluppatori esterni al progetto che sfruttano il <a href=\"https://gancio.org/dev/plugins\">sistema di plugin</a>, principalmente per inviare eventi ad altre piattaforme e canali.",
+        "custom_js_help": "Si può integrare del codice JavaScript che verrà caricato per ogni utente scrivendolo nell'area di testo qui sotto. Probabilmente è meglio prima leggere la <a href='https://gancio.org/usage/custom_js'>documentazione</a>.",
+        "delete_page_confirm": "Vuoi davvero rimuovere la pagina \"<strong>{title}</strong>\"?",
+        "receive_confirm_notification": "Ottieni l'email di conferma dell'utente/evento",
+        "calendar_first_day_of_week": "Primo giorno della settimana",
+        "calendar_first_day_of_week_description": "Selezionare il giorno della settimana che i calendari devono visualizzare per primo. Le selezioni predefinite sono basate sulle impostazioni del locale del client.",
+        "calendar_first_day_of_week_default": "Predefinito (locale del client)"
     },
     "auth": {
         "not_confirmed": "Non ancora confermato…",
@@ -407,7 +415,8 @@
         "required": "Campo {fieldName} necessario",
         "email": "Inserisci un'e-mail valida",
         "latitude": "Inserisci una latitudine valida (-90 < latitudine < 90)",
-        "longitude": "Inserisci una longitudine valida (-180 < longitudine < 180)"
+        "longitude": "Inserisci una longitudine valida (-180 < longitudine < 180)",
+        "url": "Fornire un URL valido (http:// o https://)"
     },
     "about": "\n  <p> <a href='https://gancio.org'> Gancio </a> è un'agenda condivisa per le comunità locali. </p>\n  ",
     "oauth": {
@@ -418,10 +427,10 @@
         }
     },
     "setup": {
-        "completed": "Setup completato",
-        "completed_description": "<p>Puoi entrare con le seguenti credenziali:<br/><br/>Utente: <b>{email}</b><br/>Password: <b>{password}<b/></p>",
-        "copy_password_dialog": "Sì, devi copiare la password!",
+        "completed": "Impostazione completata",
+        "completed_description": "<p>Si può entrare con le seguenti credenziali:<br/><br/>Utente: <b>{email}</b><br/>Password: <b>{password}<b/></p>",
+        "copy_password_dialog": "Sì, bisogna copiare la password!",
         "start": "Inizia",
-        "https_warning": "Stai visitando il setup da HTTP, ricorda di cambiare il baseurl nel config.json quando passerai ad HTTPS!"
+        "https_warning": "Si sta navigando in HTTP, ricordarsi di cambiare il baseurl nel config.json quando si passerà ad HTTPS!"
     }
 }
