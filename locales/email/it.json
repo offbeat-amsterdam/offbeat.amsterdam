@@ -29,7 +29,7 @@
     "report": {
         "subject": "Segnalazione evento [{{event.title}}]",
         "content_ADMIN": "Una persona con permessi di amministrazione ha commentato l'evento <strong>{{event.title}}</strong>:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>Apri moderazione</a>",
-        "content_ANON": "Una persona ha fatto rapporto sull'evento <strong>{{event.title}}</strong>:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>Apri la moderazione<a>",
+        "content_ANON": "Una persona ha fatto rapporto sull'evento <strong>{{event.title}}</strong>:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>Apri la moderazione</a>",
         "content_AUTHOR": "Chi ha inserito l'evento <strong>{{event.title}}</strong> ha scritto:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>Apri evento</a>"
     }
 }
