@@ -262,7 +262,7 @@
         "instance_locale_description": "Orrialdeak erabiltzailearen gogoko hizkuntzan bistaratzen dira. Batzuetan mezuak jende guztiari hizkuntza berean bistaratu beharra dago (adibidez, ActivityPub bidez argitaratzen dugunean edo eposta batzuetan). Kasu hauetan goian hautatutako hizkuntza erabiliko dugu.",
         "instance_place": "Instantziaren kokalekua adierazten du",
         "title_description": "Orrialdearen izenburuan, ICS jarioetan eta RSS-ak esportatzeko epostaren gaian erabiltzen da.",
-        "description_description": "Goiburuan agertzen da izenburutik gertu",
+        "description_description": "Goiburuan agertzen da izenburutik gertu · (HTML onartzen da)",
         "instance_name_help": "Jarraitu beharreko ActivityPub kontua",
         "enable_trusted_instances": "Gaitu instantzia fidagarriak",
         "trusted_instances_help": "Instantzia fidagarrien zerrenda goiburuan erakutsiko da",
@@ -340,7 +340,15 @@
         "edit_tag_help": "Etiketa alda dezakezu, berria jarriz edo lehendik dagoen batekin bat eginez. Lotutako {n} ekitaldiak ere aldatu egingo dira.",
         "tag_renamed": "\"{newTag}\" izen berria jarri zaio \"{oldTag}\" etiketari",
         "instance_removed": "Instantzia ezabatu egin da",
-        "delete_collection_confirm": "Ziur <u>{collection}</u> bilduma ezabatu nahi duzula?"
+        "delete_collection_confirm": "Ziur <u>{collection}</u> bilduma ezabatu nahi duzula?",
+        "enable_moderation": "Gaitu moderazioa",
+        "enable_report": "Gaitu jakinarazpen ekitaldia",
+        "trusted_sources_label": "Iturri federatu fidagarrietarako nabigazio-etiketa",
+        "trusted_sources_label_default": "Beste kokapenak",
+        "trusted_sources_label_help": "Etiketa lehenetsia 'Beste kokapenak' da",
+        "add_trusted_source": "Iturri federatu fidagarri bat gehitu",
+        "delete_trusted_source_confirm": "Ziur zaude iturri fidagarri hau ezabatu nahi duzula?",
+        "trusted_source_removed": "Iturri fidagarria kenduta"
     },
     "auth": {
         "not_confirmed": "Oraindik ez da berretsi…",
