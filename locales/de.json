@@ -278,7 +278,8 @@
         "calendar_first_day_of_week_default": "Standard (Benutzergebietsschema)",
         "calendar_first_day_of_week": "Erster Tag der Kalenderwoche",
         "calendar_first_day_of_week_description": "Wähle den Wochentag aus, den die Kalender als ersten Tag der Woche anzeigen sollen. Die Standardeinstellung richtet sich nach dem Gebietsschema des Benutzers.",
-        "receive_confirm_notification": "E-Mail-Bestätigung für Benutzer/Veranstaltung abrufen"
+        "receive_confirm_notification": "E-Mail-Bestätigung für Benutzer/Veranstaltung abrufen",
+        "smtp_password_description": "Lasse dieses Feld leer, wenn das Passwort nicht geändert werden soll"
     },
     "settings": {
         "update_confirm": "Willst du deine Änderung speichern?",
@@ -343,7 +344,7 @@
         "each_2w": "Jede zweite Woche",
         "ics": "ICS",
         "remove_recurrent_confirmation": "Bist du dir sicher, dass du diese wiederkehrende Veranstaltung entfernen möchtest?\nFrühere Veranstaltungen werden beibehalten, aber es werden keine zukünftigen Veranstaltungen mehr hinzugefügt.",
-        "anon_description": "Es ist möglich, eine Veranstaltung hinzufügen, ohne vorherige Registrierung oder Anmeldung. Die Veranstaltung wartet, bis sie von einer Person bestätigt wird.\nEs ist nicht möglich, ohne Anmeldung erstellte Veranstaltungen nachträglich zu verändern.<br/><br/>\nDu kannst dich stattdessen <a href='/login'>anmelden</a> oder <a href='/register'>registrieren</a>. Falls nicht, fahre fort. Wir schalten Deine Veranstaltung frei, sobald es uns möglich ist. ",
+        "anon_description": "Es ist möglich, eine Veranstaltung hinzuzufügen, ohne vorherige Registrierung oder Anmeldung. Die Veranstaltung wartet, bis sie von der Moderation bestätigt wurde.\nEs ist nicht möglich, ohne Benutzerkonto erstellte Veranstaltungen nachträglich zu ändern.<br/><br/>\nHierfür kann ein Konto <a href='/register'>registriert</a> oder damit <a href='/login'>angemeldet</a> werden. Falls nicht, fahre fort. Wir prüfen die Veranstaltung, sobald es uns möglich ist. ",
         "where_description": "Wo ist die Veranstaltung? Wenn der Ort noch nicht beschrieben wurde, kannst du ihn selbst eintragen.",
         "coordinates_search": "Suche nach Koordinaten",
         "coordinates_search_description": "Sie können den Ort anhand des Namens suchen oder das Koordinatenpaar einfügen.",
@@ -396,7 +397,8 @@
         "disable_author_confirm": "Bist Du dir sicher, dass dieser Autor deaktiviert werden soll?",
         "assign_to_user": "Jemandem zuweisen",
         "assign_to_user_description": "Du kannst einen anonym eingetragene Veranstaltung ein:e Benuter:in zuweisen. Dies erlaubt ihm/ihr, diese Veranstaltung zu ändern.",
-        "address_geocoded_disclaimer": "Falls du die <strong>Adresse</strong> oder die <strong>Hausnummer</strong> nicht in den Ergebnissen des Geo-Codings finden kannst, kannst du sie manuell in das Feld \"Adresse\" eintragen ohne die Koordinaten zu verlieren. Bedenke, dass das <a target=\"_blank\" href=\"https://www.openstreetmap.org/\">OpenStreetMap</a>-Projekt offen für Mitwirkung ist. Falls du Android nutzt, empfehlen wir <a target=\"_blank\" href=\"https://f-droid.org/en/packages/de.westnordost.streetcomplete/\">StreetComplete</a> "
+        "address_geocoded_disclaimer": "Falls du die <strong>Adresse</strong> oder die <strong>Hausnummer</strong> nicht in den Ergebnissen des Geo-Codings finden kannst, kannst du sie manuell in das Feld \"Adresse\" eintragen ohne die Koordinaten zu verlieren. Bedenke, dass das <a target=\"_blank\" href=\"https://www.openstreetmap.org/\">OpenStreetMap</a>-Projekt offen für Mitwirkung ist. Falls du Android nutzt, empfehlen wir <a target=\"_blank\" href=\"https://f-droid.org/en/packages/de.westnordost.streetcomplete/\">StreetComplete</a> ",
+        "anon_description_without_registration": "Hier kann eine Veranstaltung hinzugefügt werden. Es ist erforderlich, dass wir sie anschauen und prüfen, um eventuell nicht passende Veranstaltungen auszusortieren..\nEs wird nicht möglich sein, die Veranstaltung im Nachhinein zu ändern.<br/><br/>\nFahre fort, um die Veranstaltung einzutragen. Wir werden sie uns so bald wie möglich ansehen.."
     },
     "register": {
         "first_user": "Admin erstellt",

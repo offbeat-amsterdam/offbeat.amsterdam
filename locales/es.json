@@ -224,9 +224,9 @@
         "message_hint": "Podrías enviar un mensaje a otros administradores y, opcionalmente, a la persona autora del evento.",
         "assign_to_user": "Asignar al usuario",
         "assign_to_user_description": "Puede asignar un evento anónimo a un usuario. Esto permitirá al usuario seleccionado modificar el evento.",
-        "recurrent_1y_days": "{months} {days} todo año",
-        "recurrent_1y_ordinal": "Los {n} {days} en {months} todo año",
-        "each_year": "Todo año",
+        "recurrent_1y_days": "{months} {days} cada año",
+        "recurrent_1y_ordinal": "Los {n} {days} en {months} cada año",
+        "each_year": "Cada año",
         "anon_description_without_registration": "Puedes añadir un evento, pero tendrá que ser revisado para confirmar que es adecuado.\nNo será posible modificarlo una vez enviado.<br/><br/>\nContinua y sube tu evento, lo revisaremos lo antes posible."
     },
     "admin": {
