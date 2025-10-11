@@ -207,7 +207,7 @@
         "show_multidate": "data anitzeko ekitaldiak",
         "where_advanced_options": "Lekua - Aukera aurreratuak",
         "where_advanced_options_description": "Zehaztu hemen lekuaren ezaugarri gehigarriak",
-        "online_locations_help": "Esaterako bideokonferentzia baten URLa eta URL alternatiboa (gehienez 3)",
+        "online_locations_help": "Bideokonferentzia baten URLa edo RSVP URLa (gehienez 3)",
         "online_locations": "Online kokapenak",
         "online_locations_fallback_urls": "Esteka alternatiboak",
         "message_author_hint": "Idatzi mezu bat administratzaileei",
@@ -217,7 +217,10 @@
         "anon_description_without_registration": "Ekitaldi bat gehi dezakezu, baina berrikusi beharko da egokia dela baieztatzeko.\nEzin izango da aldatu bidali ondoren.<br/><br/>\nAurrera egin eta bidali zure ekitaldia, ahalik eta azkarren berrikusiko dugu.",
         "assign_to_user": "Esleitu erabiltzaileari",
         "each_year": "Urtero",
-        "message": "Mezua"
+        "message": "Mezua",
+        "recurrent_1y_days": "{months} {days} urtero",
+        "recurrent_1y_ordinal": "Urtero {n} {egun} {months}-etan",
+        "assign_to_user_description": "Ekitaldi anonimo bat eslei diezaiokezu erabiltzaile bati. Honek ahalbidetuko du hautatutako erabiltzaileak ekitaldia aldatzea."
     },
     "admin": {
         "place_description": "Lekua edo helbidea oker badago, alda dezakezu.<br/>Leku honekin lotutako iraganeko eta etorkizuneko ekitaldien helbidea aldatuko da.",
@@ -348,7 +351,12 @@
         "trusted_sources_label_help": "Etiketa lehenetsia 'Beste kokapenak' da",
         "add_trusted_source": "Iturri federatu fidagarri bat gehitu",
         "delete_trusted_source_confirm": "Ziur zaude iturri fidagarri hau ezabatu nahi duzula?",
-        "trusted_source_removed": "Iturri fidagarria kenduta"
+        "trusted_source_removed": "Iturri fidagarria kenduta",
+        "unconfirmed_events": "Berretsi gabeko gertaerak",
+        "custom_js": "Javascript kode pertsonalizatua",
+        "custom_css": "CSS estilo pertsonalizatua",
+        "default_fedi_hashtags": "Fediverse hashtag lehenetsiak",
+        "past_unconfirmed_events": "Iraganeko baieztatu gabeko gertaerak"
     },
     "auth": {
         "not_confirmed": "Oraindik ez da berretsi…",
@@ -391,7 +399,8 @@
         "email": "Sartu baliozko eposta bat",
         "required": "{fieldName} beharrezkoa da",
         "latitude": "Sartu baliozko latitude bat (-90 < latitudea < 90)",
-        "longitude": "Sartu baliozko longitudea bat (-180 < longitudea < 180)"
+        "longitude": "Sartu baliozko longitudea bat (-180 < longitudea < 180)",
+        "url": "Eman URL baliodun bat (http:// edo https://)"
     },
     "setup": {
         "start": "Hasi",
