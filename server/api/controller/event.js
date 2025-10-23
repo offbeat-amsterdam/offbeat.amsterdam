@@ -879,8 +879,12 @@ const eventController = {
       replacements.push(query)
       where[Op.or] =
         [
-          { title: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('title')), 'LIKE', '%' + query + '%') },
-          Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('name')), 'LIKE', '%' + query + '%'),
+          {
+            title: Sequelize.where(
+              Sequelize.fn('LOWER', Sequelize.col('title')), 'LIKE', Sequelize.fn('LOWER', `%${query}%`)),
+          },
+          Sequelize.where(
+            Sequelize.fn('LOWER', Sequelize.col('name')), 'LIKE', Sequelize.fn('LOWER', `%${query}%`)),
           Sequelize.fn('EXISTS', Sequelize.literal(`SELECT 1 FROM event_tags WHERE ${Col('event_tags.eventId')}=${Col('event.id')} AND LOWER(${Col('tagTag')}) = LOWER(?)`))
         ]
     }
