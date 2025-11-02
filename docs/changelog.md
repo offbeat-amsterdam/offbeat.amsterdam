@@ -7,6 +7,15 @@ nav_order: 10
 
 All notable changes to this project will be documented in this file.
 
+### [1.28.1](https://framagit.org/les/gancio/compare/v1.28.0...v1.28.1) (2025-11-02)
+
+
+### Bug Fixes
+
+* include discord and bluesky deps in production, ref [#627](https://framagit.org/les/gancio/issues/627) and [#620](https://framagit.org/les/gancio/issues/620) ([d36010e](https://framagit.org/les/gancio/commit/d36010ed95c6a9c66f1e3a3a35b79ce5c2f02fd8))
+* events: Make search case-insensitive (postgresql issue) [!115](https://framagit.org/les/gancio/-/merge_requests/115), fix [#526](https://framagit.org/les/gancio/-/issues/526)
+* tags: Make search case-insensitive (postgresql issue) [!116](https://framagit.org/les/gancio/-/merge_requests/116), fix [#629](https://framagit.org/les/gancio/-/issues/629)
+
 ## [1.28.0](https://framagit.org/les/gancio/compare/v1.27.0...v1.28.0) (2025-09-08)
 
 Thanks to valuable contributions, we have three new translations, two new plugins, a bridge to Discord (@freefall) and to Bluesky (@coegho) and many improvements to the feed plugin and various fixes (@NightTsarina). Thanks to everyone who contributed.
