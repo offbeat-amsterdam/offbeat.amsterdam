@@ -10,7 +10,7 @@ permalink: /
 
 A shared agenda for local communities.
 {: .fs-6 }
-Last release  **[1.28.0 - 8 Sept 2025](/changelog)**
+Last release  **[1.28.1 - 2 Nov 2025](/changelog)**
 
 {: .warning-title }
 > 2.0 is coming
