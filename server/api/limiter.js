@@ -10,6 +10,10 @@ const instanceApiRateLimiter = {
     max: 250, // Limit each IP to 150 requests per `window`
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+    skip: (request, response) => {
+      // Do not rate-limit authenticated users
+      return request.user && request.user.is_active
+    },
     handler: (request, response, next, options) => {
       log.warn(`DDOS protection api rate limiter: > 250req/minute/ip ${request.ip}`)
       return response.status(options.statusCode).send(options.message)    
