@@ -73,13 +73,9 @@ module.exports = {
     ],
     routes: async () => {
       if (config.status === 'READY') {
-        try {
-          const Event = require('./server/api/models/event')
-          const events = await Event.findAll({ where: { is_visible: true } })
-          return events.map(e => `/event/${e.slug}`)
-        } catch (e) {
-          return []
-        }
+        const { Event, Tag, Place } = require('./server/api/models/models')
+        const events = await Event.findAll({ where: { is_visible: true } })
+        return events.map(e => `/event/${e.slug}`)
       } else {
         return []
       }
