@@ -20,7 +20,7 @@ import { mapState } from 'vuex'
         return { page }
       } catch (e) {
         console.error(e)
-        error({ statusCode: 404, message: 'Page not found' })
+        error(e)
       }
     },
     data () {

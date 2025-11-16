@@ -43,7 +43,7 @@ export default {
       return { events, collection }
     } catch (e) {
       console.error(e)
-      error({ statusCode: 400, message: 'Error!' })
+      error(e)
     }
   }
 

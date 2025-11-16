@@ -119,7 +119,7 @@ export default {
           return {}
         }
       } catch (e) {
-        error({ statusCode: 404, message: 'Event not found!' })
+        error(e)
         return {}
       }
 

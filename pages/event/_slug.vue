@@ -153,7 +153,7 @@ export default {
       const event = await $axios.$get(`/event/detail/${params.slug}`)
       return { event }
     } catch (e) {
-      error({ statusCode: 404, message: 'Event not found' })
+      error(e)
     }
   },
   data ({$route}) {
