@@ -1,7 +1,7 @@
 <template lang='pug'>
 v-container.pa-2.text-center
   v-alert(v-if="error.statusCode === 404" type='error' :icon='mdiAlert') ¯\_(ツ)_/¯ {{error.message}}
-  v-alert.mb-2(v-else type='error' :icon='mdiAlert') An error occurred: {{error.message}}
+  v-alert.mb-2(v-else type='error' :icon='mdiAlert') {{error.message}} (HTTP status: {{error.statusCode}})
   nuxt-link(to='/')
     v-btn(outlined color='primary') Back to home
 </template>

@@ -42,8 +42,10 @@ export default {
       const events = await $axios.$get(`/collections/${encodeURIComponent(collection)}`)
       return { events, collection }
     } catch (e) {
-      console.error(e)
-      error(e)
+      error({
+        statusCode: e?.response?.status ?? 500,
+        message: e?.response?.data?.message ?? e?.response?.data ?? e?.message ?? 'Request failed'
+      })
     }
   }
 
