@@ -73,11 +73,11 @@ module.exports = {
     ],
     routes: async () => {
       if (config.status === 'READY') {
-        const { Event, Tag, Place } = require('./server/api/models/models')
+        const { Event } = require('./server/api/models/models')
         const events = await Event.findAll({ where: { is_visible: true } })
         return events.map(e => `/event/${e.slug}`)
       } else {
-        return []
+        throw new Error('Server not ready')
       }
     }
   },
