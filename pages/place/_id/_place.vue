@@ -64,7 +64,10 @@ export default {
       const { events, pastEvents, place } = await $axios.$get(`/place/${params.id}`)
       return { events, pastEvents, place }
     } catch (e) {
-      error({ statusCode: 404, message: 'Place not found!' })
+      error({
+        statusCode: e?.response?.status ?? 500,
+        message: e?.response?.data?.message ?? e?.response?.data ?? e?.message ?? 'Request failed'
+      })
     }
   }
 }

@@ -14,13 +14,12 @@ import { mapState } from 'vuex'
     async asyncData ({ params, error, $axios }) {
       try {
         const page = await $axios.$get(`/pages/${params.slug}`)
-        if (!page) {
-          error({ statusCode: 404, message: 'Page not found' })
-        }
         return { page }
       } catch (e) {
-        console.error(e)
-        error({ statusCode: 404, message: 'Page not found' })
+        error({
+          statusCode: e?.response?.status ?? 500,
+          message: e?.response?.data?.message ?? e?.response?.data ?? e?.message ?? 'Request failed'
+        })
       }
     },
     data () {

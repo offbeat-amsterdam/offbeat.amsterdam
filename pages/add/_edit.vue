@@ -116,11 +116,12 @@ export default {
         event = await $axios.$get('/event/detail/' + data.id)
         if (!$auth.user.is_editor && !$auth.user.is_admin && !event.isMine) {
           error({ statusCode: 401, message: 'Not allowed' })
-          return {}
         }
       } catch (e) {
-        error({ statusCode: 404, message: 'Event not found!' })
-        return {}
+        error({
+          statusCode: e?.response?.status ?? 500,
+          message: e?.response?.data?.message ?? e?.response?.data ?? e?.message ?? 'Request failed'
+        })
       }
 
       data.event.place.name = event.place.name
