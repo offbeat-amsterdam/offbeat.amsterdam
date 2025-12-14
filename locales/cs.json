@@ -280,7 +280,7 @@
     "export": {
         "email_description": "Můžeš dostávat události které tě zajímají na e-mail.",
         "feed_description": "Chcete-li sledovat nové události z počítače nebo mobilního telefonu bez nutnosti pravidelně chodit na tento web, použijte RSS. </p>\n\n<p> Se službou RSS můžete použávat speciální aplikaci pro příjem novinek z webů, které vás zajímají. Jedná se o skvělý způsob, jak rychle sledovat mnoho stránek bez nutnosti vytvářet si na nich účet </p>\n\n<li> Pokud máte Android, doporučujeme <a href=\"https://f-droid.org/cs/packages/net.frju.flym/\">Flym</a> nebo Feeder </li>\n<li> Pro iPhone / iPad můžete použít <a href=\"https://itunes.apple.com/cz/app/feeds4u/id1038456442442?mt=8\">Feed4U</a> </li> </li>\n<li> Pro počítač / notebook doporučujeme Feedbro, dá se nainstalovat do <a href=\"https://addons.mozilla.org/cs/firefox/addon/feedbroreader/\">Firefoxu</a> nebo <a href=\"https://chrome.google.com/webstore/detail/feedbro/mefgmmbdailogpfhfblcnnjfmnmdfa\">Chromu</a>. </li>\n<br/>\nPřidejte si tento odkaz do své RSS čtečky a zůstaňte v obraze.",
-        "intro": "Na rozdíl od asociálních platforem, které dělají vše pro to, aby si udržely uživatele a jejich data, my věříme, že informace musí být svobodné, stejně jako lidé. Proto můžete být informováni o událostech i bez nutnosti chodit na tuto stránku.",
+        "intro": "Na rozdíl od asociálních platforem, které dělají vše pro to, aby si udržely uživatele a jejich data, my věříme, že informace musejí být svobodné, stejně jako lidé. Proto můžete být informováni o událostech i bez nutnosti chodit na tuto stránku.",
         "list_description": "Pokud máte vlastní webovou stránku a chcete sdílet seznam událostí, použijte tento kód",
         "ical_description": "Počítače a telefony jsou obvykle vybaveny aplikací kalendáře, která umožňuje připojení vzdáleného kalendáře.",
         "insert_your_address": "Vlož svoji e-mailovou adresu",
@@ -375,7 +375,7 @@
         "not_registered": "Nejste zaregistrováni?",
         "description": "Po přihlášení můžete přidávat nové události.",
         "ok": "Úspěšně přihlášeni",
-        "forgot_password": "Zapomenuté heslo?",
+        "forgot_password": "Zapomněli jste heslo?",
         "check_email": "Zkontrolujte svou schránku a spam.",
         "error": "Přihlášení se nezdařilo. Zkontrolujte zadané údaje."
     },

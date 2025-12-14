@@ -13,10 +13,23 @@
     },
     "confirm": {
         "subject": "Du kan nå begynne publiseringen av hendelser",
-        "content": "Hei, din konto på <a href='{{{config.baseurl}}}'>{{config.title}}</a> har blitt bekreftet.\nSkriv til oss på {{config.admin_email}} for info."
+        "content": "Hei, din konto på <a href='{{{config.baseurl}}}'>{{config.title}}</a> har blitt bekreftet. Skriv til oss på {{config.admin_email}} for info."
     },
     "register": {
         "content": "Registreringsforespørsel mottatt. Den vil bekreftes så snart som mulig.",
         "subject": "Registreringsforespørsel mottatt"
+    },
+    "event_confirm": {
+        "content": "Du kan bekrefte denne hendelsen på <a href='{{{url}}}'>denne siden</a>"
+    },
+    "test": {
+        "subject": "Din SMTP konfigurasjon virker",
+        "content": "Dette er en test epost, hvis du leser dette virker din konfigurasjon."
+    },
+    "report": {
+        "subject": "Hendelse moderering [{{event.title}}]",
+        "content_ADMIN": "En administrator kommenterte på hendelsen <strong>{{event.title}}</strong>:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>Åpne redigering</a>",
+        "content_ANON": "En besøker har rapportert hendelsen <strong>{{event.title}}</strong>:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>Åpne redigeringen</a>",
+        "content_AUTHOR": "Forfatteren bak denne hendelsen <strong>{{event.title}}</strong> skrev:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>Åpne redigering</a>"
     }
 }

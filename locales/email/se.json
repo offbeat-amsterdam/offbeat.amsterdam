@@ -1,0 +1,35 @@
+{
+    "register": {
+        "subject": "Registrerenohcan lea boahtán",
+        "content": "Mii oaččuimet registrerenohcamuša. Mii duođaštit dan nu johtilit go vejolaš."
+    },
+    "confirm": {
+        "subject": "Dál sáhtát almmuhit dáhpáhusaid",
+        "content": "Bures, du konto <a href='{{{config.baseurl}}}'>{{config.title}}</a> lea duođaštuvvon. Čále midjiide {{config.admin_email}} jus dárbbašat eambo dieđuid."
+    },
+    "user_confirm": {
+        "subject": "Dál sáhtát almmuhit dáhpáhusaid",
+        "content": "Bures, du konto <a href='{{{config.baseurl}}}'>{{config.title}}</a> lea ráhkaduvvon. <a href='{{{config.baseurl}}}/user_confirm/{{user.recover_code}}'>Duođaš dan ja vállje beassansáni.</a>."
+    },
+    "recover": {
+        "subject": "Beassansátni máhcaheapmi",
+        "content": "Bures, don leat bivdán beassansáni máhcaheami {{config.title}}:s. <a href='{{{config.baseurl}}}/recover/{{user.recover_code}}'>Deaddilat dáppe</a> duođaštit."
+    },
+    "admin_register": {
+        "subject": "Ođđa registreren",
+        "content": "{{user.email}} lea bivdán registrerema {{config.title}}: <br/><pre>{{user.description}}</pre><br/> Duođaš dan <a href='{{{config.baseurl}}}/admin'>dás</a>."
+    },
+    "event_confirm": {
+        "content": "Sáhtát duođaštit dán dáhpáhusa <a href='{{{url}}}'>dán siiddus</a>"
+    },
+    "test": {
+        "subject": "Du SMTP-konfigurašuvdna doaibmá",
+        "content": "Dát lea geahččalan-e-poasta, jus don logat dán de du konfigurašuvdna doaibmá."
+    },
+    "report": {
+        "subject": "Dáhpáhusa mudden [{{event.title}}]",
+        "content_ADMIN": "Admin kommenterii dáhpáhusa <strong>{{event.title}}</strong>:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>Raba muddema</a>",
+        "content_ANON": "Geavaheaddji dieđihii dáhpáhusa <strong>{{event.title}}</strong>:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>Raba muddema</a>",
+        "content_AUTHOR": "Dáhpáhusa čálli <strong>{{event.title}}</strong> čálii:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>Raba muddema</a>"
+    }
+}
