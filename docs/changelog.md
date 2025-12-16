@@ -7,6 +7,17 @@ nav_order: 10
 
 All notable changes to this project will be documented in this file.
 
+### [1.28.2](https://framagit.org/les/gancio/compare/v1.28.1...v1.28.2) (2025-12-15)
+
+
+### Bug Fixes
+
+* avoid sitemap caching during startup ([22e9b6d](https://framagit.org/les/gancio/commit/22e9b6d454af98a484d9bf18c6b8689f6e1cff63))
+* dynamic routes in sitemap ([24af478](https://framagit.org/les/gancio/commit/24af4788fdb687f511a7fdea2de07b1fc8cd911b)), closes [#633](https://framagit.org/les/gancio/issues/633)
+* propagate errors from API calls to user ([7960d90](https://framagit.org/les/gancio/commit/7960d9057a744cc1017abda6e20be0967ead0827)), closes [#634](https://framagit.org/les/gancio/issues/634)
+* propagate errors from API II ([bb0547d](https://framagit.org/les/gancio/commit/bb0547d0020484037507aba938d6becb6053d8b0))
+
+
 ### [1.28.1](https://framagit.org/les/gancio/compare/v1.28.0...v1.28.1) (2025-11-02)
 
 
