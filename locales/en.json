@@ -179,7 +179,7 @@
         "only_future": "only upcoming events",
         "recurrent_description": "Choose frequency and select days",
         "multidate_description": "Is it a festival? Choose when it starts and ends",
-        "multidate": "More days",
+        "multidate": "Multiple days",
         "normal": "Normal",
         "normal_description": "Choose the day.",
         "recurrent_1w_days": "Each {days}",
