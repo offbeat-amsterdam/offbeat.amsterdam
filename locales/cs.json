@@ -334,7 +334,7 @@
         "each_week": "Každý týden",
         "what_description": "Název",
         "only_future": "pouze budoucí události",
-        "multidate": "Více dní",
+        "multidate": "Několik dní",
         "description_description": "Popis",
         "recurrent": "Pravidelné",
         "remove_recurrent_confirmation": "Přejete si odstranit tuto pravidelnou událost?\nMinulé události budou zachovány, nebudou ale vytvořeny žádné budoucí.",
