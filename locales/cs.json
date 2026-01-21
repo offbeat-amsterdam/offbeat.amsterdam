@@ -1,7 +1,7 @@
 {
     "admin": {
         "announcement_remove_ok": "Oznámení odebráno",
-        "description_description": "Zobrazuje se v záhlaví stránky vedle názvu (je podporováno HTML)",
+        "description_description": "Text popisu, který se zobrazuje v záhlaví stránky pod názvem (je podporováno HTML)",
         "config_plugin": "Nastavení doplňků",
         "delete_announcement_confirm": "Opravdu chcete odebrat toto oznámení?",
         "header_image": "Úvodní obrázek",
