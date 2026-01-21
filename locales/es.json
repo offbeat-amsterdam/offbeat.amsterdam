@@ -274,7 +274,7 @@
         "instance_locale_description": "El idioma utilizado para mostrar las páginas es el idioma preferido por el usuario. Sin embargo, en algunos casos tenemos que mostrar los mensajes para todos de la misma manera (por ejemplo, cuando publicamos a través de ActivityPub o cuando enviamos algunos correos electrónicos). En estos casos utilizaremos el idioma seleccionado anteriormente.",
         "instance_place": "Lugar indicativo de esta instancia",
         "title_description": "Se utiliza en el título de la página, en la línea de asunto del correo electrónico, en la exportación de feeds y ics.",
-        "description_description": "Aparece en el encabezado junto al título (se puede usar HTML)",
+        "description_description": "Texto que aparece en el encabezado bajo el título (acepta HTML)",
         "instance_name_help": "Nombre de la cuenta de ActivityPub a seguir: {ap_handler} (por favor, revisa esto con cuidado)",
         "enable_trusted_instances": "Activar los nodos de confianza",
         "trusted_instances_help": "La lista de nodos de confianza se mostrará en la cabecera",
