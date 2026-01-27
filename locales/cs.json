@@ -349,7 +349,7 @@
         "tag_description": "Štítek",
         "saved": "Událost uložena",
         "assign_to_user": "Přiřadit k uživateli",
-        "assign_to_user_description": "Anonymní událost můžete přiřadit k uživateli. Tím umožníte zvolenému uživateli událost upravovat.",
+        "assign_to_user_description": "Anonymní událost můžete přiřadit k jakémukoli uživateli. Tím umožníte zvolenému uživateli událost upravovat.",
         "message": "Zpráva",
         "message_hint": "Můžete poslat zprávu ostatním administrátorům a případně osobě, která je autorem události.",
         "message_author_hint": "Napsat zprávu administrátorům",
