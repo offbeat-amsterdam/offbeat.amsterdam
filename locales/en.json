@@ -155,7 +155,7 @@
         "anon_description": "You can add an event without registering or logging in, but will have to wait for someone to read it,\nconfirming that it is a suitable event. It will not be possible to modify it.<br/><br/>\nYou can instead <a href='/login'>log in</a> or <a href='/register'>register</a>. Otherwise go ahead and submit your event, we'll review it as soon as possible. ",
         "anon_description_without_registration": "You can add an event, but it will need to be reviewed to confirm that it’s a suitable event.\nIt won’t be possible to modify it after submission.<br/><br/>\nGo ahead and submit your event, we'll review it as soon as possible.",
         "assign_to_user": "Assign to user",
-        "assign_to_user_description": "You can assign an anon event to an user. This will allow the selected user to modify the event.",
+        "assign_to_user_description": "You can assign an anonymous event to any user. This will allow the selected user to modify the event.",
         "same_day": "on same day",
         "what_description": "Title",
         "description_description": "Description",
