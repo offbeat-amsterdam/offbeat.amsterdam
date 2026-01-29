@@ -214,7 +214,7 @@
         "disable_author_confirm": "Tes certeza de querer desactivar a creadora de este evento?",
         "message_hint": "Pódeslle enviar unha mensaxe a outras Admin e optativamente tamén á persoa creadora do evento.",
         "assign_to_user": "Asignar á usuaria",
-        "assign_to_user_description": "Podes asignar un evento anónimo a unha usuaria. Isto permitirá que a usuaria seleccionada poida modificar o evento.",
+        "assign_to_user_description": "Podes asignar un evento anónimo a calquera usuaria. Isto permitirá que a usuaria seleccionada poida modificar o evento.",
         "recurrent_1y_days": "{months} {days} cada ano",
         "recurrent_1y_ordinal": "O {n} {days} en {months} cada ano",
         "each_year": "Cada ano",
