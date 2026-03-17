@@ -8,7 +8,11 @@ parent: Install
 
 ## Backup
 
-The following commands should be valid for every setup (docker/debian/sqlite/postgres).
+The following commands should be valid for every setup if you did not changed default configuration.
+
+> error "Be careful"
+> Backup are critical, make sure to test your backup and restore process before relying on it.
+
 
 1. Move to gancio path
 ```bash
@@ -20,7 +24,12 @@ cd /opt/gancio/ # or where your installation is
 sudo -u postgres pg_dump -Fc gancio > gancio.dump
 ```
 
-1. Archive database, configuration, custom user locales, logs, images and thumbnails
+1. Backup MariaDB (only required for non-docker MariaDB installation)
+```bash
+sudo mariadb-dump -u root -p gancio > gancio.dump
+```
+
+1. Archive database, configuration, custom user locales, logs, custom plugins, images and thumbnails
 ```bash
 sudo tar -czf gancio-$(date +%Y-%m-%d-%H%M%S)-backup.tgz  \
   $(ls -d config.json uploads user_locale gancio.sqlite db.sqlite gancio.dump postgres data db logs 2> /dev/null)
@@ -47,4 +56,10 @@ tar xvf gancio-*-backup.tgz
 ```
 sudo -u postgres createdb gancio
 sudo -u postgres pg_restore -d gancio gancio.dump
+```
+
+1. Restore MariaDB database (only required for non-docker MariaDB installation)
+```bash
+sudo mariadb -u root -p -e "CREATE DATABASE gancio"
+sudo mariadb -u root -p gancio < gancio.dump
 ```
