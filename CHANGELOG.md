@@ -1,8 +1,13 @@
 # 0.6.8 (26-04-2026)
 ## Fixes
-- Fix memory leak: `express.static()` was being instantiated on every request for logo, favicon, fallback image and 
-header image -- now cached per path and recreated only when settings change
-- Fix `express-rate-limit` error: server middleware is now eagerly loaded at startup instead of lazily on first request
+- Fix memory leaks
+  - `express.static()` was instantiated on every request for logo, favicon, fallback image and header image
+  - `rateLimit()` was called inside the request handler creating a new instance per API call -- rate limiting was also 
+    effectively broken as each request started with a fresh counter
+- Fix `express-rate-limit` errors
+  - set `trust proxy` to `1` instead of `true` -- `true` trusts all `X-Forwarded-For` headers, letting any client spoof
+    their IP and bypass rate limiting
+  - eagerly load server middleware at startup so rate limiters initialise outside request context
 
 ## Changes
 - Align with Gancio `1.28.2`

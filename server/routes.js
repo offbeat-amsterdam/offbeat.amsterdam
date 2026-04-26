@@ -25,7 +25,7 @@ async function main () {
   // const promBundle = require('express-prom-bundle')
   // const metricsMiddleware = promBundle({ includeMethod: true })
 
-  app.enable('trust proxy')
+  app.set('trust proxy', 1)
 
   // do not handle all routes on setup
   if (config.status === 'READY') {

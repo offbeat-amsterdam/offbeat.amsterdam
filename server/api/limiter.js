@@ -1,11 +1,14 @@
 const rateLimit = require('express-rate-limit');
 const log = require('../log');
 
-const createRateLimiter = (options) => (req, res, next) => {
-  if (process.env.NODE_ENV !== 'production' || (req.user && req.user.is_admin && req.user.is_active)) {
-    return next(); // Disable rate limit for admins or in non-production mode
+const createRateLimiter = (options) => {
+  const limiter = rateLimit(options)
+  return (req, res, next) => {
+    if (process.env.NODE_ENV !== 'production' || (req.user && req.user.is_admin && req.user.is_active)) {
+      return next()
+    }
+    return limiter(req, res, next)
   }
-  return rateLimit(options)(req, res, next);
 };
 
 const instanceApiRateLimiter = {
