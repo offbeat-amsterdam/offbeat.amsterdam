@@ -53,6 +53,42 @@ div.v-application--wrap {
 } 
 ```
 
+### Remove search bar
+```css
+#navsearch .v-input {
+  display: none;
+}
+```
+
+### Change aspect ration of the images
+```css
+.img.thumb img {
+  aspect-ratio: 0.7 !important;
+  max-height: none !important;
+}
+```
+
+If the images are too big, you can change the max-width:
+
+```css
+#events .event {
+  max-width: 300px !important;
+}
+```
+
+
+### Round edges to the event cards
+
+```css
+.theme--light .event {
+    border-radius:10pt;
+}
+.theme--dark .event {
+    border-radius:10pt;
+}
+```
+
 > info "References"
 > [#413](https://framagit.org/les/gancio/-/issues/413)
 > [#451](https://framagit.org/les/gancio/-/issues/451)
+> [#536](https://framagit.org/les/gancio/-/issues/536)

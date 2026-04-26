@@ -24,6 +24,8 @@ nav_order: 7
 - [rebaltela.org](https://rebaltela.org) (Verona, Italy)
 - [roma.convoca.la](https://roma.convoca.la) (Roma, Italy)
 - [scruscio.org](https://scruscio.org/) (Palermo, Italy)
+- [gancio.invegendo.org](https://gancio.invegendo.org) (Genova, Italy)
+- [sciamsciam.org](https://sciamsciam.org) (Basilicata, Italy)
 - [bcn.convoca.la](https://bcn.convoca.la/) (Barcelona)
 - [mad.convoca.la](https://mad.convoca.la/) (Madrid)
 - [eventosmurcia.org](https://eventosmurcia.org/) (Murcia, Spain)
@@ -32,10 +34,13 @@ nav_order: 7
 - [lamanifestive.fr](https://lamanifestive.fr/) (Social and cultural events of south-alsace, France)
 - [agenda.rouen-luttes.org](https://agenda.rouen-luttes.org/) (Rouen)
 - [www.not-quite-there-yet.net](https://www.not-quite-there-yet.net/) (Toulouse)
+- [https://villemorte.fr/agenda-2-0/](https://villemorte.fr/agenda-2-0/) (Lyon, France)
 - [events.rheinmain.social](https://events.rheinmain.social/) (Rheinmain)
 - [calndr.de](https://calndr.de/)
 - [bonn.jetzt](https://bonn.jetzt/) (Digital-Events aus Bonn, Rhein-Sieg und der Region)
+- [gancio.blablalinux.be](https://gancio.blablalinux.be/)
 - [flyinghigh-bonn.org](https://flyinghigh-bonn.org/) (resistant and subcultural events in and around Bonn.)
+- [gancio.graz.events](https://gancio.graz.events/) (Verein zur Förderung ethischer Digitalkultur)
 - [quest.livellosegreto.it](https://quest.livellosegreto.it/)
 - [agenda.lanbroa.eus](https://agenda.lanbroa.eus/) (Lanbroa)
 - [mallorca.convoca.la](https://mallorca.convoca.la/) (Mallorca)
@@ -57,8 +62,12 @@ nav_order: 7
 - [offbeat.amsterdam](https://offbeat.amsterdam) (Amsterdam)
 - [koledar.kompot.si](https://koledar.kompot.si) (Ljubljana, Slovenia)
 - [vagancio.partidopirata.com.ar](https://vagancio.partidopirata.com.ar)(Buenos Aires, Argentina)
+- [kinkcalendar.site](https://kinkcalendar.site/) (kink, BDSM and fetish community)
+- [antroposofiachile.net](https://gancio.antroposofiachile.net) (Red de Eventos de Antroposofía en Chile)
+- [pelumpen.com](https://eventos.pelumpen.com) (Red de eventos del Valle de Pelumpén; Limache y Olmué, V Región, Chile)
+- [calendar.clonmel.town](https://calendar.clonmel.town) (What's On Clonmel; Local events guide, Ireland)
 
 
-You can also check federated instances on [fedidb.org](https://fedidb.org/software/gancio) or on [fediverse.observer](https://gancio.fediverse.observer/list)
+You can also check federated instances on [fedilist.com](https://fedilist.com/instance?q=&ip=&software=gancio&registrations=&onion=), [fedidb.org](https://fedidb.org/software/gancio), [fediverse.observer](https://gancio.fediverse.observer/list)
 
 <small>Do you want your instance to appear here or to be removed? [Write us]({% link contact.md %}).</small>

@@ -18,8 +18,10 @@ export default {
       }
       return { announcement }
     } catch (e) {
-      console.error(e)
-      error({ statusCode: 404, message: 'Announcement not found' })
+      error({
+        statusCode: e?.response?.status ?? 500,
+        message: e?.response?.data?.message ?? e?.response?.data ?? e?.message ?? 'Request failed'
+      })
     }
   },
   data () {

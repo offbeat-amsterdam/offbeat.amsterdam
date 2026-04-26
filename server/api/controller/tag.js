@@ -76,7 +76,10 @@ module.exports = {
     const search = req?.query?.search
     let where = { }
     if (search) {
-      where = { tag: { [Op.like]: `%${search}%` } }
+      where = {
+        tag: Sequelize.where(
+          Sequelize.fn('LOWER', Sequelize.col('tag')), 'LIKE', Sequelize.fn('LOWER', `%${search}%`)),
+      }
     }
     const tags = await Tag.findAll({
       order: [[fn('COUNT', col('tag.tag')), 'DESC']],

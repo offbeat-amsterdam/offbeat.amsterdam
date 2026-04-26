@@ -5,6 +5,7 @@ const dayjs = require('dayjs')
 const { Event, User, Tag, Place, APUser, Resource, EventNotification } = require('../api/models/models')
 const tagController = require('../api/controller/tag')
 const Helpers = require('./helpers')
+const { parseAPLocation } = require('./places')
 
 module.exports = {
   
@@ -92,7 +93,7 @@ module.exports = {
       log.error('[FEDI] Event %s updated not from the owner! %s != %s', ap_id, res.locals.fedi_user.ap_id, event?.ap_user?.ap_id)
     }
 
-    const [ place, online_locations ] = await Place.parseAPEvent(APEvent)
+    const [ place, online_locations ] = await parseAPLocation(APEvent)
 
     let media = []
     const image_url = APEvent?.attachment?.find(a => a?.mediaType.includes('image') && a.url)?.url

@@ -261,7 +261,13 @@ const Helpers = {
         throw new BadRequestError(`${missing_field} required`)
       }
 
-      // check if this event is new
+      // check if this event is in the past
+      if (dayjs(APEvent.startTime).isBefore(dayjs())) {
+        log.warn(`[FEDI] Event startTime is in the past: ${APEvent.startTime}`)
+        throw new BadRequestError('Event startTime is in the past')
+      }
+
+      // check if this event is already added
       const ap_id = APEvent.id
       const exists = await Event.findOne({ where: { ap_id }})
       if (exists) {

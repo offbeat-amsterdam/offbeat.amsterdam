@@ -12,7 +12,7 @@ v-card
         persistent-hint
         :rules="$validators.email")
 
-      v-switch(v-model='smtp.sendmail'
+      v-switch(v-model='smtp.sendmail' inset
         :label="$t('admin.smtp_use_sendmail')")
 
       v-row(v-if='!smtp.sendmail')
@@ -26,37 +26,30 @@ v-card
             :rules="[$validators.required('admin.smtp_port')]")
 
         v-col(cols=12)
-          v-switch(v-model='smtp.secure'
+          v-switch(v-model='smtp.secure' inset
             :label="$t('admin.smtp_secure')")
-        
+
         v-col(md=6)
           v-text-field(v-model='smtp.auth.user'
             :label="$t('common.user')")
 
         v-col(md=6)
           v-text-field(v-model='smtp.auth.pass'
+            persistent-hint
+            :hint="$t('admin.smtp_password_description')"
             :label="$t('common.password')"
             type='password')
 
   v-card-actions
     v-spacer
-    v-btn(color='primary' @click='testSMTP' :loading='loading' :disabled='loading || !isValid' outlined) {{$t('admin.smtp_test_button')}}
-    v-btn(color='warning' @click="done" outlined) {{$t("common.ok")}}
+    v-btn(color='primary' @click='done(true)' :loading='loading' :disabled='loading || !isValid' outlined) {{$t('admin.smtp_test_button')}}
+    v-btn(color='warning' @click="done(false)" outlined) {{$t("common.ok")}}
 
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'
 export default {
   data ({ $store }) {
-    // if ($store.state.settings.smtp) {
-    //   smtp.host = $store.state.settings.smtp.host
-    //   if ($store.state.settings.smtp.auth) {
-    //     smtp.auth.user = $store.state.settings.smtp.auth.user
-    //     smtp.auth.pass = $store.state.settings.smtp.auth.pass
-    //   } else {
-    //     smtp.auth = {}
-    //   }
-    // }
     return {
       isValid: false,
       loading: false,
@@ -71,54 +64,53 @@ export default {
     }
   },
   computed: mapState(['settings']),
-  watch: {
-    'smtp.secure' (value) {
-      console.error(this.smtp.port)
-      if ([465, 587].includes(this.smtp.port) || !this.smtp.port) {
-        this.smtp.port = value ? 465 : 587
-      }
-    }
-  },
   methods: {
     ...mapActions(['setSetting']),
-    async testSMTP () {
-      this.loading = true
-      try {
-        const smtp = JSON.parse(JSON.stringify(this.smtp))
-        if (!smtp.auth.user) {
-          delete smtp.auth
-        }
-        if (!smtp.secure) {
-          smtp.secure = false
-          smtp.ignoreTLS = true
-        }        
-        // await this.setSetting({ key: 'smtp', value: JSON.parse(JSON.stringify(this.smtp)) })
-        await this.$axios.$post('/settings/smtp', { smtp })
-        this.$root.$message(this.$t('admin.smtp_test_success', { admin_email: this.admin_email }), { color: 'success' })
-      } catch (e) {
-        console.error(e)
-        this.$root.$message(e.response && e.response.data, { color: 'error' })
-      }
-      this.loading = false
-    },
     save (key, value) {
       if (this.settings[key] !== value) {
         this.setSetting({ key, value })
       }
-    },    
-    done () {
+    },
+    async done (testing) {
       const smtp = JSON.parse(JSON.stringify(this.smtp))
       if (!smtp.auth.user) {
         delete smtp.auth
       }
-      if (!smtp.secure) {
-        smtp.secure = false
-        smtp.ignoreTLS = true
-      }
-      this.setSetting({ key: 'smtp', value: smtp })
-      this.$emit('close')
-    },
 
+      // override past `ignoreTLS` smtp setting
+      smtp.ignoreTLS = false
+
+      smtp.port = Number(smtp.port)
+      // force encryption based on selected port, see https://framagit.org/les/gancio/-/issues/192
+      if (smtp.secure) {
+        if (smtp.port === 465) {
+          smtp.secure = true
+          smtp.requireTLS = false
+        } else {
+          smtp.secure = false
+          smtp.requireTLS = true
+        }
+      } else {
+        // use TLS immediately for port 465
+        // this is recommended in nodemailer documentation
+        smtp.secure = smtp.port === 465
+        smtp.requireTLS = false
+      }
+
+      if (testing) {
+        this.loading = true
+        try {
+          await this.$axios.$post('/settings/test_smtp', { smtp })
+          this.$root.$message(this.$t('admin.smtp_test_success', { admin_email: this.admin_email }), { color: 'success' })
+        } catch (e) {
+          this.$root.$message(e.response && e.response.data, { color: 'error' })
+        }
+        this.loading = false
+      } else {
+        this.setSetting({ key: 'smtp', value: smtp })
+        this.$emit('close')
+      }
+    }
   }
 }
 </script>

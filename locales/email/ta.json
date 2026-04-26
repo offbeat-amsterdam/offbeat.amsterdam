@@ -5,7 +5,7 @@
     },
     "confirm": {
         "subject": "நீங்கள் இப்போது நிகழ்வுகளை வெளியிடத் தொடங்கலாம்",
-        "content": "ஆய், உங்கள் கணக்கு <a href = '{{{config.baseurl}}}'> {{config.title}} </a> உறுதிப்படுத்தப்பட்டுள்ளது. எந்தவொரு தகவலுக்கும் {{config.admin_email} at இல் எங்களுக்கு எழுதுங்கள்."
+        "content": "ஆய், உங்கள் கணக்கு <a href='{{{config.baseurl}}}'>{{config.title}} </a> உறுதிப்படுத்தப்பட்டுள்ளது. எந்தவொரு தகவலுக்கும் {{config.admin_email}} இல் எங்களுக்கு எழுதுங்கள்."
     },
     "user_confirm": {
         "subject": "நீங்கள் இப்போது நிகழ்வுகளை வெளியிடத் தொடங்கலாம்",
@@ -13,11 +13,11 @@
     },
     "recover": {
         "subject": "கடவுச்சொல் மீட்பு",
-        "content": "ஆய், {{config.title} on இல் கடவுச்சொல் மீட்டெடுப்பைக் கோரினீர்கள். <a href = '{{{config.title}}}/மீட்டெடு/{{config.baseurl}}'> உறுதிப்படுத்த இங்கே சொடுக்கு செய்க </a>."
+        "content": "வணக்கம், நீங்கள் {{config.title}} இல் கடவுச்சொல் மீட்டெடுப்பைக் கோரியுள்ளீர்கள். உறுதிப்படுத்த <a href='{{{config.baseurl}}}/recover/{{user.recover_code}}'>இங்கே கிளிக் செய்யவும்</a>."
     },
     "admin_register": {
         "subject": "புதிய பதிவு",
-        "content": "{{user.email} the {{user.email}}}: <br/> <pre> {{{பயனர். {user.description}}}/admin '> இங்கே </a>."
+        "content": "{{user.email}} என்பவர் {{config.title}} இல் பதிவு செய்யக் கோரியுள்ளார்: <br/><pre>{{user.description}}</pre><br/> <a href='{{{config.baseurl}}}/admin'>இங்கே</a> உறுதிப்படுத்தவும்."
     },
     "event_confirm": {
         "content": "இந்த நிகழ்வை <a href = '{{{url}}}'> இந்த பக்கம் </a> இல் உறுதிப்படுத்தலாம்"
@@ -28,8 +28,8 @@
     },
     "report": {
         "subject": "நிகழ்வு மிதமான [{{event.title}}]",
-        "content_ADMIN": "நிகழ்வு பற்றி ஒரு நிர்வாகி <strong> {{event.title}} </strong>: <br/> <blockquote> {{message}} </clackquote> <br/> <br/> <a href = ' {{{url}}} '> திறந்த மிதமான </a>",
-        "content_ANON": "ஒரு பார்வையாளர் <strong> {{event.title}} </strong>: <br/> <blockquote> {{message}} </blockquote> <br/> <br/> <a href = '{ {{url}}} '> திறந்த மிதமான </a>",
-        "content_AUTHOR": "நிகழ்வு <strong> {{event.title}} </strong> எழுதியது: <br/> <blockquote> {{message}} </blockquote> <br/> <br/> <a href = '{ {{url}}} '> திறந்த மிதமான </a>"
+        "content_ADMIN": "நிகழ்வைப் பற்றி ஒரு நிர்வாகி கருத்து தெரிவித்தார் <strong>{{event.title}}</strong>:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>திறந்த மதிப்பீட்டு</a>",
+        "content_ANON": "ஒரு பார்வையாளர் நிகழ்வைப் புகாரளித்தார் <strong>{{event.title}}</strong>:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>திறந்த மதிப்பீட்டை</a>",
+        "content_AUTHOR": "நிகழ்வின் ஆசிரியர் <strong>{{event.title}}</strong> இவ்வாறு எழுதினார்:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>திறந்த மதிப்பீட்டை</a>"
     }
 }

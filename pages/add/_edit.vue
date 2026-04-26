@@ -15,7 +15,7 @@ v-container.container.pa-0.pa-md-3
           v-row
             //- Not logged event
             v-col(v-if='!$auth.loggedIn' cols=12)
-              p(v-html="$t('event.anon_description')")
+              p(v-html="$t(settings.allow_registration ? 'event.anon_description' : 'event.anon_description_without_registration')")
 
             //- Title
             v-col(cols=12)
@@ -116,11 +116,12 @@ export default {
         event = await $axios.$get('/event/detail/' + data.id)
         if (!$auth.user.is_editor && !$auth.user.is_admin && !event.isMine) {
           error({ statusCode: 401, message: 'Not allowed' })
-          return {}
         }
       } catch (e) {
-        error({ statusCode: 404, message: 'Event not found!' })
-        return {}
+        error({
+          statusCode: e?.response?.status ?? 500,
+          message: e?.response?.data?.message ?? e?.response?.data ?? e?.message ?? 'Request failed'
+        })
       }
 
       data.event.place.name = event.place.name
@@ -221,6 +222,7 @@ export default {
         })
         return
       }
+      if (this.loading) { return }
       this.loading = true
 
       const formData = new FormData()

@@ -212,4 +212,45 @@ describe('Recurrent events', () => {
 
   })
 
+  test('shoud create an occurrence each year in future when start date time is in past', async () => {
+    const eventController = require('../server/api/controller/event')
+    const { Event } = require('../server/api/models/models')
+
+    // each year starting from past
+    const ret = await Event.create({
+      title: 'each year starting from future',
+      is_visible: true,
+      recurrent: { frequency: '1y', type: 'ordinal' },
+      start_datetime: DateTime.local(2033, 4, 28, 8).toUnixInteger()
+    })
+
+    // 28 April 2033 08:00
+    let ev = await eventController._createRecurrentOccurrence(ret)
+    expect(ev.start_datetime).toBe(DateTime.local(2033, 4, 28, 8).toUnixInteger())
+
+    // 28 April 2033 08:00 -> 1m -> 27 April 2034 08:00
+    ev = await eventController._createRecurrentOccurrence(ret, DateTime.fromSeconds(ev.start_datetime + 1), false)
+    expect(ev.start_datetime).toBe(DateTime.local(2034, 4, 28, 8).toUnixInteger())
+  })
+
+  test('shoud create an occurrence each year on first Sunday in May', async () => {
+    const eventController = require('../server/api/controller/event')
+    const { Event } = require('../server/api/models/models')
+
+    // each year starting from past
+    const ret = await Event.create({
+      title: 'each year starting from future',
+      is_visible: true,
+      recurrent: { frequency: '1y', type: 1 },
+      start_datetime: DateTime.local(2033, 5, 1, 12).toUnixInteger()
+    })
+
+    // 1 May 2033 08:00
+    let ev = await eventController._createRecurrentOccurrence(ret)
+    expect(ev.start_datetime).toBe(DateTime.local(2033, 5, 1, 12).toUnixInteger())
+
+    // 1st Sunday in May (1st) 2033 08:00 -> 1y -> 1st Sunday in May (7th) 2034 08:00
+    ev = await eventController._createRecurrentOccurrence(ret, DateTime.fromSeconds(ev.start_datetime + 1), false)
+    expect(ev.start_datetime).toBe(DateTime.local(2034, 5, 7, 12).toUnixInteger())
+  })
 })

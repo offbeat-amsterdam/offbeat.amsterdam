@@ -20,7 +20,10 @@ export default {
       const event = await $axios.$get(`/event/detail/${params.event_id}`)
       return { event }
     } catch (e) {
-      error({ statusCode: 404, message: 'Event not found' })
+      error({
+        statusCode: e?.response?.status ?? 500,
+        message: e?.response?.data?.message ?? e?.response?.data ?? e?.message ?? 'Request failed'
+      })
     }
   },
   data () {

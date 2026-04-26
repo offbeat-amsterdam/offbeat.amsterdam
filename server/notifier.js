@@ -68,7 +68,7 @@ const notifier = {
     const admins = await User.findAll({ where: { role: ['admin', 'editor'], is_active: true, to_notify: true }, attributes: ['email'], raw: true })
     let emails = [settingsController.settings.admin_email]
     emails = emails.concat(admins?.map(a => a.email))
-    return mail.send(emails, template, locals)
+    return mail.send(emails, template, locals, undefined, true)
   },
 
   async notifyEvent (action, eventId) {

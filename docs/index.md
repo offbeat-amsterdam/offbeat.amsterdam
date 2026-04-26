@@ -10,7 +10,14 @@ permalink: /
 
 A shared agenda for local communities.
 {: .fs-6 }
-Last release  **[1.26.0 - 28 Apr 2025](/changelog)**
+Last release  **[1.28.2 - 15 Dec 2025](/changelog)**
+
+{: .warning-title }
+> 2.0 is coming
+> {: .fs-5 }
+> After considerable effort, version 2.0 is about to arrive: a complete rewrite of the project to eliminate accumulated technical debt and establish a cleaner, more modern and manageable code base across the entire stack. More details can be found in the [CHANGELOG](https://framagit.org/les/gancio/-/releases/v2.0.0-alpha.1#v200-alpha1).  
+> With the release, I started writing better [usage](https://gancio.org/v2/usage) and [code](https://gancio.org/v2/dev/code) documentation to support future developments and onboarding, which I have currently placed in a subsection of the website.  
+> The release __is still in alpha__ and there are still some incompatibilities, so test it via [Docker](https://gancio.org/v2/install/docker) or directly [from the code](https://gancio.org/v2/dev), [open issues](https://framagit.org/les/gancio/-/issues), but please do not update yet.
 
 [Install]({% link install/install.md %}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [Demo](https://demo.gancio.org){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2 }

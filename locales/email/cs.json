@@ -1,29 +1,35 @@
 {
     "register": {
-        "content": "Přijali jsme žádost o registraci, potvrdíme ji co nejdříve.",
+        "content": "Přijali jsme vaši žádost o registraci. Potvrdíme ji, jakmile to bude možné.",
         "subject": "Žádost o registraci byla přijata"
     },
     "user_confirm": {
-        "content": "Ahoj, tvůj účet na <a href='{{{config.baseurl}}}'>{{config.title}}</a> byl vytvořený. <a href='{{{config.baseurl}}}/user_confirm/{{user.recover_code}}'>Potvrď ho a nastav si heslo.</a>.",
-        "subject": "Nyní můžeš začít zveřejňovat události"
+        "content": "Zdravíme, váš účet na webu <a href='{{{config.baseurl}}}'>{{config.title}}</a> byl vytvořen. <a href='{{{config.baseurl}}}/user_confirm/{{user.recover_code}}'>Potvrďte jej a nastavte si heslo.</a>.",
+        "subject": "Nyní můžete začít zveřejňovat události"
     },
     "event_confirm": {
-        "content": "Tuto událost můžeš potvrdit na <a href='{{{url}}}'>této stránce </a>"
+        "content": "Tuto událost můžete potvrdit na <a href='{{{url}}}'>této stránce</a>"
     },
     "admin_register": {
         "subject": "Nová registrace",
-        "content": "{{user.email}} požádal o registraci na {{config.title}}: <br/><pre>{{user.description}}</pre><br/> Potvrď ji <a href='{{{config.baseurl}}}/admin'>zde</a>."
+        "content": "Uživatel {{user.email}} požádal o registraci na {{config.title}}: <br/><pre>{{user.description}}</pre><br/> Potvrďte ji <a href='{{{config.baseurl}}}/admin'>zde</a>."
     },
     "confirm": {
-        "subject": "Teď můžete začít zveřejňovat události",
-        "content": "Ahoj, tvůj účet na <a href='{{{config.baseurl}}}'>{{config.title}}</a> byl schválený. Napiš nám na {{config.admin_email}} pokud potřebuješ další informace."
+        "subject": "Nyní můžete začít zveřejňovat události",
+        "content": "Zdravíme, váš účet na webu <a href='{{{config.baseurl}}}'>{{config.title}}</a> byl schválen. Pro více informací nás kontaktuj na adrese {{config.admin_email}}."
     },
     "recover": {
         "subject": "Obnova hesla",
-        "content": "Ahoj, požádali jste o změnu hesla na {{config.title}}. <a href='{{{config.baseurl}}}/recover/{{user.recover_code}}'>Klikni zde</a> pro potvrzení."
+        "content": "Zdravíme, na webu {{config.title}} jste požádali o změnu hesla. Pro potvrzení žádosti <a href='{{{config.baseurl}}}/recover/{{user.recover_code}}'>klikněte sem</a>."
     },
     "test": {
-        "content": "Toto je testovací email, nastavení je funkční.",
+        "content": "Toto je testovací email, vaše nastavení je funkční.",
         "subject": "Nastavení SMTP je funkční"
+    },
+    "report": {
+        "content_ANON": "Návštěvník nahlásil událost <strong>{{event.title}}</strong>:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>Otevřít moderaci</a>",
+        "subject": "Moderace události [{{event.title}}]",
+        "content_ADMIN": "Administrátor okomentoval událost <strong>{{event.title}}</strong>:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>Otevřít moderaci</a>",
+        "content_AUTHOR": "Autor události <strong>{{event.title}}</strong> napsal:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>Otevřít moderaci</a>"
     }
 }

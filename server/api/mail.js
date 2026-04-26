@@ -22,16 +22,17 @@ const mail = {
     TaskManager.add(task)
   },
 
-  _send (addresses, template, locals, locale, bcc=false) {
+  _send (addresses, template, locals, locale, bcc = false) {
     // this hack is needed because there are more standards to indicate language code
     // https://framagit.org/les/gancio/-/issues/539#note_2198016
     const localeMapOverride = {
       'sr-Cyrl': 'Cy-sr-SP',
-      'sr-Latn': 'Lt-sr-SP',
+      'sr-Latn': 'Lt-sr-SP'
     }
     const settings = settingsController.settings
     locale = locale || settings.instance_locale
     locale = localeMapOverride?.[locale] ?? locale
+
     log.info(`Send ${template} email to ${addresses} with locale ${locale}`)
     const email = new Email({
       views: { root: path.join(__dirname, '..', 'emails') },
@@ -77,6 +78,7 @@ const mail = {
         datetime: timestamp => DateTime.fromSeconds(timestamp, opt).toFormat('EEEE, d MMMM HH:mm')
       }
     }
+
     return email.send(msg)
       .catch(e => {
         log.error('[MAIL]', e)

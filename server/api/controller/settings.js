@@ -7,6 +7,7 @@ const config = require('../../config')
 const generateKeyPair = promisify(crypto.generateKeyPair)
 const log = require('../../log')
 const escape = require('lodash/escape')
+const clone = require('lodash/cloneDeep')
 const DB = require('../models/models')
 
 let defaultHostname
@@ -114,7 +115,17 @@ const settingsController = {
   },
 
   async set (key, value, is_secret = false) {
-    log.info(`SET ${key} ${is_secret ? '*****' : value}`)
+    // If the key is 'smtp', handle it specially
+    if (key === 'smtp') {
+      if (!value.auth?.pass) {
+        value.auth ||= {}
+        value.auth.pass = settingsController.settings.smtp?.auth?.pass
+      }
+      log.info(`SET SMTP: ${JSON.stringify({ host: value.host, port: value.port, user: value.auth.user })}`)
+    } else {
+      log.info(`SET ${key} ${is_secret ? '*****' : JSON.stringify(value)}`)
+    }
+
     try {
       const [setting, created] = await DB.Setting.findOrCreate({
         where: { key },
@@ -166,7 +177,9 @@ const settingsController = {
   },
 
   getSMTPSettings (_req, res) {
-    return res.json(settingsController['settings']['smtp'])
+    const smtpSettings = clone(settingsController.settings.smtp)
+    delete smtpSettings.auth?.pass
+    return res.json(smtpSettings)
   },
 
   getAll (_req, res) {
@@ -184,6 +197,7 @@ const settingsController = {
 
     // convert and resize to png
     return sharp(uploadedPath)
+      .rotate()
       .resize(400)
       .png({ quality: 90 })
       .toFile(baseImgPath + '.png', (err) => {
@@ -206,6 +220,7 @@ const settingsController = {
 
     // convert and resize to png
     return sharp(uploadedPath)
+      .rotate()
       .resize(600)
       .png({ quality: 99 })
       .toFile(baseImgPath, (err) => {
@@ -228,6 +243,7 @@ const settingsController = {
 
     // convert and resize to png
     return sharp(uploadedPath)
+      .rotate()
       .resize(600)
       .png({ quality: 99 })
       .toFile(baseImgPath, (err) => {

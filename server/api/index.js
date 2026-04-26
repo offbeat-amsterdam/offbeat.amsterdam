@@ -156,6 +156,30 @@ module.exports = () => {
 
     // api.get('/event/search', eventController.search)
 
+    /**
+     * Update an event
+     * @category Event
+     * @name /api/event
+     * @type PUT
+     * @info `Content-Type` has to be `multipart/form-data` to support image upload
+     * @info Events could be modified by admins or by the event's owner
+     * @param {number} id - event's id
+     * @param {string} title - event's title
+     * @param {string} description - event's description (html accepted and sanitized)
+     * @param {string} place_name - the name of the place
+     * @param {string} [place_address] - the address of the place
+     * @param {float} [place_latitude] - the latitude of the place
+     * @param {float} [place_longitude] - the longitude of the place
+     * @param {array} online_locations - List of online locations
+     * @param {integer} start_datetime - start timestamp
+     * @param {integer} multidate - is a multidate event?
+     * @param {array} tags - List of tags
+     * @param {object} [recurrent] - Recurrent event details
+     * @param {string} [recurrent.frequency] - could be `1w`, `2w`, `1y`
+     * @param {array} [recurrent.days] - array of days
+     * @param {image} [image] - Image
+     * @param {string} [image_url] - Image URL
+     */
     api.put('/event', isAuth, upload.single('image'), eventController.update)
     api.put('/event/assign_to_author', isAdmin, eventController.assignToAuthor)
     api.get('/event/import', eventController.isAnonEventAllowed, helpers.importURL)
@@ -175,7 +199,7 @@ module.exports = () => {
     api.post('/settings/logo', isAdmin, multer({ dest: config.upload_path }).single('logo'), settingsController.setLogo)
     api.post('/settings/fallbackImage', isAdmin, multer({ dest: config.upload_path }).single('fallbackImage'), settingsController.setFallbackImage)
     api.post('/settings/headerImage', isAdmin, multer({ dest: config.upload_path }).single('headerImage'), settingsController.setHeaderImage)
-    api.post('/settings/smtp', isAdmin, settingsController.testSMTP)
+    api.post('/settings/test_smtp', isAdmin, settingsController.testSMTP)
     api.get('/settings/smtp', isAdmin, settingsController.getSMTPSettings)
 
     // moderation

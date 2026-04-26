@@ -89,20 +89,22 @@ export default ({ app, store }, inject) => {
       const opt = {
         zone,
         locale: app.i18n.locale || store.state.settings.instance_locale
-      }      
+      }
       const parent = event.parent
       if (!parent.recurrent || !parent.recurrent.frequency) return 'error!'
       const { frequency, type } = parent.recurrent
+      const parentStart = DateTime.fromSeconds(parent.start_datetime, opt)
       let recurrent
       if (frequency === '1w' || frequency === '2w') {
-        recurrent = app.i18n.t(`event.recurrent_${frequency}_days`, { days: DateTime.fromSeconds(parent.start_datetime, opt).toFormat(format)})
-      } else if (frequency === '1m' || frequency === '2m') {
-        const d = type === 'ordinal' ? DateTime.fromSeconds(parent.start_datetime, opt).day : DateTime.fromSeconds(parent.start_datetime, opt).toFormat(format)
+        recurrent = app.i18n.t(`event.recurrent_${frequency}_days`, { days: parentStart.toFormat(format) })
+      } else if (frequency === '1m' || frequency === '2m' || frequency === '1y') {
+        const d = type === 'ordinal' ? parentStart.day : parentStart.toFormat(format)
+        const m = parentStart.toFormat('MMMM')
         if (type === 'ordinal') {
-          recurrent = app.i18n.t(`event.recurrent_${frequency}_days`, { days: d })
+          recurrent = app.i18n.t(`event.recurrent_${frequency}_days`, { days: d, months: m })
         } else {
           recurrent = app.i18n.t(`event.recurrent_${frequency}_ordinal`,
-          { n: app.i18n.t('ordinal.' + type), days: d })
+            { n: app.i18n.t('ordinal.' + type), days: d, months: m })
         }
       }
       return recurrent

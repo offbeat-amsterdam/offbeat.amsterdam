@@ -108,15 +108,15 @@ export default {
       const ret = await this.$root.$confirm('event.disable_author_confirm')
       if (!ret) { return }
       try {
-          await this.$axios.$put(`/event/disable_author/${this.event.id}`)
-          this.$root.$message("Author disabled!", { color: 'success' })
-          this.event.isAnon = true
+        await this.$axios.$put(`/event/disable_author/${this.event.id}`)
+        this.$root.$message("Author disabled!", { color: 'success' })
+        this.event.isAnon = true
       } catch (e) {
-          this.$root.$message(e, { color: 'warning' })
+        this.$root.$message(e, { color: 'warning' })
       }
     },
     async remove (parent = false) {
-      const ret = await this.$root.$confirm(`event.remove_${parent ? 'recurrent_' : ''}confirmation`)
+      const ret = await this.$root.$confirm(`event.remove_${parent ? 'recurrent_' : ''}confirmation`, { event: this.event.title })
       if (!ret) { return }
       const id = parent ? this.event.parentId : this.event.id
       await this.$axios.delete(`/event/${id}`)

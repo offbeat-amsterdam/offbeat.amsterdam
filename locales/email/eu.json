@@ -25,5 +25,11 @@
     "test": {
         "subject": "Zure SMTP konfigurazioa badabil",
         "content": "Hau probako eposta bat da, mezu hau irakurtzen ari bazara konfigurazioa badabilela esan nahi du."
+    },
+    "report": {
+        "content_AUTHOR": "<strong>{{event.title}}</strong> ekitaldiaren egilea hurrengoa idatzi du: <br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>Ireki moderazioa</a>",
+        "subject": "[{{event.title}}] ekitaldiaren moderazioa",
+        "content_ADMIN": "administratzaile batek <strong>{{event.title}}</strong> ekitaldiari buruz iruzkindu du:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>Ireki moderazioa</a>",
+        "content_ANON": "Bisitari batek <strong>{{event.title}}</strong> ekitaldia jakinarazi du:<br/><blockquote>{{message}}</blockquote><br/><br/><a href='{{{url}}}'>Ireki moderazioa</a>"
     }
 }

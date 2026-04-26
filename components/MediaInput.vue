@@ -15,6 +15,9 @@ span
 
           v-col.col-12.col-sm-4
             p {{$t('event.choose_focal_point')}}
+
+            //- TODO: what if the URL preview goes wrong?
+            //- this could happen due to cors issues or a simply typo
             img.mediaPreview.d-none.d-sm-block(v-if='mediaPreview'
               :src='mediaPreview' :style="{ 'object-position': position }")
 

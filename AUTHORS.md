@@ -5,7 +5,6 @@ josé m <correoxm@disroot.org>
 fadelkon <fadelkon@posteo.net>
 Marko Krtinić <it@zvo.hr>
 Renne Rocha <renne@rocha.dev.br>
-Weblate Admin <eventi@cisti.org>
 gallegonovato <fran-carro@hotmail.es>
 Languages add-on <noreply-addon-languages@weblate.org>
 Weblate <noreply@weblate.org>
@@ -23,8 +22,6 @@ Eryk Michalak <gnu.ewm@protonmail.com>
 J. Lavoie <j.lavoie@net-c.ca>
 La Kelo Gaztetxea <itzulpenak@lakelogaztetxea.net>
 Marek Bachmann <post@mbbit.de>
-Weblate Admin <admin@example.com>
-joenepraat <joenepraat@posteo.org>
 ssantos <ssantos@web.de>
 Øjvind Fritjof Arnfred <fritjof@mencagli-arnfred.dk>
 Nacho <nacho@nucleartesuji.com>

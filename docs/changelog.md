@@ -7,6 +7,84 @@ nav_order: 10
 
 All notable changes to this project will be documented in this file.
 
+### [1.28.2](https://framagit.org/les/gancio/compare/v1.28.1...v1.28.2) (2025-12-15)
+
+
+### Bug Fixes
+
+* avoid sitemap caching during startup ([22e9b6d](https://framagit.org/les/gancio/commit/22e9b6d454af98a484d9bf18c6b8689f6e1cff63))
+* dynamic routes in sitemap ([24af478](https://framagit.org/les/gancio/commit/24af4788fdb687f511a7fdea2de07b1fc8cd911b)), closes [#633](https://framagit.org/les/gancio/issues/633)
+* propagate errors from API calls to user ([7960d90](https://framagit.org/les/gancio/commit/7960d9057a744cc1017abda6e20be0967ead0827)), closes [#634](https://framagit.org/les/gancio/issues/634)
+* propagate errors from API II ([bb0547d](https://framagit.org/les/gancio/commit/bb0547d0020484037507aba938d6becb6053d8b0))
+
+
+### [1.28.1](https://framagit.org/les/gancio/compare/v1.28.0...v1.28.1) (2025-11-02)
+
+
+### Bug Fixes
+
+* include discord and bluesky deps in production, ref [#627](https://framagit.org/les/gancio/issues/627) and [#620](https://framagit.org/les/gancio/issues/620) ([d36010e](https://framagit.org/les/gancio/commit/d36010ed95c6a9c66f1e3a3a35b79ce5c2f02fd8))
+* events: Make search case-insensitive (postgresql issue) [!115](https://framagit.org/les/gancio/-/merge_requests/115), fix [#526](https://framagit.org/les/gancio/-/issues/526)
+* tags: Make search case-insensitive (postgresql issue) [!116](https://framagit.org/les/gancio/-/merge_requests/116), fix [#629](https://framagit.org/les/gancio/-/issues/629)
+
+## [1.28.0](https://framagit.org/les/gancio/compare/v1.27.0...v1.28.0) (2025-09-08)
+
+Thanks to valuable contributions, we have three new translations, two new plugins, a bridge to Discord (@freefall) and to Bluesky (@coegho) and many improvements to the feed plugin and various fixes (@NightTsarina). Thanks to everyone who contributed.
+
+This will be the last release of version 1.x, so please do not write your contributions to `master` (the old branch) because the focus will be on stabilizing version 2.0 (it is the default branch `main`).
+
+
+### Features
+
+* add bluesky bridge plugin ([a31f447](https://framagit.org/les/gancio/commit/a31f447e34c273efee15f4bbd55b88f0e79c474d))
+* add plugin discord bridge ([e349a3f](https://framagit.org/les/gancio/commit/e349a3f0ba09a6e989c5cbf1e8e101fb157adf6d))
+* new language Latvian, Latviešu ([f522d19](https://framagit.org/les/gancio/commit/f522d19e2b1b202451aba730df68b8f33d034d20))
+* new languages Greek, Farsi, Korean ([cd34e89](https://framagit.org/les/gancio/commit/cd34e89327111d22b82cb21883d3c1638ece7d83))
+
+
+### Bug Fixes
+
+* add some more custom css example in documentation, fix [#536](https://framagit.org/les/gancio/issues/536) ([1098785](https://framagit.org/les/gancio/commit/1098785e4d1d08165738e50f5f17b42ba3d71066))
+* document API auth and update event, fix [#594](https://framagit.org/les/gancio/issues/594) ([3caf4bb](https://framagit.org/les/gancio/commit/3caf4bbbf409b57d466beafb0232f2c9594fce6d))
+* Duplicate events with a slow internet connection, fix [#590](https://framagit.org/les/gancio/issues/590) ([3ba2dfd](https://framagit.org/les/gancio/commit/3ba2dfdf71802037b51e8ec22e08242c9ed9b25c))
+* **ics:** implement includePastEvents in ics parser ([0eb92d7](https://framagit.org/les/gancio/commit/0eb92d7b8b54a612bfa9e67add185cdcc5955956))
+* update telegram plugin to v1.0.6, fix [#589](https://framagit.org/les/gancio/issues/589) ([7f20aac](https://framagit.org/les/gancio/commit/7f20aacbcc82036c1e6db378dbbeb9dd866b3474))
+* update yarn.lock, fix [#418](https://framagit.org/les/gancio/issues/418) ([4e43ffd](https://framagit.org/les/gancio/commit/4e43ffd69f3a98497c0ff257049608f5c05be16b))
+* use includePastEvents logic from backend in feed plugin ([2b610d0](https://framagit.org/les/gancio/commit/2b610d033758309c6a8a85bb60fc716d41e2fb47))
+
+
+## [1.27.0](https://framagit.org/les/gancio/compare/v1.26.1...v1.27.0) (2025-06-21)
+
+
+### Features
+
+* new language Japanese, 日本語 ([a986115](https://framagit.org/les/gancio/commit/a98611563c8de40fc0a9c69fd50ef01297537ff6))
+* Add yearly recurrence option ([bffd683](https://framagit.org/les/gancio/commit/bffd68358c9aaa9f5d2a69c6d84757008ce88507)), closes [#203](https://framagit.org/les/gancio/issues/203)
+* add dev container configuration ([f397041](https://framagit.org/les/gancio/commit/f397041d9e00f0dea7673e30db59a067f5caf928))
+
+
+### Bug Fixes
+
+*  Do not import passed events when backfilling events from newly followed actor, fix [#583](https://framagit.org/les/gancio/issues/583) ([86bb11a](https://framagit.org/les/gancio/commit/86bb11ace29eaa72502b17f4aa0e1d12d0933bf4))
+* Admin notification emails once again without Bcc, fix [#578](https://framagit.org/les/gancio/issues/578) ([90e4294](https://framagit.org/les/gancio/commit/90e42940e4e2cf95f44467970d91089ca482f3d0))
+* gancio advertises register on `/add` when registration is disabled, fix [#588](https://framagit.org/les/gancio/issues/588) ([f003fe8](https://framagit.org/les/gancio/commit/f003fe88d32b2b5c2a0a496792f67f7d44f38499))
+* Hide sensitive value of SMTP settings ([a2c22fc](https://framagit.org/les/gancio/commit/a2c22fceb0637460c78eff065dbf31c7a6036fc8))
+* improve error handler on wrong image url, fix [#577](https://framagit.org/les/gancio/issues/577) ([6476898](https://framagit.org/les/gancio/commit/647689881ca2518ec5a3da0ab0079fcf3501a44e))
+* remove federated events too, fix [#586](https://framagit.org/les/gancio/issues/586) ([09743d5](https://framagit.org/les/gancio/commit/09743d56c405e5129dea6a443123ba4ee96137d9))
+* Rotate uploaded images according to their exif data, fix [#576](https://framagit.org/les/gancio/issues/576) ([903af9f](https://framagit.org/les/gancio/commit/903af9fece2a07532709038320bb40070428dee2))
+* **SMTP:** merge test and save smtp configuration, better select ([4c2d7db](https://framagit.org/les/gancio/commit/4c2d7db7fcfcb61e4a0b308c7c0f1745185b6e23))
+* **SMTP:** stop changing the port on `secure` changes ([d5cf4e9](https://framagit.org/les/gancio/commit/d5cf4e98992f0c53fafd8565b8f4ec707dee5fe7))
+* STARTTLS became unusable after testing with the secure flag unset ([64ba325](https://framagit.org/les/gancio/commit/64ba3259df4d536eaf3387c6de2be0ce6a9a3aa9)), closes [#192](https://framagit.org/les/gancio/issues/192)
+* update AP event, parseAPLocation ([b4c635a](https://framagit.org/les/gancio/commit/b4c635a7e7bc33da706ce3825fe81a5d60c946fc))
+* update eslint config ([ab937c3](https://framagit.org/les/gancio/commit/ab937c3d9509723366cc4f578b4350ae63f80742)), closes [#581](https://framagit.org/les/gancio/issues/581)
+
+### [1.26.1](https://framagit.org/les/gancio/compare/v1.26.0...v1.26.1) (2025-04-28)
+
+
+### Bug Fixes
+
+* error when getting image from url ([9cd862d](https://framagit.org/les/gancio/commit/9cd862da66c6fd7473a48d5084023b7a0304d241))
+
 ## [1.26.0](https://framagit.org/les/gancio/compare/v1.25.1...v1.26.0) (2025-04-28)
 
 ### Notes

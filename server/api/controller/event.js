@@ -606,7 +606,7 @@ const eventController = {
       }
     } catch (e) {
       log.error('[EVENT ADD]', e)
-      res.sendStatus(400)
+      res.status(400).send(`Error: ` + (e?.message ?? e))
     }
   },
 
@@ -703,7 +703,7 @@ const eventController = {
         eventDetails.media = [{ ...event.media[0], focalpoint }] // [0].focalpoint = focalpoint
       }
 
-      if (body.image_name && event.media.length && event.media[0].name !== body.image_name) {
+      if (body.image_name && event.media?.length && event.media[0].name !== body.image_name) {
         eventDetails.media[0].name = body.image_name || body.title || ''
       }
 
@@ -778,7 +778,6 @@ const eventController = {
         // remove related resources
         await Resource.destroy({ where: { eventId: event.id }})
         await EventNotification.destroy({ where: { eventId: event.id }})
-
       } catch (e) {
         console.error(e)
       }
@@ -788,9 +787,9 @@ const eventController = {
       // notify local events only
       if (!event.ap_id) {
         notifier.notifyEvent('Delete', event.id).finally(() => event.destroy())
+      } else {
+        event.destroy()
       }
-
-
     } else {
       res.sendStatus(403)
     }
@@ -880,8 +879,12 @@ const eventController = {
       replacements.push(query)
       where[Op.or] =
         [
-          { title: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('title')), 'LIKE', '%' + query + '%') },
-          Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('name')), 'LIKE', '%' + query + '%'),
+          {
+            title: Sequelize.where(
+              Sequelize.fn('LOWER', Sequelize.col('title')), 'LIKE', Sequelize.fn('LOWER', `%${query}%`)),
+          },
+          Sequelize.where(
+            Sequelize.fn('LOWER', Sequelize.col('name')), 'LIKE', Sequelize.fn('LOWER', `%${query}%`)),
           Sequelize.fn('EXISTS', Sequelize.literal(`SELECT 1 FROM event_tags WHERE ${Col('event_tags.eventId')}=${Col('event.id')} AND LOWER(${Col('tagTag')}) = LOWER(?)`))
         ]
     }
@@ -1073,21 +1076,21 @@ const eventController = {
       if (cursor < startAt) {
         cursor = cursor.plus({ days: 7 * Number(frequency[0]) })
       }
-    } else if (frequency === '1m') {
-
-      // day n.X each month
+    } else if (frequency === '1m' || frequency === '1y') {
+      let interval = frequency === '1y' ? { years: 1 } : { months: 1 }
+      // day n.X each interval
       if (type === 'ordinal') {
         cursor = cursor.set({ day: parentStartDatetime.day })
 
         if (cursor< startAt) {
-          cursor = cursor.plus({ months: 1 })
+          cursor = cursor.plus(interval)
         }
       } else { // weekday
 
         // get recurrent freq details
         cursor = helpers.getWeekdayN(cursor, type, parentStartDatetime.weekday)
         if (cursor < startAt) {
-          cursor = cursor.plus({ months: 1 })
+          cursor = cursor.plus(interval)
           cursor = helpers.getWeekdayN(cursor, type, parentStartDatetime.weekday)
         }
       }

@@ -4,6 +4,11 @@
 header image -- now cached per path and recreated only when settings change
 - Fix `express-rate-limit` error: server middleware is now eagerly loaded at startup instead of lazily on first request
 
+## Changes
+- Align with Gancio `1.28.2`
+[1.28.1](https://framagit.org/les/gancio/compare/v1.28.0...v1.28.1)
+[1.28.2](https://framagit.org/les/gancio/compare/v1.28.1...v1.28.2)
+
 # 0.6.7 (19-07-2025)
 ## Improvement
 - Restore scroll position when going back to home page [#17](https://github.com/tboye/offbeat.amsterdam/pull/17)

@@ -28,7 +28,7 @@ v-col(cols=12)
         v-progress-circular(indeterminate color='primary')
 
   div.text-center.mb-2(v-if='type === "recurrent"')
-    span(v-if='value.recurrent.frequency !== "1m" && value.recurrent.frequency !== "2m"') {{ whenPatterns }}
+    span(v-if='value.recurrent.frequency !== "1m" && value.recurrent.frequency !== "2m" && value.recurrent.frequency !== "1y"') {{ whenPatterns }}
     v-btn-toggle.mt-1.flex-column.flex-sm-row(v-else :value='value.recurrent.type' color='primary' @change='fq => change("recurrentType", fq)')
       v-btn(v-for='whenPattern in whenPatterns' :value='whenPattern.key' :key='whenPatterns.key' small) {{ whenPattern.label }}
 
@@ -122,7 +122,8 @@ export default {
       frequencies: [
         { value: '1w', text: this.$t('event.each_week') },
         { value: '2w', text: this.$t('event.each_2w') },
-        { value: '1m', text: this.$t('event.each_month') }
+        { value: '1m', text: this.$t('event.each_month') },
+        { value: '1y', text: this.$t('event.each_year') }
       ]
     }
   },
@@ -152,20 +153,21 @@ export default {
 
       const freq = this.value.recurrent.frequency
       const weekDay = date.toFormat('EEEE')
+      const month = date.toFormat('MMMM')
       if (freq === '1w' || freq === '2w') {
         return this.$t(`event.recurrent_${freq}_days`, { days: weekDay }).toUpperCase()
-      } else if (freq === '1m' || freq === '2m') {
+      } else if (freq === '1m' || freq === '2m' || freq === '1y') {
         const n = Math.floor((date.day-1) / 7) + 1
 
         const patterns = [
-          { label: this.$t(`event.recurrent_${freq}_days`, { days: date.day }), key: 'ordinal' }
+          { label: this.$t(`event.recurrent_${freq}_days`, { days: date.day, months: month }), key: 'ordinal' }
           // { label: this.$tc(`event.recurrent_${freq}_ordinal`, { n, days: weekDay }), key: 'weekday' }
         ]
 
         if (n < 5) {
           patterns.push(
             {
-              label: this.$t(`event.recurrent_${freq}_ordinal`, { n: this.$t(`ordinal.${n}`), days: weekDay }),
+              label: this.$t(`event.recurrent_${freq}_ordinal`, { n: this.$t(`ordinal.${n}`), days: weekDay, months: month }),
               key: n
             }
           )
@@ -176,7 +178,7 @@ export default {
         if (lastWeek) {
           patterns.push(
             {
-              label: this.$t(`event.recurrent_${freq}_ordinal`, { n: this.$t('ordinal.-1'), days: weekDay }),
+              label: this.$t(`event.recurrent_${freq}_ordinal`, { n: this.$t('ordinal.-1'), days: weekDay, months: month }),
               key: -1
             }
           )

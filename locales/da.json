@@ -116,7 +116,7 @@
         "announcements": "Bekendtgørelser",
         "url": "URL",
         "authorize": "Autoriser",
-        "moderation": "Moderation",
+        "moderation": "Moderering",
         "filter": "Filter",
         "title": "Titel"
     },
@@ -134,7 +134,7 @@
         "feed_description": "For at kunne modtage opdateringer om begivenheder på en computer eller smartphone, uden at skulle besøge denne side af og til, kan du bruge RSS feeds. </p>\n\n<p> Med RSS feeds bruger du en særlig app til at modtage opdateringer fra sider der interesserer dig. Det er en god og hurtig måde at følge mange sider på, uden at behøve at bøvle med at oprette en konto eller andre af den slags komplikationer. </p>\n\n<li> Hvis du har Android, anbefaler vi <a href=\"https://f-droid.org/en/packages/net.frju.flym/\">Flym</a> eller Feeder </li>\n<li> Til iPhone / iPad kan du bruge <a href=\"https://itunes.apple.com/ua/app/feeds4u/id1038456442?mt=8\"> Feed4U </a> </li>\n<li> Til din computer anbefaler vi Feedbro, som kan installeres som tilføjelse til <a href=\"https://addons.mozilla.org/en-GB/firefox/addon/feedbroreader/\"> Firefox </a> eller <a href=\"https://chrome.google.com/webstore/detail/feedbro/mefgmmbdailogpfhfblcnnjfmnpnmdfa\"> Chrome </a>. </li>\n<br/>\nHvis du tilføjer dette link til din RSS feed læser, vil du løbende være opdateret.",
         "intro": "I modsætning til de asociale platforme, der gør alt for at fastholde brugere og deres data, ikke mindst, tror vi på at information, ligesom mennesker, skal være fri. Derfor kan du sagtens holde dig opdateret om de begivenheder du er interesseret i, uden at gå igennem denne side.",
         "filter_title": "Filtrer",
-        "ical_title": "ics/ical",
+        "ical_title": "ics/ikal",
         "list_title": "Liste",
         "email_description": "Du kan få begivenheder der interesserer dig tilsendt via e-mail.",
         "insert_your_address": "Indtast din e-mailadresse",
@@ -218,7 +218,10 @@
         "only_future": "kun kommende begivenheder",
         "where_advanced_options_description": "Her kan du tilføje yderligere beskrivelser af stedet",
         "online_locations_help": "Foreksempel et link til en videokonference",
-        "report_message_confirmation": "Synes du denne begivenhed ikke bør være her? Skriv til os hvorfor"
+        "report_message_confirmation": "Synes du denne begivenhed ikke bør være her? Skriv til os hvorfor",
+        "recurrent_1y_ordinal": "På {n} {days} i {months} hvert år",
+        "recurrent_1y_days": "{months} {days} hvert år",
+        "each_year": "Hvert år"
     },
     "admin": {
         "delete_user": "Fjern",
@@ -317,6 +320,104 @@
         "add_link": "Tilføj link",
         "smtp_description": "<ul><li>Admin bør modtage en e-mail når en begivenhed tilføjes anonymt (hvis det er slået til).</li><li>Admin bør modtage en e-mail om registreringsanmodning (hvis det er slået til</li><li>Bruger bør modtage en e-mail om registreringsanmodning.</li><li>Bruger bør modtage en e-mail om bekræftet registrering</li><li>Bruger bør modtage en bekræftelses e-mail når de er blevet registreret direkte af admin.</li><li>Brugere bør modtage e-mail om at genoprette password hvis de har glemt det</li></ul>",
         "smtp_test_success": "En test e-mail er blevet sendt til {admin_email}, tjek venligst din indbakke",
-        "smtp_test_button": "Send en test e-mail"
-    }
+        "smtp_test_button": "Send en test e-mail",
+        "geocoding_provider_help": "Standardudbyderen er Nominatim",
+        "geocoding_provider": "Geocoding udbyder",
+        "geocoding_countrycodes": "Landekoder",
+        "created_at": "Oprettet",
+        "geocoding_countrycodes_help": "Lader dig instille et søgefilter baseret på landekoder",
+        "smtp_use_sendmail": "Brug sendmail",
+        "domain": "Domæne",
+        "known_users": "Kendte brugere",
+        "config_plugin": "Plugin konfiguration",
+        "delete_collection_confirm": "Er du sikker på  at du vil fjerne samlingen <u>{collection}</u>?",
+        "geocoding_provider_type": "Geokodningssoftware",
+        "geocoding_test_success": "Geokodningstjenesten på {service_name} fungerer",
+        "tilelayer_provider_help": "Standardudbyderen er OpenStreetMap",
+        "tilelayer_provider_attribution": "Attribuering",
+        "tilelayer_test_button": "Test fliselag",
+        "custom_js": "Brugerdefineret Javascript-kode",
+        "custom_css": "Brugerdefineret CSS stil",
+        "default_fedi_hashtags": "Standard fediverse-hashtags",
+        "unconfirmed_events": "Ubekræftede events",
+        "past_unconfirmed_events": "Tidligere ubekræftede events",
+        "blocked": "Blokeret",
+        "geocoding_provider_type_help": "Standardsoftwaren er Nominatim",
+        "default_images_help": "Du skal <a href='/admin?tab=theme'>opdatere</a> siden for at se ændringerne.",
+        "geocoding_test_button": "Test geokodning",
+        "tilelayer_provider": "Tilelayer-udbyder",
+        "tilelayer_test_success": "Tilelayer tjenesten på {service_name} fungerer",
+        "tilelayer_test_error": "Tilelayer tjenesten kan ikke nås på {service_name}",
+        "geolocation": "Geolokation",
+        "colors": "Farver",
+        "show_download_media": "Vis download af mediehandling",
+        "show_download_media_hint": "Vis en knap til download af medier på eventets side",
+        "custom_css_help": "Du kan også tilpasse nogle stilark, læs nogle eksempler <a href='https://gancio.org/usage/custom_css'>her</a>.",
+        "calendar_first_day_of_week": "Første dag i kalenderugen",
+        "calendar_first_day_of_week_default": "Standard (klientens lokale)",
+        "default_fedi_hashtags_help": "De angivne tags vil blive føjet til events, der sendes til fediverse",
+        "federated_events_in_home": "Vis fødererede events på startsiden",
+        "new_page": "Tilføj en ny brugerdefineret side",
+        "delete_page_confirm": "Er du sikker på, at du vil fjerne siden \"<strong>{title}</strong>\"?",
+        "geocoding_test_error": "Geokodningstjenesten kan ikke nås på {service_name}",
+        "tag_renamed": "Tag \"{oldTag}\" omdøbt til \"{newTag}\"",
+        "stats": "{n_followers} »aktører« følger denne instans, der er {n_events} events fra fediverse og {n_resources} kommentarer",
+        "custom_js_help": "Du kan integrere noget javascript-kode, der vil blive indlæst for hver bruger, ved at skrive i dette tekstområde nedenfor. Du vil sandsynligvis gerne læse <a href='https://gancio.org/usage/custom_js'>Dokumentation</a> først.",
+        "geolocation_description": "<b>1. Definer en udbyder af geokodningstjenester</b>.<br>I øjeblikket er der blandt dem, der er opført i <a href=\"https://wiki.openstreetmap.org/wiki/Nominatim#Alternatives_.2F_Third-party_providers\">wiki af OpenStreetMap</a>, der er support til software <a href=\"https://github.com/osm-search/Nominatim\">Nominatim</a> og <a href=\"https://github.com/komoot/photon\">Photon</a>.<br>Du kan bruge en af de relaterede officielle demoer ved at kopiere linket i 'Geokodningsudbyder' felt:<ul><li>https://nominatim.openstreetmap.org/search (<a href=\"https://operations.osmfoundation.org/policies/nominatim/\">Vilkår for service</a>)</li><li>https://photon.komoot.io/api/ (<a href=\"https://photon.komoot.io/\">Vilkår for service</a>)</li></ul><br><b>2. Definer en udbyder for kortlag.</b><br>Du kan finde en liste over dem her: <a href=\"https://leaflet-extras.github.io/leaflet-providers/preview/\">https://leaflet-extras.github.io/leaflet-providers/preview/</a>",
+        "receive_confirm_notification": "Få e-mail med bekræftelse af bruger/event",
+        "federated_events_in_home_help": "Indgående events fra betroede fødererede kilder vises som standard på startsiden. For kun at vise nogle events kan du bruge collections",
+        "calendar_first_day_of_week_description": "Vælg den ugedag, som kalenderen skal vise som den første dag i ugen. Standard vælger i henhold til klientens lokalitet.",
+        "page_description": "I dette afsnit kan du administrere brugerdefinerede sider (f.eks. politikker, vejledninger). Disse sider vises ikke automatisk nogen steder, men du kan henvise til dem i sidefoden, fra om-siden eller hvor som helst via linket til forhåndsvisning."
+    },
+    "confirm": {
+        "title": "Brugerbekræftelse",
+        "valid": "Din konto er bekræftet, og du kan nu <a href=\"/login\">logge ind</a>",
+        "not_valid": "Noget gik galt."
+    },
+    "settings": {
+        "remove_account": "Ved at trykke på følgende knap slettes din brugerkonto. Begivenheder, du har offentliggjort, vil ikke blive det.",
+        "password_updated": "Adgangskode ændret.",
+        "danger_section": "Farlig sektion",
+        "update_confirm": "Vil du gemme din modifikation?",
+        "change_password": "Skift dit kodeord",
+        "remove_account_confirm": "Du er ved at slette din konto permanent"
+    },
+    "ordinal": {
+        "1": "først",
+        "2": "sekundær",
+        "3": "tredje",
+        "5": "femte",
+        "-1": "sidste",
+        "4": "fjerde"
+    },
+    "oauth": {
+        "redirected_to": "Efter bekræftelse vil du blive omdirigeret til <code>{url}</code>",
+        "scopes": {
+            "event:write": "Tilføj og rediger dine events"
+        },
+        "authorization_request": "Applikationen <code>{app}</code> beder om følgende autorisation på <code>{instance_name}</code>:"
+    },
+    "setup": {
+        "start": "Begynd",
+        "completed_description": "<p>Du kan nu logge ind med følgende bruger:<br/><br/>Bruger: <b>{email}</b><br/>Kodeord: <b>{password}<b/></p>",
+        "copy_password_dialog": "Ja, du skal kopiere kodeordet!",
+        "https_warning": "Du besøger os fra HTTP, så husk at ændre baseurl i config.json, hvis du skifter til HTTPS!",
+        "completed": "Opsætning gennemført"
+    },
+    "auth": {
+        "not_confirmed": "Ikke bekræftet endnu…",
+        "fail": "Kunne ikke logge ind. Er du sikker på, at adgangskoden er korrekt?"
+    },
+    "error": {
+        "nick_taken": "Dette kælenavn er allerede i brug.",
+        "email_taken": "Denne e-mail bruges allerede."
+    },
+    "validators": {
+        "required": "{fieldName} er påkrævet",
+        "email": "Indsæt en gyldig e-mail",
+        "url": "Angiv en gyldig URL (http:// eller https://)",
+        "latitude": "Indsæt en gyldig breddegrad (-90 < breddegrad < 90)",
+        "longitude": "Indsæt en gyldig længdegrad (-180 < længdegrad < 180)"
+    },
+    "about": "\n  <p><a href='https://gancio.org'>Gancio</a> er en fælles dagsorden for lokalsamfundene.</p>\n  "
 }

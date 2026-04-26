@@ -119,7 +119,9 @@
         "role": "Rôle",
         "pin": "Epinglé",
         "trusted_sources": "Sources fédérées de confiance",
-        "past_events": "Événements passés"
+        "past_events": "Événements passés",
+        "enabled": "Activé",
+        "pages": "Pages"
     },
     "event": {
         "follow_me_description": "Une des manières de rester informé sur les évènements publiés ici sur {title}\nest de suivre le compte <u>{account}</u> sur le fediverse, par exemple via Mastodon, et pourquoi pas d'ajouter des ressources à un évènement à partir de là.<br/><br/>\nSi vous n'avez jamais entendu parler de Mastodon and du fediverse, nous vous recommandons de lire <a href='https://www.savjee.be/videos/simply-explained/mastodon-and-fediverse-explained/'>cet article (en anglais)</a>.<br/><br/>Saisissez votre nom d'instance ci-dessous (par ex. mastodon.social)",
@@ -145,7 +147,7 @@
         "show_past": "évènement antérieurs également",
         "show_recurrent": "évènements récurrents",
         "recurrent": "Récurrent",
-        "remove_confirmation": "Êtes-vous sûr·e de vouloir supprimer cet évènement ?",
+        "remove_confirmation": "Êtes-vous sûr·e de vouloir supprimer l'évènement « <strong>{event}</strong> »?",
         "not_found": "Impossible de trouver l'évènement",
         "confirmed": "Évènement confirmé",
         "where_description": "Où est l'évènement ? S'il n'apparaît pas, vous pouvez le créer.",
@@ -158,7 +160,7 @@
         "description_description": "Description",
         "what_description": "Titre",
         "same_day": "le même jour",
-        "anon_description": "Vous pouvez ajouter un évènement sans vous inscrire ni vous connecter, mais vous devrez attendre que quelqu'un le lise et\nconfirme qu'il s'agit d'un évènement conforme. Il ne sera pas possible de le modifier.<br/><br/> \nVous pouvez plutôt <a href='/login'>vous connecter</a> ou <a href='/register'>vous inscrire</a>. Sinon allez-y et obtenez une réponse au plus vite. ",
+        "anon_description": "Vous pouvez ajouter un évènement sans vous inscrire ni vous connecter, mais vous devrez attendre que quelqu'un le lise et\nconfirme qu'il s'agit d'un évènement conforme. Il ne sera pas possible de le modifier.<br/><br/> \nVous pouvez plutôt <a href='/login'>vous connecter</a> ou <a href='/register'>vous inscrire</a>. Sinon allez-y et envoyez votre évènement, nous le traiterons au plus vite. ",
         "anon": "Anonyme",
         "ics": "ICS",
         "each_2w": "Une semaine sur deux",
@@ -191,7 +193,11 @@
         "disable_author": "Désactiver l'auteur",
         "disable_author_confirm": "Êtes-vous sur de vouloir désactiver l'auteur de cet évènement ?",
         "assign_to_user": "Attribuer à un utilisateur",
-        "assign_to_user_description": "Vous pouvez attribuer un événement anonyme à un utilisateur qui pourra alors modifier l'événement."
+        "assign_to_user_description": "Vous pouvez attribuer un événement anonyme à un utilisateur qui pourra alors modifier l'événement.",
+        "anon_description_without_registration": "Vous pouvez ajouter un évènement, mais il devra être vérifié afin de s'assurer de sa conformité. \nUne fois envoyé, vous ne pourrez plus modifier votre évènement.<br/><br/> \nAllez-y et envoyez votre évènement, nous le traiterons au plus vite.",
+        "recurrent_1y_days": "Tous les ans, le {days} {months}",
+        "recurrent_1y_ordinal": "Tous les ans, le {n} {days} de {months}",
+        "each_year": "Chaque année"
     },
     "register": {
         "description": "Les mouvements sociaux doivent s'organiser et s'autofinancer.<br/>\n<br/>Avant de pouvoir publier, <strong> le compte doit être approuvé</strong>, considérez que <strong> derrière ce site vous trouverez de vraies personnes</strong>, à qui vous pouvez écrire en deux lignes pour exprimer les évènements que vous souhaiteriez publier.",
@@ -206,7 +212,10 @@
         "insert_your_address": "Saisissez votre adresse courriel",
         "email_description": "Vous pouvez recevoir les évènements qui vous intéressent par courriel.",
         "intro": "Contrairement aux plates-formes non sociales qui font tout pour garder les utilisateurs et les données à leur sujet, nous croyons que l’information, tout comme les gens, doit être libre. Pour cela, vous pouvez rester informé sur les événements que vous voulez, sans nécessairement passer par ce site.",
-        "filter_description": "Vous pouvez filtrer vos exports ici par étiquettes et lieu ou avec une collection préétablie"
+        "filter_description": "Vous pouvez filtrer vos exports ici par étiquettes et lieu ou avec une collection préétablie",
+        "filter_title": "Filtre",
+        "ical_title": "ics/ical",
+        "list_title": "Liste"
     },
     "admin": {
         "federation": "Fédération / ActivityPub",
@@ -225,7 +234,7 @@
         "trusted_instances_label_default": "Noeuds de confiance",
         "trusted_instances_label_help": "L'étiquette par défaut est \"Noeuds de confiance\"",
         "enable_trusted_instances": "Activer les noeuds de confiance",
-        "instance_name_help": "Compte ActivityPub à suivre",
+        "instance_name_help": "Compte ActivityPub à suivre: {ap_handler} (vérifier très attentivement !)",
         "instance_place": "Lieu indicatif de cette instance",
         "description_description": "Apparaît dans l'entête à côté du titre (HTML pris en charge)",
         "title_description": "Utilisé dans le titre de la page, dans le sujet des courriels et dans les flux RSS et ICS.",
@@ -358,7 +367,17 @@
         "default_fedi_hashtags_help": "Les tags spécifiées seront ajoutées aux événements envoyés au fediverse",
         "federated_events_in_home": "Afficher les événements fédérés sur la page d'accueil",
         "federated_events_in_home_help": "Les événements provenant de sources fédérées de confiance seront affichés par défaut sur la page d'accueil. Pour n'afficher que certains événements, vous pouvez utiliser les collections",
-        "add_trusted_source_help": "Utilisez l'une des syntaxes suivantes : <br/><ul><li>l'adresse web d'un autre Gancio ou d'un logiciel qui supporte un Application Actor / <a href='https://codeberg.org/fediverse/fep/src/branch/main/fep/2677/fep-2677.md'>FEP-2677</a> (e.g. <u>https://demo.gancio.org</u>)</li><li>ou un compte ActivityPub, tel <u>@gancio@mastodon.cisti.org</u></li><li>l'url d'un compte, tel <u>https://instance.tld/actor</u>.</li></ul><br/>Les Events publiés or boostés par ces sources seront importés."
+        "add_trusted_source_help": "Utilisez l'une des syntaxes suivantes : <br/><ul><li>l'adresse web d'un autre Gancio ou d'un logiciel qui supporte un Application Actor / <a href='https://codeberg.org/fediverse/fep/src/branch/main/fep/2677/fep-2677.md'>FEP-2677</a> (e.g. <u>https://demo.gancio.org</u>)</li><li>ou un compte ActivityPub, tel <u>@gancio@mastodon.cisti.org</u></li><li>l'url d'un compte, tel <u>https://instance.tld/actor</u>.</li></ul><br/>Les Events publiés or boostés par ces sources seront importés.",
+        "unconfirmed_events": "Événements non confirmés",
+        "past_unconfirmed_events": "Événements non confirmés passés",
+        "delete_page_confirm": "Êtes-vous sûr de vouloir supprimer la page « <strong>{title}</strong> » ?",
+        "calendar_first_day_of_week": "Premier jour de la semaine",
+        "page_description": "Dans cette section, vous pouvez gérer les pages personnalisées (e.g., chartes, guides pratiques). Ces pages n'apparaîtront pas automatiquement, mais vous pouvez y faire référence dans le pied de page, depuis la page « À propos » ou n'importe quelle autre page, via le lien « Aperçu ».",
+        "new_page": "Ajouter une nouvelle page personnalisée",
+        "receive_confirm_notification": "Reçoit les demandes de confirmation d'utilisateur/évènement",
+        "calendar_first_day_of_week_description": "Sélectionnez le jour à afficher comme premier jour de la semaine dans les calendriers. Par défaut, la choix est fait en fonction des paramètres régionaux (locale) de l'utilisateur.",
+        "calendar_first_day_of_week_default": "Par défaut (locale utilisateur)",
+        "smtp_password_description": "Laissez ce champ vide si vous ne souhaitez pas modifier le mot de passe"
     },
     "oauth": {
         "scopes": {
@@ -372,7 +391,8 @@
         "email": "Saisissez une adresse courriel valide",
         "required": "{fieldName} est requis",
         "latitude": "Insérer une latitude comprise entre -90 et 90",
-        "longitude": "Insérer une longitude valide (entre -180 et 180)"
+        "longitude": "Insérer une longitude valide (entre -180 et 180)",
+        "url": "Indiquez une URL valide (http:// ou https://)"
     },
     "ordinal": {
         "1": "premier",
