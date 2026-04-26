@@ -168,25 +168,41 @@ const Helpers = {
       })
     })
 
-    router.use('/fallbackimage.png', (req, res, next) => {
-      const fallbackImagePath =  settingsController.settings.fallback_image || './static/noimg.svg'
-      return express.static(fallbackImagePath, { maxAge: '10m' })(req, res, next)
-    })
+    // express.static() holds internal state — share one instance per path
+    const _staticCache = {}
+    function cachedStatic(key, getPath, opts) {
+      return (req, res, next) => {
+        const p = getPath(res)
+        if (_staticCache[key]?.path !== p) {
+          _staticCache[key] = { path: p, middleware: express.static(p, opts) }
+        }
+        return _staticCache[key].middleware(req, res, next)
+      }
+    }
 
-    router.use('/headerimage.png', (req, res, next) => {
-      const headerImagePath =  settingsController.settings.header_image || './static/noimg.svg'
-      return express.static(headerImagePath, { maxAge: '10m' })(req, res, next)
-    })
+    router.use('/fallbackimage.png', cachedStatic(
+      'fallback',
+      () => settingsController.settings.fallback_image || './static/noimg.svg',
+      { maxAge: '10m' }
+    ))
 
-    router.use('/logo.png', (req, res, next) => {
-      const logoPath = settingsController.settings.logo || './static/gancio'
-      return express.static(logoPath + '.png', { maxAge: '10m' } )(req, res, next)
-    })
+    router.use('/headerimage.png', cachedStatic(
+      'header',
+      () => settingsController.settings.header_image || './static/noimg.svg',
+      { maxAge: '10m' }
+    ))
 
-    router.use('/favicon.ico', (req, res, next) => {
-      const faviconPath = res.locals.settings.logo ? res.locals.settings.logo + '.png' : './assets/favicon.ico'
-      return express.static(faviconPath, { immutable: true, maxAge: '10m' })(req, res, next)
-    })
+    router.use('/logo.png', cachedStatic(
+      'logo',
+      () => (settingsController.settings.logo || './static/gancio') + '.png',
+      { maxAge: '10m' }
+    ))
+
+    router.use('/favicon.ico', cachedStatic(
+      'favicon',
+      (res) => res.locals.settings.logo ? res.locals.settings.logo + '.png' : './assets/favicon.ico',
+      { immutable: true, maxAge: '10m' }
+    ))
 
     router.use('/custom_js', (_req, res, next) => {
       return res.type('application/javascript').send(res.locals.settings?.custom_js ?? '')

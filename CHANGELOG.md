@@ -1,3 +1,9 @@
+# 0.6.8 (26-04-2026)
+## Fixes
+- Fix memory leak: `express.static()` was being instantiated on every request for logo, favicon, fallback image and 
+header image -- now cached per path and recreated only when settings change
+- Fix `express-rate-limit` error: server middleware is now eagerly loaded at startup instead of lazily on first request
+
 # 0.6.7 (19-07-2025)
 ## Improvement
 - Restore scroll position when going back to home page [#17](https://github.com/tboye/offbeat.amsterdam/pull/17)
