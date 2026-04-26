@@ -2,7 +2,8 @@ const config = require('./server/config.js')
 const locales = require('./locales/index')
 const dns = require('node:dns')
 dns.setDefaultResultOrder('ipv4first')
-const settingsController = require('./server/api/controller/settings');
+const settingsController = require('./server/api/controller/settings')
+require('./server/routes') // eager-load so rate limiters initialize outside request context
 
 export default {
   publicRuntimeConfig: {
