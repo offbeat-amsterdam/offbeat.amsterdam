@@ -1,3 +1,7 @@
+# 0.6.9 (27-04-2026)
+## Improvements
+- Better accessibility (labels, default color contrast)
+
 # 0.6.8 (26-04-2026)
 ## Fixes
 - Fix memory leaks

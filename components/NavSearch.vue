@@ -8,8 +8,8 @@
             :placeholder='$t("common.search")' @click:clear="setFilter(['query', null])"
             @keypress.enter="setFilter(['query', query])" clearable :clear-icon='mdiClose')
             template(v-slot:append)
-              v-icon.mr-2(v-if='query' v-text='mdiMagnify' @click="setFilter(['query', query])")
-              v-icon(v-if='settings.allow_recurrent_event || settings.allow_multidate_event' v-text='mdiCog' v-bind='attrs' v-on='on')
+              v-icon.mr-2(v-if='query' v-text='mdiMagnify' @click="setFilter(['query', query])" :aria-label="$t('common.search')")
+              v-icon(v-if='settings.allow_recurrent_event || settings.allow_multidate_event' v-text='mdiCog' v-bind='attrs' v-on='on' :aria-label="$t('common.filter')")
         v-card(outlined :rounded='"0"')
           v-card-text
             v-row(dense)

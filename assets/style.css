@@ -2,7 +2,7 @@ html, body {
   scrollbar-width: thin;
   overflow-y: auto !important;
   overflow-x: hidden;
-  scrollbar-color: #FF4511 #111;
+  scrollbar-color: #DB3B00 #111;
   font-family: sans-serif;
 }
 
@@ -117,7 +117,7 @@ li {
 
 .v-menu__content {
   scrollbar-width: thin;
-  scrollbar-color: #FF4511 #111;
+  scrollbar-color: #DB3B00 #111;
   box-shadow: none !important;
 }
 

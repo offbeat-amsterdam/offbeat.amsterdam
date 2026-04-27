@@ -1,10 +1,10 @@
 <template>
   <v-tabs id='navbar' centered background-color='transparent' optional dense icons-and-text class='mt-4'>
-    <v-tab v-if='$auth.loggedIn || settings.allow_anon_event' to='/add' :ripple="false">
+    <v-tab v-if='$auth.loggedIn || settings.allow_anon_event' to='/add' :ripple="false" :aria-label="$t('common.add_event')">
       <span class='d-none d-sm-flex'>{{$t('common.add_event')}}</span>
       <v-icon color='primary' v-text='mdiPlus' />
     </v-tab>
-    <v-tab to='/export' :ripple="false">
+    <v-tab to='/export' :ripple="false" :aria-label="$t('common.share')">
       <span class='d-none d-sm-flex'>{{$t('common.share')}}</span>
       <v-icon v-text='mdiShareVariant' />
     </v-tab>
