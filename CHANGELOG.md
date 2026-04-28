@@ -1,3 +1,7 @@
+# 0.6.10 (28-04-2026)
+## Fix
+- Fixed SSR API calls routing through nginx instead of loopback
+
 # 0.6.9 (27-04-2026)
 ## Improvements
 - Better accessibility (labels, default color contrast)
