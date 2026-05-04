@@ -1,3 +1,7 @@
+# 0.6.12 (05-05-2026)
+## Fixes
+- Fix missing background on dialog and menu popups 
+
 # 0.6.11 (04-05-2026)
 ## Changes
 - Rebrand 'Online' events into 'Multiple locations' events (dirty hack -- UI only change, DB not touched)
