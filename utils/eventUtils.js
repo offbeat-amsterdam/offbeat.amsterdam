@@ -24,17 +24,14 @@ export function buildEventJsonLd(event, settings, $helper) {
   }
 
   const isOnline = event.place?.name?.toLowerCase() === 'online'
-  schema.eventAttendanceMode = isOnline ? "https://schema.org/OnlineEventAttendanceMode" : "https://schema.org/OfflineEventAttendanceMode"
-  if (!isOnline) {
-    schema.location = {
-      "@type": "Place",
-      name: event.place.name,
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: event.place.address
+  schema.eventAttendanceMode = "https://schema.org/OfflineEventAttendanceMode"
+  schema.location = isOnline
+    ? { "@type": "Place", name: "Multiple Locations" }
+    : {
+        "@type": "Place",
+        name: event.place.name,
+        address: { "@type": "PostalAddress", streetAddress: event.place.address }
       }
-    }
-  }
 
   if (event.tags?.length) {
     schema.keywords = event.tags.join(', ')

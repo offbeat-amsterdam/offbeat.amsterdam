@@ -20,7 +20,7 @@ v-row.mb-4
           v-list-item-content(two-line v-if='item.create')
             v-list-item-title <v-icon color='primary' v-text='mdiPlus' :aria-label='$t("common.add")'></v-icon> {{$t('common.add')}} <strong>{{item.name}}</strong>
           v-list-item-content(two-line v-else-if='item.online')
-            v-list-item-title <v-icon color='primary' v-text='mdiLaptopAccount' :aria-label='$t("common.online")'></v-icon> {{$t('common.online')}}
+            v-list-item-title <v-icon color='primary' v-text='mdiMapMarkerMultiple' :aria-label='$t("common.multiple_locations")'></v-icon> {{$t('common.multiple_locations')}}
           v-list-item-content(two-line v-else)
             v-list-item-title(v-text='item.name')
             v-list-item-subtitle(v-text='item.address')
@@ -61,7 +61,7 @@ v-row.mb-4
     
 </template>
 <script>
-import { mdiMap, mdiMapMarker, mdiPlus, mdiCog, mdiLink, mdiCloseCircle, mdiLaptopAccount, mdiMapSearch } from '@mdi/js'
+import { mdiMap, mdiMapMarker, mdiMapMarkerMultiple, mdiPlus, mdiCog, mdiLink, mdiCloseCircle, mdiLaptopAccount, mdiMapSearch } from '@mdi/js'
 import { mapState } from 'vuex'
 import debounce from 'lodash/debounce'
 import WhereInputAdvanced from './WhereInputAdvanced.vue'
@@ -76,7 +76,7 @@ export default {
   components: { WhereInputAdvanced, TBtn },
   data () {
     return {
-      mdiMap, mdiMapMarker, mdiPlus, mdiCog, mdiLink, mdiCloseCircle, mdiLaptopAccount, mdiMapSearch,
+      mdiMap, mdiMapMarker, mdiMapMarkerMultiple, mdiPlus, mdiCog, mdiLink, mdiCloseCircle, mdiLaptopAccount, mdiMapSearch,
       places: [],
       place: { isNew: false, name: '' },
       placeName: '',

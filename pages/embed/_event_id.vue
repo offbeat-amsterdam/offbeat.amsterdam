@@ -9,7 +9,7 @@ nuxt-link.embed_event(:to='`/event/${event.slug || event.id}`' target='_blank' :
     h4 {{event.title}}
 
     //- date / place
-    .date {{event.place.name}}
+    .date {{event.place.name === 'online' ? $t('common.multiple_locations') : event.place.name}}
 </template>
 <script>
 

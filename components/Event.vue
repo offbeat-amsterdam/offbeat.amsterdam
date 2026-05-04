@@ -20,12 +20,18 @@
       :content="$time.unixFormat(event.end_datetime,'yyyy-MM-dd\'T\'HH:mm')"> {{ $time.unixFormat(event.end_datetime)}}</time>
 
     <div class='p-location'>
-      <nuxt-link class='place d-block pl-0' text
-        :to='`/place/${event.place.id}/${encodeURIComponent(event.place.name)}`'>
-        <v-icon v-text='mdiMapMarker'></v-icon>
-        <span>{{ event.place.name }}</span>
-      </nuxt-link>
-      <div class='d-none p-street-address'>{{ event.place.address }}</div>
+      <template v-if="event.place.name === 'online'">
+        <v-icon v-text='mdiMapMarkerMultiple'></v-icon>
+        <span>{{ $t('common.multiple_locations') }}</span>
+      </template>
+      <template v-else>
+        <nuxt-link class='place d-block pl-0' text
+          :to='`/place/${event.place.id}/${encodeURIComponent(event.place.name)}`'>
+          <v-icon v-text='mdiMapMarker'></v-icon>
+          <span>{{ event.place.name }}</span>
+        </nuxt-link>
+        <div class='d-none p-street-address'>{{ event.place.address }}</div>
+      </template>
     </div>
   </v-card-text>
 
@@ -44,12 +50,12 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
 import MyPicture from '~/components/MyPicture'
-import { mdiRepeat, mdiCalendar, mdiMapMarker, mdiTimerSandComplete } from '@mdi/js'
+import { mdiRepeat, mdiCalendar, mdiMapMarker, mdiMapMarkerMultiple, mdiTimerSandComplete } from '@mdi/js'
 import { buildEventJsonLd } from '../utils/eventUtils'
 
 export default {
   data() {
-    return { mdiRepeat, mdiMapMarker, mdiCalendar, mdiTimerSandComplete }
+    return { mdiRepeat, mdiMapMarker, mdiMapMarkerMultiple, mdiCalendar, mdiTimerSandComplete }
   },
   components: {
     MyPicture

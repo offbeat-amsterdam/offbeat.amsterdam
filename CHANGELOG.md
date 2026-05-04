@@ -1,3 +1,7 @@
+# 0.6.11 (04-05-2026)
+## Changes
+- Rebrand 'Online' events into 'Multiple locations' events (dirty hack -- UI only change, DB not touched)
+
 # 0.6.10 (28-04-2026)
 ## Fix
 - Fixed SSR API calls routing through nginx instead of loopback

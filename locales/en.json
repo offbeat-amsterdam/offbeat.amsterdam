@@ -106,6 +106,7 @@
         "longitude": "Longitude",
         "search_coordinates": "Search coordinates",
         "online": "Online",
+        "multiple_locations": "Multiple Locations",
         "test": "Test",
         "show_preview": "Show preview",
         "clone": "Clone",

@@ -23,10 +23,13 @@
               small(v-if='event.parentId')  ({{$time.recurrentDetail(event)}})
 
             .p-location.h-adr
-              v-icon(v-text='mdiMapMarker')
-              nuxt-link.vcard.ml-2.p-name.text-decoration-none.text-uppercase(:to='`/place/${event?.place?.id}/${encodeURIComponent(event?.place?.name)}`')
-                span {{event?.place?.name}}
-              .font-weight-light.p-street-address(v-if='event?.place?.name !=="online"') {{event?.place?.address}}
+              v-icon(v-text='isOnline ? mdiMapMarkerMultiple : mdiMapMarker')
+              template(v-if='isOnline')
+                span.ml-2.p-name {{$t('common.multiple_locations')}}
+              template(v-else)
+                nuxt-link.vcard.ml-2.p-name.text-decoration-none.text-uppercase(:to='`/place/${event?.place?.id}/${encodeURIComponent(event?.place?.name)}`')
+                  span {{event?.place?.name}}
+                .font-weight-light.p-street-address {{event?.place?.address}}
 
             //- a.d-block(v-if='event.ap_object?.url' :href="event.ap_object?.url") {{ event.ap_object?.url }}
             a(v-if='event?.original_url'  :href="event?.original_url") {{event.original_url}}
@@ -134,7 +137,7 @@ import EventModeration from '@/components/EventModeration'
 
 import { mdiArrowLeft, mdiArrowRight, mdiDotsVertical, mdiCodeTags, mdiClose, mdiMap, mdiMessageTextOutline,
   mdiEye, mdiEyeOff, mdiDelete, mdiRepeat, mdiLock, mdiFileDownloadOutline, mdiShareAll, mdiTimerSandComplete,
-  mdiCalendarImport, mdiCalendar, mdiContentCopy, mdiMapMarker, mdiChevronUp, mdiMonitorAccount, mdiBookmark, mdiStar,
+  mdiCalendarImport, mdiCalendar, mdiContentCopy, mdiMapMarker, mdiMapMarkerMultiple, mdiChevronUp, mdiMonitorAccount, mdiBookmark, mdiStar,
   mdiLinkVariant, mdiInformation, mdiTicketConfirmationOutline} from '@mdi/js'
 import { buildEventJsonLd } from '../../utils/eventUtils'
 
@@ -164,7 +167,7 @@ export default {
   data ({$route}) {
     return {
       mdiArrowLeft, mdiArrowRight, mdiDotsVertical, mdiCodeTags, mdiCalendarImport, mdiCalendar, mdiFileDownloadOutline, mdiMessageTextOutline, mdiTimerSandComplete,
-      mdiMapMarker, mdiContentCopy, mdiClose, mdiDelete, mdiEye, mdiEyeOff, mdiRepeat, mdiMap, mdiChevronUp, mdiMonitorAccount, mdiBookmark, mdiStar, mdiShareAll, mdiLinkVariant,
+      mdiMapMarker, mdiMapMarkerMultiple, mdiContentCopy, mdiClose, mdiDelete, mdiEye, mdiEyeOff, mdiRepeat, mdiMap, mdiChevronUp, mdiMonitorAccount, mdiBookmark, mdiStar, mdiShareAll, mdiLinkVariant,
       mdiInformation, mdiTicketConfirmationOutline,
       currentAttachment: 0,
       event: {},

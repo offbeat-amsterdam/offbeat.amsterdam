@@ -1,7 +1,7 @@
 <template>
   <v-container id='home' class='px-2 px-sm-6 pt-0'>
     <h1 class='d-block text-h4 font-weight-black text-center text-uppercase mt-10 mx-auto w-100 text-underline'>
-      <u>{{ place.name }}</u>
+      <u>{{ place.name === 'online' ? $t('common.multiple_locations') : place.name }}</u>
     </h1>
     <span v-if='place.name!=="online"' class="d-block text-subtitle text-center w-100">{{ place.address }}</span>
 
