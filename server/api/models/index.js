@@ -96,6 +96,13 @@ const db = {
       ...dbConf.dialectOptions,
       autoJsonMap: true
     }
+    dbConf.pool = {
+      max: 20,
+      min: 0,
+      acquire: 30000,
+      idle: 10000,
+      ...dbConf.pool
+    }
     log.debug(`Connecting to DB: ${JSON.stringify(dbConf)}`)
     if (dbConf.dialect === 'sqlite') {
       dbConf.retry = {

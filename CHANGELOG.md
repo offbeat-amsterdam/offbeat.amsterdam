@@ -1,3 +1,8 @@
+# 0.6.13 (10-07-2026)
+## Fix
+- Fix intermittent 502s: raise Node's keep-alive idle timeout so nginx doesn't reuse a connection Node has already 
+closed, raise DB connection pool size to prevent request queuing under load
+
 # 0.6.12 (05-05-2026)
 ## Fixes
 - Fix missing background on dialog and menu popups 

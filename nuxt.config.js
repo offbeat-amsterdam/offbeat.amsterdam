@@ -202,8 +202,11 @@ module.exports = {
   },
   hooks: {
     listen(server) {
-      server.keepAliveTimeout = 35000;
-      server.headersTimeout = 36000;
+      // Must exceed nginx's upstream `keepalive_timeout` (70s) so Node never
+      // closes a pooled connection that nginx still considers reusable,
+      // which otherwise surfaces as ECONNRESET / 502s on the next reuse.
+      server.keepAliveTimeout = 75000;
+      server.headersTimeout = 76000;
     }
   },
   build: {
