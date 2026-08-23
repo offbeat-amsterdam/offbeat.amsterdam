@@ -182,6 +182,8 @@
         "recurrent_description": "Choose frequency and select days",
         "multidate_description": "Is it a festival? Choose when it starts and ends",
         "multidate": "Multiple days",
+        "ongoing_title": "Ongoing",
+        "until_date": "Until {date}",
         "normal": "Normal",
         "normal_description": "Choose the day.",
         "recurrent_1w_days": "Each {days}",
