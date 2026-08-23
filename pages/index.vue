@@ -5,11 +5,13 @@
     <section id='announcements' class='mt-2 mt-sm-4' v-if='announcements?.length'>
       <Announcement v-for='announcement in announcements' :key='`a_${announcement.id}`' :announcement='announcement' />
     </section>
+  
+    <OngoingRail class='mt-sm-4 mt-2' v-if='!$fetchState.pending' :events='ongoingEvents' />
 
     <!-- Events -->
     <section id='events' class='mt-sm-4 mt-2' v-if='!$fetchState.pending'>
       <v-lazy class='event v-card' :value='shouldLoadImmediately(idx)'
-        v-for='(event, idx) in visibleEvents' :key='event.id'
+        v-for='(event, idx) in upcomingEvents' :key='event.id'
         :min-height='hide_thumbs ? 105 : undefined'
         :options="{ threshold: .5, rootMargin: '500px' }"
         :class="{ 'theme--dark': is_dark }"
@@ -29,13 +31,16 @@
 import { mapState, mapActions, mapGetters  } from 'vuex'
 import { DateTime } from 'luxon'
 import Event from '@/components/Event'
+import OngoingRail from '@/components/OngoingRail'
 import Announcement from '@/components/Announcement'
 import ThemeView from '@/components/ThemeView'
 import { mdiMagnify, mdiCloseCircle } from '@mdi/js'
+import ongoingSplit from '@/assets/ongoingSplit'
 
 export default {
   name: 'Index',
-  components: { Event, Announcement, ThemeView },
+  components: { Event, Announcement, ThemeView, OngoingRail },
+  mixins: [ongoingSplit],
   middleware: 'setup',
   fetch () {
     if (process.server) return
@@ -109,6 +114,14 @@ export default {
       } else {
         return this.events.filter(e => this.filter.show_recurrent || !e.parentId)
       }
+    },
+
+    eventsToSplit () {
+      return this.visibleEvents
+    },
+
+    splitOngoing () {
+      return !this.selectedDay
     }
   },
   created () {
@@ -168,7 +181,7 @@ export default {
       if (idx < 9) return true
       if (this.isRestoringScroll && this.lastViewedEventId) {
         // Find the index of the event we're trying to restore to
-        const targetEventIndex = this.visibleEvents.findIndex(e => e.id === this.lastViewedEventId)
+        const targetEventIndex = this.upcomingEvents.findIndex(e => e.id === this.lastViewedEventId)
         if (targetEventIndex !== -1) {
           // Load up to the target event
           return idx <= targetEventIndex
