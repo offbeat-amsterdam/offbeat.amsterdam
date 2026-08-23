@@ -56,7 +56,9 @@ export default ({ app, store }, inject) => {
 
     when (event) {
       const currentYear = app.$time.currentYear()
-      const addTimezone = event.ap_id || event.place?.name === 'online'
+      // federated events really can be in another timezone; a multi venue
+      // event (stored as the 'online' place) is local, so no suffix for it
+      const addTimezone = !!event.ap_id
 
       const opt = {
         zone: store.state.settings.instance_timezone,
