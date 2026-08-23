@@ -1,3 +1,14 @@
+# 0.7.0 (24-08-2026)
+## Improvements
+- Multi-day events (exhibitions, festivals) no longer stick to the top of the agenda: once open they move into a
+  collapsible `Ongoing` rail and read `Until Sunday, Aug 31` instead of a start time that has passed. Same on venue and
+  collection pages. Detected by the `multidate` flag *or* a 48h+ duration, as almost no event has the flag
+
+## Fixes
+- Venue pages listed still-running events under `Past events` too -- the API counts an event as past once it has
+  *started*
+- Multi-venue events no longer get a `GMT+2` suffix, and RSS/ICS say `Multiple Locations` instead of `online`
+
 # 0.6.13 (10-07-2026)
 ## Fix
 - Fix intermittent 502s: raise Node's keep-alive idle timeout so nginx doesn't reuse a connection Node has already 
