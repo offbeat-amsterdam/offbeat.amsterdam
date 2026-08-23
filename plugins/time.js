@@ -1,4 +1,5 @@
 import { DateTime, Settings } from 'luxon'
+import { isLongRunning } from '@/utils/eventUtils'
 export default ({ app, store }, inject) => {
   const zone = Settings.defaultZoneName = store.state.settings.instance_timezone
   Settings.defaultLocale = app.i18n.locale || store.state.settings.instance_locale
@@ -55,7 +56,9 @@ export default ({ app, store }, inject) => {
 
     when (event) {
       const currentYear = app.$time.currentYear()
-      const addTimezone = event.ap_id || event.place?.name === 'online'
+      // federated events really can be in another timezone; a multi venue
+      // event (stored as the 'online' place) is local, so no suffix for it
+      const addTimezone = !!event.ap_id
 
       const opt = {
         zone: store.state.settings.instance_timezone,
@@ -70,6 +73,25 @@ export default ({ app, store }, inject) => {
       }
 
       return time
+    },
+
+    /**
+     * @description how a long running event reads once it is running: the
+     * opening time is noise by then, the closing date is the whole point
+     */
+    until (event) {
+      const opt = {
+        zone: store.state.settings.instance_timezone,
+        locale: app.i18n.locale || store.state.settings.instance_locale
+      }
+      const end = DateTime.fromSeconds(event.end_datetime, opt)
+      const date = end.toLocaleString({
+        weekday: 'long',
+        ...(time.currentYear() !== end.year && { year: 'numeric' }),
+        month: 'short',
+        day: '2-digit'
+      })
+      return app.i18n.t('event.until_date', { date })
     },
 
     nowUnix () {
@@ -141,7 +163,7 @@ export default ({ app, store }, inject) => {
         const key = `${start.month}${start.day}`
         const c = (e.end_datetime || e.start_datetime) < now ? 'vc-past' : ''
 
-        if (e.multidate === true && e.end_datetime) {
+        if (isLongRunning(e) && e.end_datetime) {
           attributes.push({
             dates: { start: start.toJSDate(), end: DateTime.fromSeconds(e.end_datetime).toJSDate() },
             highlight: {

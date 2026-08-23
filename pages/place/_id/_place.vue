@@ -14,18 +14,20 @@
         <HowToArriveNav :place='place' class="justify-center" />
       </div>
     </div>
+    
+    <OngoingRail class='mt-14' :events='ongoingEvents' name='place' />
 
     <!-- Events -->
-    <div id="events" class='mt-14'>
-      <v-lazy class='event v-card' :value='idx<9' v-for='(event, idx) in events' :key='event.id' :min-height='hide_thumbs ? 105 : undefined' :options="{ threshold: .5, rootMargin: '500px' }" :class="{ 'theme--dark': is_dark }">
+    <div id="events" :class="ongoingEvents.length ? 'mt-8' : 'mt-14'">
+      <v-lazy class='event v-card' :value='idx<9' v-for='(event, idx) in upcomingEvents' :key='event.id' :min-height='hide_thumbs ? 105 : undefined' :options="{ threshold: .5, rootMargin: '500px' }" :class="{ 'theme--dark': is_dark }">
         <Event :event='event' :lazy='idx > 9' />
       </v-lazy>
     </div>
 
     <!-- Past Events -->
-    <h2 class='mt-14 mb-3' v-if="pastEvents.length">{{$t('common.past_events')}}</h2>
-    <div v-if="pastEvents.length" id="events">
-      <v-lazy class='event v-card' :value='idx<9' v-for='(event, idx) in pastEvents' :key='event.id' :min-height='hide_thumbs ? 105 : undefined' :options="{ threshold: .5, rootMargin: '500px' }" :class="{ 'theme--dark': is_dark }">
+    <h2 class='mt-14 mb-3' v-if="endedEvents.length">{{$t('common.past_events')}}</h2>
+    <div v-if="endedEvents.length" id="events">
+      <v-lazy class='event v-card' :value='idx<9' v-for='(event, idx) in endedEvents' :key='event.id' :min-height='hide_thumbs ? 105 : undefined' :options="{ threshold: .5, rootMargin: '500px' }" :class="{ 'theme--dark': is_dark }">
         <Event :event='event' :lazy='idx > 9' />
       </v-lazy>
     </div>
@@ -36,13 +38,17 @@
 
 import { mapState, mapGetters } from 'vuex'
 import Event from '@/components/Event'
+import ongoingSplit from '@/assets/ongoingSplit'
 import HowToArriveNav from '@/components/HowToArriveNav.vue'
+import OngoingRail from '@/components/OngoingRail'
 
 export default {
   name: 'Place',
+  mixins: [ongoingSplit],
   components: {
     Event,
     HowToArriveNav,
+    OngoingRail,
     [process.client && 'Map']: () => import('@/components/Map.vue')
   },
   head() {
@@ -58,6 +64,18 @@ export default {
   computed: {
     ...mapState(['settings']),
     ...mapGetters(['hide_thumbs', 'is_dark']),
+    eventsToSplit () {
+      return this.events
+    },
+    /**
+     * The API calls an event past as soon as it has *started*, so anything
+     * running right now comes back in both lists. Only what has actually
+     * finished belongs under "past events".
+     */
+    endedEvents () {
+      const now = this.$time.nowUnix()
+      return this.pastEvents.filter(e => (e.end_datetime || e.start_datetime) <= now)
+    }
   },
   async asyncData({ $axios, params, error }) {
     try {

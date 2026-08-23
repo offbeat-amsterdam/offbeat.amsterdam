@@ -15,7 +15,9 @@ function formatDatetime(timestamp, type = 'long', addTimezone = false ) {
 
 
 export function when(event) {
-  const addTimezone = event.ap_id || event.place.name === 'online'
+  // federated events really can be in another timezone; a multi venue
+  // event (stored as the 'online' place) is local, so no suffix for it
+  const addTimezone = !!event.ap_id
   if (event.multidate) {
     return formatDatetime(event.start_datetime, 'long', addTimezone) + ' - ' +
       formatDatetime(event.end_datetime, 'long', addTimezone)

@@ -14,7 +14,7 @@
   <v-card-text class='body pt-0 pb-0'>
 
     <time class='dt-start subtitle-1' :datetime='$time.unixFormat(event.start_datetime, "yyyy-MM-dd HH:mm")'
-      :content="$time.unixFormat(event.start_datetime, 'yyyy-MM-dd\'T\'HH:mm')"> <v-icon v-text='mdiCalendar' /> {{ $time.when(event) }}
+      :content="$time.unixFormat(event.start_datetime, 'yyyy-MM-dd\'T\'HH:mm')"> <v-icon v-text='isOnNow ? mdiCalendarRange : mdiCalendar' /> {{ whenLabel }}
     </time>
     <time class='d-none dt-end' v-if='event.end_datetime'
       :content="$time.unixFormat(event.end_datetime,'yyyy-MM-dd\'T\'HH:mm')"> {{ $time.unixFormat(event.end_datetime)}}</time>
@@ -50,12 +50,12 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
 import MyPicture from '~/components/MyPicture'
-import { mdiRepeat, mdiCalendar, mdiMapMarker, mdiMapMarkerMultiple, mdiTimerSandComplete } from '@mdi/js'
-import { buildEventJsonLd } from '../utils/eventUtils'
+import { mdiRepeat, mdiCalendar, mdiCalendarRange, mdiMapMarker, mdiMapMarkerMultiple, mdiTimerSandComplete } from '@mdi/js'
+import { buildEventJsonLd, isOnNow as isEventOnNow } from '../utils/eventUtils'
 
 export default {
   data() {
-    return { mdiRepeat, mdiMapMarker, mdiMapMarkerMultiple, mdiCalendar, mdiTimerSandComplete }
+    return { mdiRepeat, mdiMapMarker, mdiMapMarkerMultiple, mdiCalendar, mdiCalendarRange, mdiTimerSandComplete }
   },
   components: {
     MyPicture
@@ -67,6 +67,12 @@ export default {
   computed: {
     ...mapGetters(['hide_thumbs']),
     ...mapState(['settings']),
+    isOnNow() {
+      return isEventOnNow(this.event, this.$time.nowUnix())
+    },
+    whenLabel() {
+      return this.isOnNow ? this.$time.until(this.event) : this.$time.when(this.event)
+    },
     isPast() {
       const now = new Date()
       if (this.event.end_datetime) {

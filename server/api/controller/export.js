@@ -115,7 +115,12 @@ const exportController = {
       const tmpStart = DateTime.fromSeconds(e.start_datetime, { zone: 'UTC' })
       const start = [ tmpStart.year, tmpStart.month, tmpStart.day, tmpStart.hour, tmpStart.minute ]
 
-      const location = e?.place ? (e.place?.name !== 'online' ? `${e.place?.name} - ${e.place?.address}` : `${e.place?.name} - ${e?.online_locations?.[0]}`) : ''
+      // 'online' is how a multi venue event is stored, and several venues have
+      // no one address to put in LOCATION. Anything else would be a URL, which
+      // a calendar app will happily offer to navigate to.
+      const location = e?.place
+        ? (e.place?.name !== 'online' ? `${e.place?.name} - ${e.place?.address}` : 'Multiple Locations')
+        : ''
       const ret = {
         uid: `${e.id}@${settings.hostname}`,
         start,
