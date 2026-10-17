@@ -103,6 +103,12 @@ const db = {
       idle: 10000,
       ...dbConf.pool
     }
+    // Sequelize defaults to console.log for every query, which on Linux is a
+    // synchronous write to journald on each request: only log slow ones.
+    if (dbConf.logging === undefined) {
+      dbConf.logging = require('../../diagnostics').logQuery
+      dbConf.benchmark = true
+    }
     log.debug(`Connecting to DB: ${JSON.stringify(dbConf)}`)
     if (dbConf.dialect === 'sqlite') {
       dbConf.retry = {

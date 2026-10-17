@@ -26,6 +26,8 @@ const initialize = {
   },
 
   async start () {
+    require('./diagnostics').start()
+
     if (config.status == 'CONFIGURED') {
       await db.sequelize.authenticate()
       log.debug('Running migrations')

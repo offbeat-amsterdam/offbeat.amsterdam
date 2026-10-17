@@ -1,3 +1,12 @@
+# 0.7.1 (18-10-2026)
+## Fixes
+- Outbound HTTP requests (federation deliveries, nodeinfo lookups) time out after 15s instead of hanging forever when
+  a remote instance is unresponsive
+- Stop logging every SQL query to stdout -- Sequelize defaulted to `console.log`, a synchronous write on each query
+
+## Improvements
+- Hang diagnostics: warn when the event loop is blocked for over 1s (with memory usage) and log queries slower than 1s
+
 # 0.7.0 (24-08-2026)
 ## Improvements
 - Multi-day events (exhibitions, festivals) no longer stick to the top of the agenda: once open they move into a
