@@ -1,4 +1,4 @@
-# 0.8.0 (unreleased)
+# 0.8.0 (18-10-2026)
 ## Improvements
 - Paginate events on tag and venue pages
 - Add `page` and `past_page` parameters to `/api/tag/:tag` and `/api/place/:id`
