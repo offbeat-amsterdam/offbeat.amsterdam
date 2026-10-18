@@ -1,6 +1,6 @@
 <template>
   <div class='d-flex pa-4'>
-    <v-btn icon large nuxt to='/' :aria-label="settings.title">
+    <v-btn class='navheader__logo' icon large nuxt to='/' :aria-label="settings.title">
       <img :alt="settings.title" src='/logo.webp' height='40' width='40' />
     </v-btn>
 
@@ -103,3 +103,13 @@ export default {
   },
 }
 </script>
+<style>
+/* the logo links home: no "current page" highlight behind it there */
+.navheader__logo.v-btn--active::before {
+  opacity: 0;
+}
+
+.navheader__logo.v-btn--active:hover::before {
+  opacity: 0.08;
+}
+</style>

@@ -15,6 +15,7 @@
 - Fix sitemap generation failing during restarts
 - Fix events without a slug listed as `/event/undefined` in sitemap
 - Fix old images not removed when a federated event is updated
+- Fix gray background behind the logo on the home page
 
 # 0.7.6 (18-10-2026)
 ## Fixes
