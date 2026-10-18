@@ -1,63 +1,72 @@
+# 0.8.0 (unreleased)
+## Improvements
+- Paginate events on tag and venue pages
+- Add `page` and `past_page` parameters to `/api/tag/:tag` and `/api/place/:id`
+- Rename `Ongoing` to `Show ongoing` / `Hide ongoing`
+- Make venues collapsible, collapsed by default on mobile
+
+## Fixes
+- Fix ongoing events listed as past on tag pages
+
 # 0.7.6 (18-10-2026)
 ## Fixes
-- Text shows right away on slow connections instead of staying invisible until the custom fonts load
+- Fix text hidden until custom fonts load
 
 # 0.7.5 (18-10-2026)
 ## Fixes
-- Browsers now always get the right JavaScript bundle
+- Fix some browsers getting the legacy JavaScript bundle
 
 # 0.7.4 (18-10-2026)
 ## Fixes
-- Going back from an event reliably scrolls to it again, also for events in the Ongoing section
-- Going back to a venue, tag or collection page returns to where you were on it
+- Fix scroll position not restored when going back to home page
+- Restore scroll position when going back to venue, tag and collection pages
 
 # 0.7.3 (18-10-2026)
 ## Improvements
-- Faster home page: events load 50 at a time as you scroll, instead of all upcoming events at once
-- The calendar only loads the dates of the months on screen
-- Going back from an event returns to the same calendar day or month and scrolls to the event
-- New `light=true` option for `/api/events`, returning only event ids and dates
+- Paginate events on home page
+- Load calendar dates separately, only for the months shown
+- Keep selected calendar day and month when going back to home page
+- Add `light` parameter to `/api/events`
 
 # 0.7.2 (18-10-2026)
 ## Fixes
-- Much faster event, tag, place and collection pages: they no longer load the full list of upcoming events
+- Fix slow event, tag, venue and collection pages
 
 ## Improvements
-- RSS and ICS feeds are cached for 30 seconds
+- Cache RSS and ICS feeds for 30 seconds
 
 # 0.7.1 (18-10-2026)
 ## Fixes
-- Federation requests to unresponsive servers time out after 15 seconds instead of hanging
-- SQL queries are no longer all written to the log, which slowed down every request
+- Add 15s timeout to federation requests
+- Stop logging every SQL query
 
 ## Improvements
-- The log warns about server stalls and database queries taking longer than 1 second
+- Log event loop stalls and slow queries
 
 # 0.7.0 (24-08-2026)
 ## Improvements
-- Multi-day events (exhibitions, festivals) that have already started move to a collapsible `Ongoing` section and show
-  when they end (`Until Sunday, Aug 31`) instead of a start time in the past. Also on venue and collection pages.
-  Events lasting 48 hours or more count as multi-day
+- Move ongoing multi-day events into a collapsible `Ongoing` section on home, venue and collection pages, showing
+  their end date. Events lasting 48h or more count as multi-day
 
 ## Fixes
-- Venue pages no longer list ongoing events under `Past events`
-- Multi-venue events no longer show a timezone suffix, and RSS/ICS say `Multiple Locations` instead of `online`
+- Fix ongoing events listed as past on venue pages
+- Fix timezone suffix on multi-venue events, use `Multiple Locations` instead of `online` in RSS/ICS
 
 # 0.6.13 (10-07-2026)
-## Fixes
-- Fixed intermittent 502 errors and slow responses under load
+## Fix
+- Fix intermittent 502s under load
 
 # 0.6.12 (05-05-2026)
 ## Fixes
-- Fixed missing background on dialogs and menus
+- Fix missing background on dialog and menu popups
 
 # 0.6.11 (04-05-2026)
 ## Changes
-- `Online` events are now called `Multiple locations` events (display only, stored data is unchanged)
+- Rename `Online` events to `Multiple locations` (UI only)
 
 # 0.6.10 (28-04-2026)
-## Fixes
-- Fixed server-side API calls going through nginx instead of straight to the app
+## Fix
+- Fix SSR API calls routing through nginx instead of loopback
 
 # 0.6.9 (27-04-2026)
 ## Improvements
