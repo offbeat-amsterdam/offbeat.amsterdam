@@ -11,7 +11,8 @@
   </h2>
 
   <div :id='railId' class='ongoing__rail' v-show='!collapsed'>
-    <EventCompact v-for='event in events' :key='event.id' :event='event' />
+    <EventCompact v-for='event in events' :key='event.id' :event='event'
+      :data-event-id='event.id' @click.native="$emit('select', event)" />
   </div>
 
 </section>

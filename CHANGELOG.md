@@ -1,3 +1,8 @@
+# 0.7.4 (18-10-2026)
+## Fixes
+- Going back from an event reliably scrolls to it again, also for events in the Ongoing section
+- Going back to a venue, tag or collection page returns to where you were on it
+
 # 0.7.3 (18-10-2026)
 ## Improvements
 - Faster home page: events load 50 at a time as you scroll, instead of all upcoming events at once

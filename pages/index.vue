@@ -6,7 +6,7 @@
       <Announcement v-for='announcement in announcements' :key='`a_${announcement.id}`' :announcement='announcement' />
     </section>
   
-    <OngoingRail class='mt-sm-4 mt-2' v-if='!$fetchState.pending' :events='ongoingEvents' />
+    <OngoingRail class='mt-sm-4 mt-2' v-if='!$fetchState.pending' :events='ongoingEvents' @select='storeEventId' />
 
     <!-- Events -->
     <section id='events' class='mt-sm-4 mt-2' v-if='!$fetchState.pending'>
@@ -76,10 +76,11 @@ export default {
       end: view.end,
       loadingMore: false,
       moreObserver: null,
+      // cards up to this index render right away (see shouldLoadImmediately)
+      eagerUntil: 8,
       tmpEvents: [],
       selectedDay: day ? DateTime.fromISO(day, { zone: vm.$store.state.settings.instance_timezone }) : null,
       storeUnsubscribe: null,
-      isRestoringScroll: false,
       lastViewedEventId: null,
       scrollAttempts: 0,
     }
@@ -221,45 +222,27 @@ export default {
       if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual'
       }
-
-      // Set up router hooks
-      if (this.$router) {
-        // Handle scroll after navigation
-        this.$router.afterEach((to, from) => {
-          this.$nextTick(() => {
-            if (to.path === '/') {
-              // Restore scroll for home page
-              this.restoreScrollToLastEvent()
-            } else {
-              // Scroll to top for all other pages
-              window.scrollTo(0, 0)
-            }
-          })
-        })
-      }
+      // Other pages scroll to top in app/router.scrollBehavior.js. This runs on
+      // each mount instead of a router hook, which would outlive the component
+      this.restoreScrollToLastEvent()
     },
 
+    // Only ever grows: v-lazy drops its content when its value turns false,
+    // which would collapse the cards above a restored event
     shouldLoadImmediately(idx) {
-      if (idx < 9) return true
-      if (this.isRestoringScroll && this.lastViewedEventId) {
-        // Find the index of the event we're trying to restore to
-        const targetEventIndex = this.upcomingEvents.findIndex(e => e.id === this.lastViewedEventId)
-        if (targetEventIndex !== -1) {
-          // Load up to the target event
-          return idx <= targetEventIndex
-        }
-      }
-      return false
+      return idx <= this.eagerUntil
     },
 
     restoreScrollToLastEvent() {
       if (!process.client) return
 
       const lastEventId = sessionStorage.getItem('last_event_id')
-      if (!lastEventId) return
+      if (!lastEventId) {
+        window.scrollTo(0, 0)
+        return
+      }
 
       this.lastViewedEventId = parseInt(lastEventId)
-      this.isRestoringScroll = true
       this.scrollAttempts = 0
 
       this.$nextTick(() => {
@@ -273,26 +256,33 @@ export default {
         return
       }
 
-      const eventElement = document.querySelector(`[data-event-id="${this.lastViewedEventId}"]`)
-
-      if (eventElement) {
-        eventElement.scrollIntoView({
-          behavior: 'instant',
-          block: 'center'
-        })
-
-        this.resetScrollRestorationState()
-      } else {
-        // Event not rendered yet, try again
-        this.scrollAttempts++
-        setTimeout(() => {
-          this.scrollToEvent()
-        }, 300)
+      // Render every card up to the event first, so the layout above it is final
+      const targetEventIndex = this.upcomingEvents.findIndex(e => e.id === this.lastViewedEventId)
+      if (targetEventIndex > this.eagerUntil) {
+        this.eagerUntil = targetEventIndex
       }
+
+      this.$nextTick(() => {
+        const eventElement = document.querySelector(`[data-event-id="${this.lastViewedEventId}"]`)
+
+        if (eventElement) {
+          eventElement.scrollIntoView({
+            behavior: 'instant',
+            block: 'center'
+          })
+
+          this.resetScrollRestorationState()
+        } else {
+          // Event not rendered yet, try again
+          this.scrollAttempts++
+          setTimeout(() => {
+            this.scrollToEvent()
+          }, 300)
+        }
+      })
     },
 
     resetScrollRestorationState() {
-      this.isRestoringScroll = false
       this.lastViewedEventId = null
       this.scrollAttempts = 0
       if (process.client) {
