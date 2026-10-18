@@ -2,7 +2,7 @@ const { Collection, Filter, Event, Tag, Place, APUser } = require('../models/mod
 
 const log = require('../../log')
 const { DateTime } = require('luxon')
-const { col: Col, queryParamToBool } = require('../../helpers')
+const { col: Col, queryParamToBool, LIGHT_EVENT_ATTRIBUTES, toLightEvent } = require('../../helpers')
 const { Op, Sequelize } = require('sequelize')
 
 const collectionController = {
@@ -110,7 +110,7 @@ const collectionController = {
     name, start=DateTime.local().toUnixInteger(), end,
     show_recurrent=false,
     limit, include_description=false,
-    older, reverse, page }) {
+    older, reverse, page, light = false }) {
 
     // get the collection from specified name
     const collection = await Collection.findOne({ where: { name } })
@@ -191,14 +191,16 @@ const collectionController = {
       ...(conditions.length > 0 && { [Op.or]: conditions })
     }
 
+    // `light` returns only what the calendar needs to draw its dots
     const events = await Event.findAll({
       where,
-      attributes: {
+      attributes: light ? LIGHT_EVENT_ATTRIBUTES : {
         exclude: ['likes', 'boost', 'userId', 'is_visible', 'placeId', 'apUserApId',
           'createdAt', 'resources', 'ap_object', ...(!include_description ? ['description'] : [])]
       },
-      order: [['start_datetime', reverse ? 'DESC' : 'ASC']],
-      include: [
+      // id breaks ties between events starting together, so pages don't overlap
+      order: [['start_datetime', reverse ? 'DESC' : 'ASC'], ['id', reverse ? 'DESC' : 'ASC']],
+      include: light ? [{ model: Place, required: true, attributes: [] }] : [
         {
           model: Tag,
           // order: [Sequelize.literal('(SELECT COUNT("tagTag") FROM event_tags WHERE tagTag = tag) DESC')],
@@ -208,6 +210,7 @@ const collectionController = {
         { model: Place, required: true, attributes: ['id', 'name', 'address'] },
         { model: APUser, required: false, attributes: ['object'] }
       ],
+      raw: light,
       ...( limit > 0 && { limit }),
       ...( page > 0 && { offset: page * limit }),
       replacements
@@ -215,6 +218,10 @@ const collectionController = {
       log.error('[EVENT]', e)
       return []
     })
+
+    if (light) {
+      return events.map(toLightEvent)
+    }
 
     return events.map(e => {
       e = e.get()

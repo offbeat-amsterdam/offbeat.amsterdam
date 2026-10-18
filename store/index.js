@@ -39,7 +39,11 @@ export const state = () => ({
   },
   announcements: [],
   collections: [],
-  events: []
+  events: [],
+  // how `events` was loaded, so getMoreEvents can fetch the next page
+  eventsPaging: { params: null, page: 0, hasMore: false },
+  // calendar selection on the home page, 'yyyy-MM-dd' and { year, month }
+  homeView: { day: null, month: null }
 })
 
 export const getters = {
@@ -70,6 +74,12 @@ export const mutations = {
   setEvents (state, events) {
     state.events = Object.freeze(events)
   },
+  setEventsPaging (state, paging) {
+    state.eventsPaging = paging
+  },
+  setHomeView (state, view) {
+    state.homeView = view
+  },
   setFilter (state, { type, value }) {
     state.filter[type] = value
   }
@@ -78,7 +88,7 @@ export const mutations = {
 export const actions = {
   // this method is called server side only for each request for nuxt
   // we use it to get configuration from db, set locale, etc...
-  nuxtServerInit ({ commit }, { res, req, app }) {
+  nuxtServerInit ({ commit, state }, { res, req, app }) {
     if (res.locals && res.locals.settings) {
       // TODO: this is temporary, see #431
       if (!req?.user?.is_admin) {
@@ -98,6 +108,10 @@ export const actions = {
       commit('setAnnouncements', res.locals.announcements)
       commit('setCollections', res.locals.collections)
       commit('setEvents', res.locals.events)
+      if (res.locals.eventsPaging) {
+        const params = { ...res.locals.eventsPaging, show_recurrent: state.filter.show_recurrent, show_multidate: state.filter.show_multidate }
+        commit('setEventsPaging', { params, page: 0, hasMore: (res.locals.events?.length ?? 0) >= params.max })
+      }
     }
   },
   async updateAnnouncements ({ commit }) {
@@ -125,20 +139,38 @@ export const actions = {
     commit('setFilter', { type, value })
   },
   async getEvents ({ commit, state }, params = {}) {
+    const query = {
+      start: params.start || this.$time.startMonth(),
+      end: params.end || null,
+      show_recurrent: state.filter.show_recurrent,
+      show_multidate: state.filter.show_multidate,
+      ...( params.query && { query: params.query }),
+      ...( params.older && { older: params.older }),
+      ...( params.max && { max: params.max })
+    }
     try {
-      const events = await this.$api.getEvents({
-        start: params.start || this.$time.startMonth(),
-        end: params.end || null,
-        show_recurrent: state.filter.show_recurrent,
-        show_multidate: state.filter.show_multidate,
-        ...( params.query && { query: params.query }),
-        ...( params.older && { older: params.older })
-      })
+      const events = await this.$api.getEvents(query)
       commit('setEvents', events)
+      commit('setEventsPaging', { params: query, page: 0, hasMore: !!query.max && events.length >= query.max })
       return events
     } catch (e) {
       console.error('[STORE] getEvent', e)
       commit('setEvents', [])
+      commit('setEventsPaging', { params: null, page: 0, hasMore: false })
+      return []
+    }
+  },
+  async getMoreEvents ({ commit, state }) {
+    const { params, page, hasMore } = state.eventsPaging
+    if (!hasMore) return []
+    try {
+      const events = await this.$api.getEvents({ ...params, page: page + 1 })
+      const loaded = new Set(state.events.map(e => e.id))
+      commit('setEvents', [...state.events, ...events.filter(e => !loaded.has(e.id))])
+      commit('setEventsPaging', { params, page: page + 1, hasMore: events.length >= params.max })
+      return events
+    } catch (e) {
+      console.error('[STORE] getMoreEvents', e)
       return []
     }
   }

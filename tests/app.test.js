@@ -502,9 +502,31 @@ describe('Tags', () => {
     response = await request(app).get('/api/events?max=2')
       .expect(200)
 
-    expect(response.body.length).toBe(2) 
+    expect(response.body.length).toBe(2)
 
 
+  })
+
+  test('should return pages without overlap', async () => {
+    const all = await request(app).get('/api/events').expect(200)
+    expect(all.body.length).toBeGreaterThan(2)
+
+    const pages = []
+    for (let page = 0; page * 2 < all.body.length; page++) {
+      const response = await request(app).get(`/api/events?max=2&page=${page}`).expect(200)
+      pages.push(...response.body.map(e => e.id))
+    }
+    expect(pages).toEqual(all.body.map(e => e.id))
+  })
+
+  test('should return light events for the calendar', async () => {
+    const all = await request(app).get('/api/events').expect(200)
+    const response = await request(app).get('/api/events?light=true').expect(200)
+
+    expect(response.body.map(e => e.id)).toEqual(all.body.map(e => e.id))
+    for (const e of response.body) {
+      expect(Object.keys(e).filter(k => !['id', 'start_datetime', 'end_datetime', 'multidate', 'parentId'].includes(k))).toEqual([])
+    }
   })
 })
 

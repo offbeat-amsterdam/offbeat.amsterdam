@@ -7,6 +7,7 @@
       :is-dark="is_dark"
       :columns="!$vuetify.breakpoint.smAndDown ? 2 : 1"
       @input='click'
+      :from-page='page'
       @update:from-page='updatePage'
       :locale='$i18n.locale'
       :attributes='attributes'
@@ -21,25 +22,37 @@
 </template>
 <script>
 import { mapState, mapGetters } from 'vuex'
+import { DateTime } from 'luxon'
 import { mdiChevronDown, mdiClose } from '@mdi/js'
 
 export default {
   name: 'Calendar',
-  data ({$time}) {
-    const month = $time.currentMonth()
-    const year = $time.currentYear()
+  data ({ $time, $store }) {
+    // reopen on the day/month selected before visiting an event (see pages/index.vue)
+    const { day, month } = $store.state.homeView
     return {
       mdiChevronDown, mdiClose,
-      selectedDate: null,
-      page: { month, year },
+      selectedDate: day ? DateTime.fromISO(day).toJSDate() : null,
+      page: month ? { ...month } : { month: $time.currentMonth(), year: $time.currentYear() },
+      // The home list is paginated, so the dots come from their own
+      // lightweight request covering the months on screen
+      dotEvents: [],
+      dotsKey: null
     }
   },
   computed: {
-    ...mapState(['settings', 'events']),
+    ...mapState(['settings', 'filter']),
     ...mapGetters(['is_dark']),
     attributes () {
-      return this.$time.attributesFromEvents(this.events)
+      return this.$time.attributesFromEvents(this.dotEvents)
     }
+  },
+  watch: {
+    'filter.show_recurrent': 'loadDots',
+    'filter.show_multidate': 'loadDots'
+  },
+  mounted () {
+    this.loadDots()
   },
   methods: {
     updatePage (page) {
@@ -47,6 +60,29 @@ export default {
         this.page.month = page.month
         this.page.year = page.year
         this.$root.$emit('monthchange', page)
+      }
+      this.loadDots()
+    },
+    async loadDots () {
+      const first = DateTime.fromObject({ year: this.page.year, month: this.page.month }, { zone: this.settings.instance_timezone })
+      const columns = this.$vuetify.breakpoint.smAndDown ? 1 : 2
+      const params = {
+        start: first.toUnixInteger(),
+        end: first.plus({ months: columns - 1 }).endOf('month').toUnixInteger(),
+        show_recurrent: this.filter.show_recurrent,
+        show_multidate: this.filter.show_multidate,
+        light: true
+      }
+      const key = JSON.stringify(params)
+      if (key === this.dotsKey) return
+      this.dotsKey = key
+      try {
+        const events = await this.$api.getEvents(params)
+        // ignore answers for months already navigated away from
+        if (this.dotsKey === key) this.dotEvents = events
+      } catch (e) {
+        console.error('[CALENDAR] loadDots', e)
+        this.dotsKey = null
       }
     },
     click (day) {

@@ -21,6 +21,9 @@ const domPurify = DOMPurify(window)
 const URL = require('url')
 const settingsController = require('./api/controller/settings')
 
+// Events per page of the home list. Keep in sync with utils/eventUtils.js
+const HOME_PAGE_SIZE = 50
+
 domPurify.addHook('beforeSanitizeElements', node => {
   if (node.hasAttribute && node.hasAttribute('href')) {
     const href = node.getAttribute('href')
@@ -333,24 +336,32 @@ const Helpers = {
     const show_recurrent = res.locals.settings.allow_recurrent_event && res.locals.settings.recurrent_event_visible
     const collection_in_home = res.locals.settings.collection_in_home
 
-    // The full event list is used by the home calendar and event forms, but
-    // loading it for every server-rendered page makes crawler traffic trigger
-    // the same large query on event, tag, place, and other pages.
-    const needsEvents = req.path === '/' || req.path === '/admin' ||
-      req.path === '/add' || req.path.startsWith('/add/')
+    // Only the home page renders the event list, and only its first page:
+    // pages/index.vue loads the rest while scrolling, the calendar its own dots
+    const needsEvents = req.path === '/'
     const eventController = needsEvents ? require('./api/controller/event') : null
+    const start = Helpers.homeListStart(DateTime.local().toUnixInteger())
+    const limit = HOME_PAGE_SIZE
 
     const ret = await Promise.allSettled([
       announceController._getVisible(),
       collectionController._getVisible(),
       !needsEvents ? Promise.resolve([]) : collection_in_home ?
-        collectionController._getEvents({ name: collection_in_home, start: DateTime.local().startOf('month').toUnixInteger(), show_recurrent }) :
-        eventController._select({ start: DateTime.local().startOf('month').toUnixInteger(), show_multidate, show_recurrent, show_federated })
+        collectionController._getEvents({ name: collection_in_home, start, show_recurrent, limit }) :
+        eventController._select({ start, show_multidate, show_recurrent, show_federated, limit })
     ])
 
     res.locals.announcements = ret[0]?.value
     res.locals.collections = ret[1]?.value
     res.locals.events = ret[2]?.value
+    res.locals.eventsPaging = needsEvents ? { start, max: limit } : null
+  },
+
+  // Keep in sync with utils/eventUtils.js (ES module, not loadable here).
+  // The list starts 3h back so events that just started stay visible, rounded
+  // to the hour so the API URL (and nginx's cache of it) is stable.
+  homeListStart (nowUnix) {
+    return Math.floor(nowUnix / 3600) * 3600 - 3 * 3600
   },
 
   getWeekdayN(date, n, weekday) {
@@ -418,6 +429,19 @@ const Helpers = {
       next()
     } else {
       return res.sendStatus(403)
+    }
+  },
+
+  // Fields the calendar needs to draw its dots (see `light` in /api/events)
+  LIGHT_EVENT_ATTRIBUTES: ['id', 'start_datetime', 'end_datetime', 'multidate', 'parentId'],
+
+  toLightEvent (e) {
+    return {
+      id: e.id,
+      start_datetime: e.start_datetime,
+      end_datetime: Number(e.end_datetime) || null,
+      ...(e.multidate && { multidate: true }),
+      ...(e.parentId && { parentId: e.parentId })
     }
   },
 

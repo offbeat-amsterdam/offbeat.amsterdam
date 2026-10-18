@@ -1,47 +1,50 @@
+# 0.7.3 (18-10-2026)
+## Improvements
+- Faster home page: events load 50 at a time as you scroll, instead of all upcoming events at once
+- The calendar only loads the dates of the months on screen
+- Going back from an event returns to the same calendar day or month and scrolls to the event
+- New `light=true` option for `/api/events`, returning only event ids and dates
+
 # 0.7.2 (18-10-2026)
 ## Fixes
-- Event, tag, place and collection pages no longer load and embed the full upcoming event list on every
-  server render -- only the home, admin and add pages need it
+- Much faster event, tag, place and collection pages: they no longer load the full list of upcoming events
 
 ## Improvements
-- Cache the default RSS/ICS feeds for 30s, sharing one render between concurrent requests
+- RSS and ICS feeds are cached for 30 seconds
 
 # 0.7.1 (18-10-2026)
 ## Fixes
-- Outbound HTTP requests (federation deliveries, nodeinfo lookups) time out after 15s instead of hanging forever when
-  a remote instance is unresponsive
-- Stop logging every SQL query to stdout -- Sequelize defaulted to `console.log`, a synchronous write on each query
+- Federation requests to unresponsive servers time out after 15 seconds instead of hanging
+- SQL queries are no longer all written to the log, which slowed down every request
 
 ## Improvements
-- Hang diagnostics: warn when the event loop is blocked for over 1s (with memory usage) and log queries slower than 1s
+- The log warns about server stalls and database queries taking longer than 1 second
 
 # 0.7.0 (24-08-2026)
 ## Improvements
-- Multi-day events (exhibitions, festivals) no longer stick to the top of the agenda: once open they move into a
-  collapsible `Ongoing` rail and read `Until Sunday, Aug 31` instead of a start time that has passed. Same on venue and
-  collection pages. Detected by the `multidate` flag *or* a 48h+ duration, as almost no event has the flag
+- Multi-day events (exhibitions, festivals) that have already started move to a collapsible `Ongoing` section and show
+  when they end (`Until Sunday, Aug 31`) instead of a start time in the past. Also on venue and collection pages.
+  Events lasting 48 hours or more count as multi-day
 
 ## Fixes
-- Venue pages listed still-running events under `Past events` too -- the API counts an event as past once it has
-  *started*
-- Multi-venue events no longer get a `GMT+2` suffix, and RSS/ICS say `Multiple Locations` instead of `online`
+- Venue pages no longer list ongoing events under `Past events`
+- Multi-venue events no longer show a timezone suffix, and RSS/ICS say `Multiple Locations` instead of `online`
 
 # 0.6.13 (10-07-2026)
-## Fix
-- Fix intermittent 502s: raise Node's keep-alive idle timeout so nginx doesn't reuse a connection Node has already 
-closed, raise DB connection pool size to prevent request queuing under load
+## Fixes
+- Fixed intermittent 502 errors and slow responses under load
 
 # 0.6.12 (05-05-2026)
 ## Fixes
-- Fix missing background on dialog and menu popups 
+- Fixed missing background on dialogs and menus
 
 # 0.6.11 (04-05-2026)
 ## Changes
-- Rebrand 'Online' events into 'Multiple locations' events (dirty hack -- UI only change, DB not touched)
+- `Online` events are now called `Multiple locations` events (display only, stored data is unchanged)
 
 # 0.6.10 (28-04-2026)
-## Fix
-- Fixed SSR API calls routing through nginx instead of loopback
+## Fixes
+- Fixed server-side API calls going through nginx instead of straight to the app
 
 # 0.6.9 (27-04-2026)
 ## Improvements

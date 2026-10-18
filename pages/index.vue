@@ -24,6 +24,13 @@
       <v-progress-circular class='mt-5 justify-center align-center mx-auto' color='primary' indeterminate model-value='20' />
     </section>
 
+    <!-- Next page loads when this comes into view, the button is a fallback -->
+    <div ref='more' class='text-center my-4'>
+      <v-btn v-if='eventsPaging.hasMore && !$fetchState.pending' text :loading='loadingMore' @click='loadMore'>
+        {{ $t('common.load_more') }}
+      </v-btn>
+    </div>
+
 </v-container>
 </template>
 
@@ -36,6 +43,7 @@ import Announcement from '@/components/Announcement'
 import ThemeView from '@/components/ThemeView'
 import { mdiMagnify, mdiCloseCircle } from '@mdi/js'
 import ongoingSplit from '@/assets/ongoingSplit'
+import { HOME_PAGE_SIZE, homeListStart } from '@/utils/eventUtils'
 
 export default {
   name: 'Index',
@@ -49,22 +57,27 @@ export default {
         query: this.filter.query,
         older: true
       })
-    } else {
-      return this.getEvents({
-        start: this.start,
-        end: this.end,
-      })
     }
+    // Back from an event page: keep the pages already loaded, so the scroll
+    // position can be restored to an event further down the list
+    if (this.canRestoreLoadedEvents()) return
+    return this.getEvents(this.listQuery)
   },
-  data ({ $time }) {
+  data (vm) {
+    // Day and month selected in the calendar survive a visit to an event
+    // page, so going back shows the same list (see beforeRouteLeave)
+    const { day, month } = vm.$store.state.homeView
+    const view = month ? vm.monthRange(month) : { isCurrentMonth: true, start: homeListStart(vm.$time.nowUnix()), end: null }
     return {
       mdiMagnify, mdiCloseCircle,
-      isCurrentMonth: true,
-      now: $time.nowUnix(),
-      start: $time.startMonth(),
-      end: null,
+      isCurrentMonth: view.isCurrentMonth,
+      now: vm.$time.nowUnix(),
+      start: view.start,
+      end: view.end,
+      loadingMore: false,
+      moreObserver: null,
       tmpEvents: [],
-      selectedDay: null,
+      selectedDay: day ? DateTime.fromISO(day, { zone: vm.$store.state.settings.instance_timezone }) : null,
       storeUnsubscribe: null,
       isRestoringScroll: false,
       lastViewedEventId: null,
@@ -98,8 +111,18 @@ export default {
     }
   },
   computed: {
-    ...mapState(['settings', 'announcements', 'events', 'filter']),
+    ...mapState(['settings', 'announcements', 'events', 'eventsPaging', 'filter', 'homeView']),
     ...mapGetters(['hide_thumbs', 'is_dark']),
+    // only part of the list is loaded: a selected day is fetched on its own
+    listQuery () {
+      if (this.selectedDay) {
+        return {
+          start: this.selectedDay.startOf('day').toUnixInteger(),
+          end: this.selectedDay.endOf('day').toUnixInteger()
+        }
+      }
+      return { start: this.start, end: this.end, max: HOME_PAGE_SIZE }
+    },
     visibleEvents () {
       const now = this.$time.nowUnix()
       if (this.selectedDay) {
@@ -133,10 +156,23 @@ export default {
       }})
     }
   },
+  beforeRouteLeave (to, _from, next) {
+    if (to.name !== 'event-slug') {
+      this.$store.commit('setHomeView', { day: null, month: null })
+    }
+    next()
+  },
   mounted () {
     this.initScrollRestoration()
+    this.moreObserver = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) this.loadMore()
+    }, { rootMargin: '800px' })
+    this.moreObserver.observe(this.$refs.more)
   },
   destroyed () {
+    if (this.moreObserver) {
+      this.moreObserver.disconnect()
+    }
     this.$root.$off('dayclick')
     this.$root.$off('monthchange')
     if (typeof this.storeUnsubscribe === 'function') {
@@ -144,7 +180,33 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getEvents']),
+    ...mapActions(['getEvents', 'getMoreEvents']),
+
+    async loadMore () {
+      if (this.loadingMore || this.$fetchState.pending || !this.eventsPaging.hasMore) return
+      this.loadingMore = true
+      try {
+        await this.getMoreEvents()
+      } finally {
+        this.loadingMore = false
+      }
+      // The observer only fires on changes: keep going while the end of the
+      // list is still in view, e.g. when a page held only ongoing events
+      this.$nextTick(() => {
+        const more = this.$refs.more
+        if (more && more.getBoundingClientRect().top < window.innerHeight + 800) {
+          this.loadMore()
+        }
+      })
+    },
+
+    canRestoreLoadedEvents () {
+      const lastEventId = Number(sessionStorage.getItem('last_event_id'))
+      const params = this.eventsPaging.params
+      return !!lastEventId && !!params && params.start === this.listQuery.start && params.end === (this.listQuery.end ?? null) &&
+        params.show_recurrent === this.filter.show_recurrent && params.show_multidate === this.filter.show_multidate &&
+        this.events.some(e => e.id === lastEventId)
+    },
 
     // Store event ID for scroll restoration
     storeEventId(event) {
@@ -238,41 +300,53 @@ export default {
       }
     },
 
+    // Called from data(): use $store, computed properties don't exist yet
+    monthRange ({ year, month }) {
+      const zone = this.$store.state.settings.instance_timezone
+      const now = DateTime.local({ zone })
+      // check if current month is selected
+      if (month === now.month && year === now.year) {
+        return { isCurrentMonth: true, start: homeListStart(now.toUnixInteger()), end: null }
+      }
+      const first = DateTime.local(year, month, { zone })
+      return {
+        isCurrentMonth: false,
+        start: first.toUnixInteger(),
+        end: first.plus({ month: !this.$vuetify.breakpoint.smAndDown ? 1 : 0 }).endOf('month').toUnixInteger() // .endOf('week').unix()
+      }
+    },
+
     async monthChange ({ year, month }) {
       if (this.filter.query) return
       this.$nuxt.$loading.start()
-      let isCurrentMonth
 
       this.resetScrollRestorationState()
 
       // unselect current selected day
       this.selectedDay = null
-      const now = DateTime.local({zone: this.settings.instance_timezone})
-      // check if current month is selected
-      if (month === now.month && year === now.year) {
-        isCurrentMonth = true
-        this.start = now.startOf('month').toUnixInteger()
-        this.end = null
-      } else {
-        isCurrentMonth = false
-        this.start = DateTime.local(year, month, { zone: this.settings.instance_timezone }).toUnixInteger()
-        this.end = DateTime.local(year, month, { zone: this.settings.instance_timezone }).plus({ month: !this.$vuetify.breakpoint.smAndDown ? 1 : 0 }).endOf('month').toUnixInteger() // .endOf('week').unix()
-      }
+      const { isCurrentMonth, start, end } = this.monthRange({ year, month })
+      this.$store.commit('setHomeView', { day: null, month: isCurrentMonth ? null : { year, month } })
+      this.start = start
+      this.end = end
       await this.$fetch()
       this.$nuxt.$loading.finish()
       this.$nextTick( () => this.isCurrentMonth = isCurrentMonth)
     },
 
-    dayChange (day) {
-      if (!day) {
-        this.selectedDay = null
-        return
-      }
-
+    async dayChange (day) {
       this.resetScrollRestorationState()
 
-      const date = DateTime.fromJSDate(day)
-      this.selectedDay = day ? DateTime.local({ zone: this.settings.instance_timezone }).set({ year: date.year, month: date.month, day: date.day}) : null
+      // only part of the list is loaded: fetch the selected day on its own
+      if (day) {
+        const date = DateTime.fromJSDate(day)
+        this.selectedDay = DateTime.local({ zone: this.settings.instance_timezone }).set({ year: date.year, month: date.month, day: date.day})
+      } else {
+        this.selectedDay = null
+      }
+      this.$store.commit('setHomeView', { ...this.homeView, day: this.selectedDay && this.selectedDay.toISODate() })
+      this.$nuxt.$loading.start()
+      await this.$fetch()
+      this.$nuxt.$loading.finish()
     }
   }
 }

@@ -101,7 +101,7 @@ v-col(cols=12)
 </template>
 <script>
 import { DateTime } from 'luxon'
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import List from '@/components/List'
 import { mdiClockTimeFourOutline, mdiClockTimeEightOutline, mdiClose } from '@mdi/js'
 
@@ -118,6 +118,7 @@ export default {
       allowedMinutes: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55],
       menuFromHour: false,
       menuDueHour: false,
+      events: [],
       type: this.value.type || 'normal',
       frequencies: [
         { value: '1w', text: this.$t('event.each_week') },
@@ -128,7 +129,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['settings', 'events']),
+    ...mapState(['settings', 'filter']),
     ...mapGetters(['is_dark']),
     fromDate () {
       if (this.value.from) {
@@ -199,14 +200,18 @@ export default {
     } else {
       this.type = 'normal'
     }
-    // Events are only preloaded on some server-rendered pages (see initLocals),
-    // so after client-side navigation the store may hold an empty list
-    if (!this.events?.length) {
-      this.getEvents()
+    // Own copy: the store only holds the home page's (paginated) list
+    try {
+      this.events = await this.$api.getEvents({
+        start: this.$time.startMonth(),
+        show_recurrent: this.filter.show_recurrent,
+        show_multidate: this.filter.show_multidate
+      })
+    } catch (e) {
+      console.error('[DATEINPUT] getEvents', e)
     }
   },
   methods: {
-    ...mapActions(['getEvents']),
     updateRecurrent(value) {
       this.$emit('input', { ...this.value, recurrent: value || null })
     },

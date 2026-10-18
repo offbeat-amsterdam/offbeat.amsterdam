@@ -8,6 +8,7 @@ const Sequelize = require('sequelize')
 const { DateTime } = require('luxon')
 const helpers = require('../../helpers')
 const Col = helpers.col
+const { LIGHT_EVENT_ATTRIBUTES, toLightEvent } = helpers
 const notifier = require('../../notifier')
 const { htmlToText } = require('html-to-text')
 
@@ -815,7 +816,8 @@ const eventController = {
     show_federated = false,
     include_unconfirmed = false,
     include_parent = false,
-    include_description=false }) {
+    include_description=false,
+    light = false }) {
 
     const where = {
       [Op.or]: {
@@ -893,13 +895,14 @@ const eventController = {
     if (limit) {
       pagination = {
         limit,
-        offset: limit * page,
+        offset: limit * (page || 0),
       }
     }
 
+    // `light` returns only what the calendar needs to draw its dots
     const events = await Event.findAll({
       where,
-      attributes: {
+      attributes: light ? LIGHT_EVENT_ATTRIBUTES : {
         exclude: [
         'likes', 'boost', 'userId', 'createdAt', 'updatedAt', 'resources', 'placeId', 'image_path', 'ap_object', 'ap_id',
           ...(!include_parent ? ['recurrent']: []),
@@ -907,8 +910,9 @@ const eventController = {
           ...(!include_description ? ['description']: [])
         ]
       },
-      order: [['start_datetime', reverse ? 'DESC' : 'ASC']],
-      include: [
+      // id breaks ties between events starting together, so pages don't overlap
+      order: [['start_datetime', reverse ? 'DESC' : 'ASC'], ['id', reverse ? 'DESC' : 'ASC']],
+      include: light ? [{ model: Place, required: true, attributes: [] }] : [
         {
           model: Tag,
           // order: [Sequelize.literal('(SELECT COUNT(tagTag) FROM event_tags WHERE tagTag = tag) DESC')],
@@ -918,12 +922,17 @@ const eventController = {
         { model: Place, required: true, attributes: ['id', 'name', 'address', 'latitude', 'longitude'] },
         { model: APUser, required: false, attributes: ['object'] }
       ],
+      raw: light,
       ...pagination,
       replacements
     }).catch(e => {
       log.error('[EVENT]' + String(e))
       return []
     })
+
+    if (light) {
+      return events.map(toLightEvent)
+    }
 
     return events.map(e => {
       e = e.get()
@@ -1008,6 +1017,7 @@ const eventController = {
     const limit = Number(req.query.max) || 0
     const page = Number(req.query.page) || 0
     const older = req.query.older || false
+    const light = helpers.queryParamToBool(req.query.light, false)
 
     const show_federated = helpers.queryParamToBool(req.query.show_federated, settings.federated_events_in_home)
     const show_multidate = settings.allow_multidate_event && helpers.queryParamToBool(req.query.show_multidate, true)
@@ -1023,11 +1033,12 @@ const eventController = {
         show_recurrent,
         limit,
         page,
-        older
+        older,
+        light
       })
     } else {
       events = await eventController._select({
-        start, end, query, places, tags, show_recurrent, show_multidate, limit, page, older, show_federated
+        start, end, query, places, tags, show_recurrent, show_multidate, limit, page, older, show_federated, light
       })
     }
 

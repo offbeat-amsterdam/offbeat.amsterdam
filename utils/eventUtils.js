@@ -99,3 +99,15 @@ export function splitOnNow (events, now) {
   onNow.sort((a, b) => a.end_datetime - b.end_datetime)
   return { onNow, upcoming }
 }
+
+/**
+ * The home list is loaded a page at a time. Keep both in sync with
+ * server/helpers.js, which renders the first page on the server.
+ */
+export const HOME_PAGE_SIZE = 50
+
+// Starts 3h back so events that just started stay visible, rounded to the
+// hour so the API URL (and nginx's cache of it) is stable.
+export function homeListStart (nowUnix) {
+  return Math.floor(nowUnix / 3600) * 3600 - 3 * 3600
+}
