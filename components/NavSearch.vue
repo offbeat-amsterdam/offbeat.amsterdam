@@ -24,10 +24,7 @@
                 Calendar.mt-2
       v-text-field(slot='placeholder' outlined hide-details :placeholder="$t('common.search')" :append-icon='mdiCog')
 
-    span(v-if='showCollectionsBar')
-      v-btn.mr-2.mt-2(small outlined v-for='collection in collections'
-        color='primary' :key='collection.id'
-        :to='`/collection/${encodeURIComponent(collection.name)}`') {{collection.name}}
+    CollectionsBar(v-if='showCollectionsBar && collections.length' :collections='collections')
 
     Calendar.mt-2(v-if='showCalendar')
 
@@ -36,6 +33,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import Calendar from '@/components/Calendar'
+import CollectionsBar from '@/components/CollectionsBar'
 import { mdiClose, mdiCog, mdiMagnify } from '@mdi/js'
 
 export default {
@@ -46,7 +44,7 @@ export default {
     show_multidate: true,
     query: ''
   }),
-  components: { Calendar },
+  components: { Calendar, CollectionsBar },
   computed: {
     ...mapState(['collections']),
     showSearchBar () {

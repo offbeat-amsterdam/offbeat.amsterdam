@@ -5,7 +5,7 @@
     <button type='button' class='ongoing__header'
       :aria-expanded='String(!collapsed)' :aria-controls='railId'
       @click='toggle'>
-      <span class='ongoing__title'>{{ $t('event.ongoing_title') }} ({{ events.length }})</span>
+      <span class='ongoing__title'>{{ $t(collapsed ? 'event.show_ongoing' : 'event.hide_ongoing') }} ({{ events.length }})</span>
       <v-icon small v-text='collapsed ? mdiChevronDown : mdiChevronUp' />
     </button>
   </h2>
