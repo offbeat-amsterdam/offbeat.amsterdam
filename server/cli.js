@@ -9,7 +9,10 @@ process.env.cwd = process.env.GANCIO_DATA || path.resolve('./')
 process.chdir(path.resolve(__dirname, '..'))
 
 async function start () {
-  require('@nuxt/cli-edge').run(['start', '--modern'])
+  // `client` lets each browser pick its bundle (module/nomodule). A bare
+  // --modern means `server`, which detects the browser once per connection, and
+  // nginx's pooled upstream connections are shared between visitors
+  require('@nuxt/cli-edge').run(['start', '--modern=client'])
     .catch((error) => {
       console.error(error)
       process.exit(2)

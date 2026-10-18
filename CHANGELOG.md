@@ -1,3 +1,7 @@
+# 0.7.5 (18-10-2026)
+## Fixes
+- Browsers now always get the right JavaScript bundle
+
 # 0.7.4 (18-10-2026)
 ## Fixes
 - Going back from an event reliably scrolls to it again, also for events in the Ongoing section
