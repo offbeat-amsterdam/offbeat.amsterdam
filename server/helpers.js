@@ -9,6 +9,7 @@ const log = require('./log')
 const pkg = require('../package.json')
 const path = require('path')
 const sharp = require('sharp')
+const { WEBP_OPTIONS, webpPath } = require('./helpers/media')
 const axios = require('axios')
 const crypto = require('crypto')
 const fs = require('fs/promises')
@@ -273,6 +274,9 @@ const Helpers = {
     const promises = [
       sharpStream.clone().rotate().resize(500, null, { withoutEnlargement: true }).jpeg({ effort: 6, mozjpeg: true }).toFile(path.resolve(config.upload_path, 'thumb', filename + '.jpg')),
       sharpStream.clone().rotate().resize(1200, null, { withoutEnlargement: true }).jpeg({ quality: 95, effort: 6, mozjpeg: true }).toFile(path.resolve(config.upload_path, filename + '.jpg')),
+      // WebP copies, served by nginx where supported (server/helpers/media.js)
+      sharpStream.clone().rotate().resize(500, null, { withoutEnlargement: true }).webp(WEBP_OPTIONS.thumb).toFile(webpPath(path.resolve(config.upload_path, 'thumb', filename + '.jpg'))),
+      sharpStream.clone().rotate().resize(1200, null, { withoutEnlargement: true }).webp(WEBP_OPTIONS.full).toFile(webpPath(path.resolve(config.upload_path, filename + '.jpg'))),
     ]
 
     const response = await axios({ method: 'GET', url, responseType: 'stream' })

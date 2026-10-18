@@ -8,11 +8,13 @@
 - Paginate search results, upcoming events first
 - Paginate events on collection pages
 - Add `/api/events/search`
+- Serve event images as WebP where supported, add `gancio media webp` to convert existing ones
 
 ## Fixes
 - Fix ongoing events listed as past on tag pages
 - Fix sitemap generation failing during restarts
 - Fix events without a slug listed as `/event/undefined` in sitemap
+- Fix old images not removed when a federated event is updated
 
 # 0.7.6 (18-10-2026)
 ## Fixes

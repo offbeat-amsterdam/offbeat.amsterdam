@@ -3,6 +3,7 @@ const path = require('path')
 const crypto = require('crypto')
 const mkdirp = require('mkdirp')
 const sharp = require('sharp')
+const { WEBP_OPTIONS, webpPath } = require('../helpers/media')
 const log = require('../log')
 const config = require('../config')
 
@@ -17,6 +18,9 @@ const DiskStorage = {
     const promises = [
       sharpStream.clone().rotate().resize(500, null, { withoutEnlargement: true }).jpeg({ mozjpeg: true, progressive: true }).toFile(path.resolve(config.upload_path, 'thumb', filename + '.jpg')),
       sharpStream.clone().rotate().resize(1200, null, { withoutEnlargement: true } ).jpeg({ quality: 95, mozjpeg: true, progressive: true }).toFile(path.resolve(config.upload_path, filename + '.jpg')),
+      // WebP copies, served by nginx where supported (server/helpers/media.js)
+      sharpStream.clone().rotate().resize(500, null, { withoutEnlargement: true }).webp(WEBP_OPTIONS.thumb).toFile(webpPath(path.resolve(config.upload_path, 'thumb', filename + '.jpg'))),
+      sharpStream.clone().rotate().resize(1200, null, { withoutEnlargement: true }).webp(WEBP_OPTIONS.full).toFile(webpPath(path.resolve(config.upload_path, filename + '.jpg'))),
     ]
 
     file.stream.pipe(sharpStream)

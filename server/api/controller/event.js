@@ -7,6 +7,7 @@ const linkifyHtml = require('linkify-html')
 const Sequelize = require('sequelize')
 const { DateTime } = require('luxon')
 const helpers = require('../../helpers')
+const { removeMediaFiles } = require('../../helpers/media')
 const Col = helpers.col
 const { LIGHT_EVENT_ATTRIBUTES, toLightEvent } = helpers
 const notifier = require('../../notifier')
@@ -675,14 +676,7 @@ const eventController = {
 
       // remove old media in case a new one is uploaded
       if (!event.recurrent && !event.parentId && (req.file || /^https?:\/\//.test(body.image_url)) && event.media && event.media.length) {
-        try {
-          const old_path = path.resolve(config.upload_path, event.media[0].url)
-          const old_thumb_path = path.resolve(config.upload_path, 'thumb', event.media[0].url)
-          await fs.unlink(old_path)
-          await fs.unlink(old_thumb_path)
-        } catch (e) {
-          log.info(e.toString())
-        }
+        await removeMediaFiles(event.media[0].url)
       }
 
       // modify associated media only if a new file is uploaded or remote image_url is used
@@ -765,14 +759,7 @@ const eventController = {
     // check if event is mine (or user is admin)
     if (event && (req.user.is_editor || req.user.is_admin || req.user.id === event.userId)) {
       if (event.media && event.media.length && !event.recurrent && !event.parentId) {
-        try {
-          const old_path = path.join(config.upload_path, event.media[0].url)
-          const old_thumb_path = path.join(config.upload_path, 'thumb', event.media[0].url)
-          await fs.unlink(old_thumb_path)
-          await fs.unlink(old_path)
-        } catch (e) {
-          log.info(e.toString())
-        }
+        await removeMediaFiles(event.media[0].url)
       }
 
       // unassociate child events
