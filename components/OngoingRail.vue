@@ -65,6 +65,8 @@ export default {
 
 .ongoing__heading {
   margin: 0;
+  /* the h2's own line height would add space around the toggle */
+  line-height: 0;
 }
 
 .ongoing__rail {

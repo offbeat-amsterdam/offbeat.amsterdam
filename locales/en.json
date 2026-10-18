@@ -23,6 +23,7 @@
         "remove": "Remove",
         "hide": "Hide",
         "search": "Search",
+        "search_placeholder": "Search events, venues, tags",
         "edit": "Edit",
         "info": "Info",
         "confirm": "Confirm",

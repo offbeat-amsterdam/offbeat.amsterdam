@@ -1,5 +1,5 @@
 <template>
-<section class='collections mt-2' :class='`collections--${state}`'>
+<section class='collections' :class='`collections--${state}`'>
 
   <h2 class='collections__heading'>
     <button type='button' class='section-toggle'
@@ -75,7 +75,8 @@ export default {
 </script>
 <style>
 .collections__heading {
-  margin: 8px 0 0;
+  margin: 0;
+  line-height: 0;
 }
 
 .collections--collapsed .collections__list,
