@@ -542,8 +542,9 @@ describe('Place', () => {
   })
 
   test('admin should get all places', async () => {
+    // public: the sitemap lists every place from it (nuxt.config.js)
     await request(app).get('/api/places')
-      .expect(403)
+      .expect(200)
 
     const response = await request(app).get('/api/places')
       .auth(token.access_token, { type: 'bearer' })
