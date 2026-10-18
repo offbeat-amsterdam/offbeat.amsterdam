@@ -774,6 +774,35 @@ describe('Export', () => {
   test('should reject an unknown format', async () => {
     await request(app).get('/feed/pdf').expect(404)
   })
+
+  test('should page past events of tag and place pages', async () => {
+    for (const url of ['/api/tag/test', '/api/place/1']) {
+      // without page/past_page: all events, as upstream
+      const all = await request(app).get(url).expect(200)
+      expect(Array.isArray(all.body.pastEvents)).toBe(true)
+      expect(all.body.hasMorePast).toBeUndefined()
+      expect(all.body.hasMoreEvents).toBeUndefined()
+
+      const upcoming = await request(app).get(`${url}?page=0`).expect(200)
+      expect(upcoming.body.events.map(e => e.id)).toEqual(all.body.events.map(e => e.id))
+      expect(upcoming.body.hasMoreEvents).toBe(false)
+      expect(typeof upcoming.body.eventsStart).toBe('number')
+
+      const nextUpcoming = await request(app).get(`${url}?page=1&start=${upcoming.body.eventsStart}`).expect(200)
+      expect(nextUpcoming.body.pastEvents).toBeUndefined()
+      expect(nextUpcoming.body.events).toEqual([])
+
+      const first = await request(app).get(`${url}?past_page=0`).expect(200)
+      expect(Array.isArray(first.body.events)).toBe(true)
+      expect(Array.isArray(first.body.pastEvents)).toBe(true)
+      expect(typeof first.body.hasMorePast).toBe('boolean')
+
+      const next = await request(app).get(`${url}?past_page=1`).expect(200)
+      expect(next.body.events).toBeUndefined()
+      expect(Array.isArray(next.body.pastEvents)).toBe(true)
+      expect(next.body.hasMorePast).toBe(false)
+    }
+  })
 })
 
 describe('Geocoding', () => {

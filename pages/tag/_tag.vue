@@ -10,13 +10,12 @@
       </v-lazy>
     </div>
 
-    <!-- Past Events -->
-    <h2 class='mt-14 mb-3' v-if="pastEvents.length">{{$t('common.past_events')}}</h2>
-    <div v-if="pastEvents.length" id="events">
-      <v-lazy class='event v-card' :value='idx<9' v-for='(event, idx) in pastEvents' :key='event.id' :min-height='hide_thumbs ? 105 : undefined' :options="{ threshold: .5, rootMargin: '500px' }" :class="{ 'theme--dark': is_dark }">
-        <Event :event='event' :lazy='idx > 9' />
-      </v-lazy>
+    <!-- Next page loads when this comes into view, the button is a fallback -->
+    <div ref='moreEvents' class='text-center my-4'>
+      <v-btn v-if='hasMoreEvents' text :loading='loadingMoreEvents' @click='loadMoreEvents'>{{ $t('common.load_more') }}</v-btn>
     </div>
+
+    <PastEvents :events='pastEvents' :has-more='hasMorePast' :url='`/tag/${encodeURIComponent(tag)}`' />
 
   </v-container>
 </template>
@@ -24,10 +23,13 @@
 
 import { mapState, mapGetters } from 'vuex'
 import Event from '@/components/Event'
+import PastEvents from '@/components/PastEvents'
+import pagedEvents from '@/assets/pagedEvents'
 
 export default {
   name: 'Tag',
-  components: { Event },
+  components: { Event, PastEvents },
+  mixins: [pagedEvents],
   head ({ $route }) {
     const tag = $route.params.tag
     const title = `Events tagged #${tag} | ${this.settings.title}`
@@ -45,12 +47,16 @@ export default {
   computed: {
     ...mapState(['settings']),
     ...mapGetters(['hide_thumbs', 'is_dark']),
+    eventsUrl () {
+      return `/tag/${encodeURIComponent(this.tag)}`
+    }
   },
   async asyncData ({ $axios, params, error }) {
     try {
       const tag = params.tag
-      const { pastEvents, events } = await $axios.$get(`/tag/${encodeURIComponent(tag)}`)
-      return { pastEvents, events, tag }
+      const { pastEvents, hasMorePast, events, hasMoreEvents, eventsStart } =
+        await $axios.$get(`/tag/${encodeURIComponent(tag)}`, { params: { page: 0, past_page: 0 } })
+      return { pastEvents, hasMorePast, events, hasMoreEvents, eventsStart, tag }
     } catch (e) {
       error(e)
     }

@@ -24,13 +24,12 @@
       </v-lazy>
     </div>
 
-    <!-- Past Events -->
-    <h2 class='mt-14 mb-3' v-if="endedEvents.length">{{$t('common.past_events')}}</h2>
-    <div v-if="endedEvents.length" id="events">
-      <v-lazy class='event v-card' :value='idx<9' v-for='(event, idx) in endedEvents' :key='event.id' :min-height='hide_thumbs ? 105 : undefined' :options="{ threshold: .5, rootMargin: '500px' }" :class="{ 'theme--dark': is_dark }">
-        <Event :event='event' :lazy='idx > 9' />
-      </v-lazy>
+    <!-- Next page loads when this comes into view, the button is a fallback -->
+    <div ref='moreEvents' class='text-center my-4'>
+      <v-btn v-if='hasMoreEvents' text :loading='loadingMoreEvents' @click='loadMoreEvents'>{{ $t('common.load_more') }}</v-btn>
     </div>
+
+    <PastEvents :events='pastEvents' :has-more='hasMorePast' :url='`/place/${place.id}`' />
 
   </v-container>
 </template>
@@ -41,14 +40,17 @@ import Event from '@/components/Event'
 import ongoingSplit from '@/assets/ongoingSplit'
 import HowToArriveNav from '@/components/HowToArriveNav.vue'
 import OngoingRail from '@/components/OngoingRail'
+import PastEvents from '@/components/PastEvents'
+import pagedEvents from '@/assets/pagedEvents'
 
 export default {
   name: 'Place',
-  mixins: [ongoingSplit],
+  mixins: [ongoingSplit, pagedEvents],
   components: {
     Event,
     HowToArriveNav,
     OngoingRail,
+    PastEvents,
     [process.client && 'Map']: () => import('@/components/Map.vue')
   },
   head() {
@@ -67,20 +69,15 @@ export default {
     eventsToSplit () {
       return this.events
     },
-    /**
-     * The API calls an event past as soon as it has *started*, so anything
-     * running right now comes back in both lists. Only what has actually
-     * finished belongs under "past events".
-     */
-    endedEvents () {
-      const now = this.$time.nowUnix()
-      return this.pastEvents.filter(e => (e.end_datetime || e.start_datetime) <= now)
+    eventsUrl () {
+      return `/place/${this.place.id}`
     }
   },
   async asyncData({ $axios, params, error }) {
     try {
-      const { events, pastEvents, place } = await $axios.$get(`/place/${params.id}`)
-      return { events, pastEvents, place }
+      const { events, hasMoreEvents, eventsStart, pastEvents, hasMorePast, place } =
+        await $axios.$get(`/place/${params.id}`, { params: { page: 0, past_page: 0 } })
+      return { events, hasMoreEvents, eventsStart, pastEvents, hasMorePast, place }
     } catch (e) {
       error({
         statusCode: e?.response?.status ?? 500,

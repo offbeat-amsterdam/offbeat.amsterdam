@@ -21,18 +21,36 @@ module.exports = {
     }
 
     const format = req.params.format || 'json'
+
     log.debug(`Events for place: ${place.name}`)
-    const events = await eventController._select({ places: String(place.id), show_recurrent: true, show_multidate: true, show_federated: true }) 
+    const filter = { places: String(place.id) }
     switch (format) {
-      case 'rss':
+      case 'rss': {
+        const { events } = await eventController._selectUpcoming(filter)
         return exportController.feed(req, res, events,
             `${res.locals.settings.title} - Place @${place.name}`,
             `${res.locals.settings.baseurl}/feed/rss/place/${place.id}`)
-      case 'ics':
+      }
+      case 'ics': {
+        const { events } = await eventController._selectUpcoming(filter)
         return exportController.ics(req, res, events)
-      default:
-        const pastEvents = await eventController._select({ places: String(place.id), show_recurrent: true, show_multidate: true, older: true, reverse: true, show_federated: true }) 
-        return res.json({ events, pastEvents, place })
+      }
+      default: {
+        const page = eventController._pageParam(req, 'page')
+        const pastPage = eventController._pageParam(req, 'past_page')
+        // "load more" on the place page: only the list being extended
+        if (page > 0) {
+          return res.json(await eventController._selectUpcoming({ ...filter, page, start: req.query.start }))
+        }
+        if (pastPage > 0) {
+          return res.json(await eventController._selectPast({ ...filter, page: pastPage }))
+        }
+        const [upcoming, past] = await Promise.all([
+          eventController._selectUpcoming({ ...filter, page, start: req.query.start }),
+          eventController._selectPast({ ...filter, page: pastPage })
+        ])
+        return res.json({ ...upcoming, ...past, place })
+      }
     }
   },
 

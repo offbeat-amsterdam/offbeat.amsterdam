@@ -21,6 +21,11 @@ const tagController = require('./tag')
 const log = require('../../log')
 const collectionController = require('./collection')
 
+// Events per page on tag and place pages (see assets/pagedEvents.js and
+// components/PastEvents.vue)
+const UPCOMING_EVENTS_PAGE_SIZE = 50
+const PAST_EVENTS_PAGE_SIZE = 50
+
 const eventController = {
 
   async _findOrCreatePlace (body) {
@@ -800,6 +805,40 @@ const eventController = {
    * Method to search for events with pagination and filtering
    * @returns
    */
+  /**
+   * Past events of a tag or place, most recent first. With a `page` they come
+   * a page at a time, as a broad tag can have thousands of them; without one,
+   * all of them, as upstream Gancio returns them
+   */
+  async _selectPast ({ tags, places, page = null }) {
+    const paged = page !== null
+    const pastEvents = await eventController._select({
+      tags, places, show_recurrent: true, show_multidate: true, show_federated: true,
+      older: true, reverse: true, ...(paged && { limit: PAST_EVENTS_PAGE_SIZE, page })
+    })
+    return paged ? { pastEvents, hasMorePast: pastEvents.length === PAST_EVENTS_PAGE_SIZE } : { pastEvents }
+  },
+
+  /**
+   * Upcoming events of a tag or place, a page at a time with a `page`, else
+   * all of them as upstream Gancio returns them. Pages after the first pass
+   * back the `eventsStart` of the first, so they stay aligned as events end
+   */
+  async _selectUpcoming ({ tags, places, page = null, start }) {
+    const paged = page !== null
+    start = Number(start) || DateTime.local().toUnixInteger()
+    const events = await eventController._select({
+      tags, places, start, show_recurrent: true, show_multidate: true, show_federated: true,
+      ...(paged && { limit: UPCOMING_EVENTS_PAGE_SIZE, page })
+    })
+    return paged ? { events, hasMoreEvents: events.length === UPCOMING_EVENTS_PAGE_SIZE, eventsStart: start } : { events }
+  },
+
+  // `page` and `past_page` opt in to paged lists (tag and place pages)
+  _pageParam (req, name) {
+    return req.query[name] === undefined ? null : (Number(req.query[name]) || 0)
+  },
+
   async _select({
     start = DateTime.local().toUnixInteger(),
     end,

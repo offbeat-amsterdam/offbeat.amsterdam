@@ -40,17 +40,35 @@ module.exports = {
     if(!await Tag.findOne({ where: { tag } })) {
       return res.sendStatus(404)
     }
-    const events = await eventController._select({ tags: tag, show_recurrent: true, show_multidate: true, show_federated: true })
+
+    const filter = { tags: tag }
     switch (format) {
-      case 'rss':
+      case 'rss': {
+        const { events } = await eventController._selectUpcoming(filter)
         return exportController.feed(req, res, events,
             `${res.locals.settings.title} - Tag #${tag}`,
             `${res.locals.settings.baseurl}/feed/rss/tag/${encodeURIComponent(tag)}`)
-      case 'ics':
+      }
+      case 'ics': {
+        const { events } = await eventController._selectUpcoming(filter)
         return exportController.ics(req, res, events)
-      default:
-        const pastEvents = await eventController._select({ tags: tag, show_recurrent: true, show_multidate: true, show_federated: true, older: true, reverse: true })
-        return res.json({ pastEvents, events })
+      }
+      default: {
+        const page = eventController._pageParam(req, 'page')
+        const pastPage = eventController._pageParam(req, 'past_page')
+        // "load more" on the tag page: only the list being extended
+        if (page > 0) {
+          return res.json(await eventController._selectUpcoming({ ...filter, page, start: req.query.start }))
+        }
+        if (pastPage > 0) {
+          return res.json(await eventController._selectPast({ ...filter, page: pastPage }))
+        }
+        const [upcoming, past] = await Promise.all([
+          eventController._selectUpcoming({ ...filter, page, start: req.query.start }),
+          eventController._selectPast({ ...filter, page: pastPage })
+        ])
+        return res.json({ ...past, ...upcoming })
+      }
     }
   },
 
