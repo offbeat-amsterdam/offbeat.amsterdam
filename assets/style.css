@@ -1,9 +1,14 @@
 html, body {
   scrollbar-width: thin;
-  overflow-y: auto !important;
-  overflow-x: hidden;
   scrollbar-color: #DB3B00 #111;
   font-family: sans-serif;
+}
+
+/* Only on html: there it applies to the window. On body it would make body a
+   scroll container, and the sticky day headers would stop sticking */
+html {
+  overflow-y: auto !important;
+  overflow-x: hidden;
 }
 
 li {
@@ -195,8 +200,26 @@ li {
   text-decoration: none;
 }
 
-.event a:hover,
-.event a:focus {
+/* No underline on hover: the card's orange outline marks the title link and
+   the tags have their orange border. Only the venue, a second link inside the
+   card, is underlined (below). Kept for keyboard focus */
+.event a:focus-visible {
+  text-decoration: underline;
+}
+
+/* venue links (event cards, Ongoing cards): underline the name only, not
+   the gap after the pin icon */
+.event a.place:hover,
+.event a.place:focus-visible,
+.event-compact a.place:hover,
+.event-compact a.place:focus-visible {
+  text-decoration: none;
+}
+
+.event a.place:hover span,
+.event a.place:focus-visible span,
+.event-compact a.place:hover span,
+.event-compact a.place:focus-visible span {
   text-decoration: underline;
 }
 
@@ -279,57 +302,224 @@ h1 *, h2 a, a > h2, .event .title {
   border-radius: 0 !important;
 }
 
-/* Show/hide toggles of the Ongoing section and the venues list: boxy like the
-   tag chips, with the gray outline of the search field instead of their orange
-   (components/OngoingRail.vue, components/CollectionsBar.vue) */
-.section-toggle {
+/* Show/hide toggles: the venues and calendar under the search field
+   (components/CollapsibleSection.vue) and the Ongoing heading
+   (components/OngoingRail.vue). A terminal-style [+] / [-] mark, echoing the
+   brackets of the site title (in its color on hover), and the label in the
+   look of the day headers */
+.heading-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 3px 6px 3px 10px;
-  border: 1px solid;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: 0.875rem;
+  gap: 0.4em;
+  padding: 0;
+  font-family: 'VT323', monospace !important;
+  font-size: 1.4rem;
   font-weight: normal;
-  line-height: 1.5;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: border-color 0.2s;
 }
 
-.section-toggle:focus-visible {
+/* the global `*` font rule would give the label Share Tech Mono */
+.heading-toggle * {
+  font-family: 'VT323', monospace !important;
+}
+
+.heading-toggle:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 2px;
 }
 
-/* filled like the search field, so they look the same on the patterned
-   header and on the plain page below it */
-.theme--light .section-toggle {
+.theme--light .heading-toggle {
   color: rgba(0, 0, 0, 0.87);
-  border-color: rgba(0, 0, 0, 0.38);
-  background: #ffffff;
 }
 
-.theme--light .section-toggle .v-icon {
+.theme--dark .heading-toggle {
+  color: #fff;
+}
+
+/* gray, turning the accent color of the title brackets on hover */
+.theme--light .heading-toggle__mark {
   color: rgba(0, 0, 0, 0.38);
 }
 
-.theme--light .section-toggle:hover {
-  border-color: rgba(0, 0, 0, 0.86);
+.theme--dark .heading-toggle__mark {
+  color: rgba(255, 255, 255, 0.38);
 }
 
-.theme--dark .section-toggle {
+.theme--light .heading-toggle:hover .heading-toggle__mark {
+  color: #DB3B00;
+}
+
+.theme--dark .heading-toggle:hover .heading-toggle__mark {
+  color: #FF6E40;
+}
+
+@media only screen and (max-width: 600px) {
+  .heading-toggle {
+    font-size: 1.2rem;
+  }
+}
+
+/* Days of the home list (pages/index.vue): each a full-width block in the
+   wrapping #events flexbox, with its own grid of cards like #events itself */
+.day-group {
+  flex-basis: 100%;
+}
+
+/* Without dividers, space separates the days: a header sits much closer to
+   its own events (8px) than to the day before it */
+.day-group + .day-group {
+  margin-top: 16px;
+}
+
+/* the same after the Ongoing section, open or collapsed (mt-3 is !important) */
+.ongoing + #events {
+  margin-top: 28px !important;
+}
+
+.day-group__events {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+/* stays on top while scrolling through its day, until the next day's header
+   pushes it away; opaque so the cards scroll underneath it */
+.day-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin: 0;
+  padding: 8px 0;
+  font-family: 'VT323', monospace !important;
+  font-size: 1.4rem;
+  font-weight: normal;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+#events > .day-group:first-child .day-header {
+  padding-top: 0;
+}
+
+.theme--light .day-header {
+  color: rgba(0, 0, 0, 0.87);
+  background: #FFFFFF;
+}
+
+.theme--dark .day-header {
   color: #fff;
-  border-color: rgba(255, 255, 255, 0.24);
-  background: #1e1e1e;
+  background: #121212;
 }
 
-.theme--dark .section-toggle .v-icon {
-  color: rgba(255, 255, 255, 0.24);
+/* the global `*` font rule would give elements inside a header (like the
+   label of the Ongoing toggle) Share Tech Mono */
+.day-header * {
+  font-family: 'VT323', monospace !important;
 }
 
-.theme--dark .section-toggle:hover {
-  border-color: #fff;
+/* Tags in gray, so titles and venues are what stands out */
+.theme--light .event .event__tag.v-chip--outlined {
+  color: rgba(0, 0, 0, 0.6) !important;
+  border-color: rgba(0, 0, 0, 0.24) !important;
+}
+
+.theme--dark .event .event__tag.v-chip--outlined {
+  color: rgba(255, 255, 255, 0.7) !important;
+  border-color: rgba(255, 255, 255, 0.24) !important;
+}
+
+.theme--light .event .event__tag.v-chip--outlined:hover {
+  color: #DB3B00 !important;
+  border-color: #DB3B00 !important;
+}
+
+.theme--dark .event .event__tag.v-chip--outlined:hover {
+  color: #FF6E40 !important;
+  border-color: #FF6E40 !important;
+}
+
+/* Cards outlined in the accent color on hover (primary of the light/dark themes) */
+.theme--light .event:hover {
+  border-color: #DB3B00;
+}
+
+.theme--dark .event:hover {
+  border-color: #FF6E40;
+}
+
+/* Phones: image beside the text instead of above it, several events per screen */
+@media only screen and (max-width: 600px) {
+  .event {
+    min-height: 0;
+  }
+
+  .h-event.has-thumb {
+    display: grid;
+    grid-template-columns: 112px minmax(0, 1fr);
+    grid-template-rows: auto auto 1fr;
+  }
+
+  /* lets the picture and the title inside the link take their own grid cells */
+  .h-event.has-thumb > a {
+    display: contents;
+  }
+
+  .h-event.has-thumb > a > .v-icon {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+  }
+
+  /* the same square on every card, whatever the height of the text next to it */
+  .h-event.has-thumb .img.thumb {
+    grid-column: 1;
+    grid-row: 1 / 4;
+    align-self: start;
+    width: 112px;
+    height: 112px;
+  }
+
+  .h-event.has-thumb .img.thumb img {
+    height: 100%;
+    min-height: 0;
+    max-height: none;
+    aspect-ratio: auto;
+  }
+
+  .h-event.has-thumb .title {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0.5rem 0.75rem 0.25rem;
+    font-size: 1.15em !important;
+    -webkit-line-clamp: 2;
+  }
+
+  .h-event.has-thumb .body {
+    grid-column: 2;
+    grid-row: 2;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  .h-event.has-thumb .v-card__actions {
+    grid-column: 2;
+    grid-row: 3;
+    align-self: end;
+    padding: 0 0.5rem 0.5rem;
+  }
+
+  .day-header {
+    font-size: 1.2rem;
+  }
+
+  .day-group__events {
+    gap: 8px;
+  }
 }
 
 /* Fix exaggerated font size for event date in cards */

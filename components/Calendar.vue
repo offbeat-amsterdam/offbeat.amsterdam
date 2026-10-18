@@ -111,6 +111,43 @@ export default {
   opacity: 0.3;
 }
 
+/* More compact than v-calendar's defaults, especially on phones. #navsearch
+   wins over its scoped [data-v] styles */
+#navsearch .vc-day {
+  min-height: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+  #navsearch .vc-header {
+    padding-top: 6px;
+  }
+
+  #navsearch .vc-title {
+    font-size: 1rem;
+    line-height: 24px;
+  }
+
+  #navsearch .vc-weeks {
+    padding: 2px 5px 4px;
+  }
+
+  #navsearch .vc-weekday {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-size: 0.75rem;
+  }
+
+  #navsearch .vc-day {
+    min-height: 26px;
+  }
+
+  #navsearch .vc-day-content {
+    width: 24px;
+    height: 24px;
+    font-size: 0.8rem;
+  }
+}
+
 #calendarButton {
   margin-top: -6px;
   margin-left: -10px;

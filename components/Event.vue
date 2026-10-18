@@ -1,6 +1,6 @@
 <template>
 <div>
-<article class='h-event' :class="{ 'is-past': isPast }">
+<article class='h-event' :class="{ 'is-past': isPast, 'has-thumb': !hide_thumbs }">
 
   <nuxt-link :to='`/event/${event.slug || event.id}`'>
     <MyPicture v-if='!hide_thumbs' :event='event' thumb :lazy='lazy' />
@@ -36,7 +36,7 @@
   </v-card-text>
 
   <v-card-actions class='flex-wrap'>
-    <v-chip class='ml-1 mt-1' v-for='tag in event.tags.slice(0, 10)' small label :to='`/tag/${encodeURIComponent(tag)}`' :key='tag' outlined color='primary'>{{ tag }}</v-chip>
+    <v-chip class='event__tag ml-1 mt-1' v-for='tag in event.tags.slice(0, 10)' small label :to='`/tag/${encodeURIComponent(tag)}`' :key='tag' outlined>{{ tag }}</v-chip>
   </v-card-actions>
 
 </article>

@@ -6,10 +6,10 @@
       :placeholder='$t("common.search_placeholder")' :aria-label='$t("common.search")'
       @input='searchSoon' @keydown.enter='search' @click:clear='clear')
 
+    //- each toggle right above what it opens
     CollectionsBar(v-if='showCollectionsBar && collections.length' :collections='collections')
 
-    CollapsibleSection(v-if='showCalendar' name='calendar'
-      :show-label='$t("common.show_calendar")' :hide-label='$t("common.hide_calendar")')
+    CollapsibleSection(v-if='showCalendar' name='calendar' :label='$t("common.calendar")')
       Calendar
 </template>
 <script>

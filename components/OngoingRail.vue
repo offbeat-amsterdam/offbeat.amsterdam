@@ -2,15 +2,16 @@
 <section class='ongoing' v-if='events.length'>
 
   <h2 class='ongoing__heading'>
-    <button type='button' class='section-toggle'
+    <!-- .heading-toggle: in the look of the day headers below (TODAY, ...) -->
+    <button type='button' class='heading-toggle ongoing__toggle'
       :aria-expanded='String(!collapsed)' :aria-controls='railId'
       @click='toggle'>
-      <span class='ongoing__title'>{{ $t(collapsed ? 'event.show_ongoing' : 'event.hide_ongoing') }} ({{ events.length }})</span>
-      <v-icon small v-text='collapsed ? mdiChevronDown : mdiChevronUp' />
+      <span class='heading-toggle__mark' aria-hidden='true'>{{ collapsed ? '[+]' : '[-]' }}</span>
+      <span>{{ $t('event.ongoing') }}</span>
     </button>
   </h2>
 
-  <div :id='railId' class='ongoing__rail' v-show='!collapsed'>
+  <div :id='railId' class='ongoing__rail' :class="{ 'ongoing__rail--single': events.length === 1 }" v-show='!collapsed'>
     <EventCompact v-for='event in events' :key='event.id' :event='event'
       :data-event-id='event.id' @click.native="$emit('select', event)" />
   </div>
@@ -19,7 +20,6 @@
 </template>
 <script>
 import EventCompact from '~/components/EventCompact'
-import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
 
 export default {
   name: 'OngoingRail',
@@ -35,8 +35,6 @@ export default {
   },
   data () {
     return {
-      mdiChevronDown,
-      mdiChevronUp,
       // read on the server too, so the rail does not flip after hydration
       collapsed: this.$cookies?.get(`ongoing_collapsed_${this.name}`) === true
     }
@@ -69,6 +67,11 @@ export default {
   line-height: 0;
 }
 
+/* the whole line is clickable */
+.ongoing__toggle {
+  width: 100%;
+}
+
 .ongoing__rail {
   display: grid;
   grid-auto-flow: column;
@@ -80,6 +83,18 @@ export default {
   overflow-x: auto;
   scrollbar-width: thin;
   overscroll-behavior-x: contain;
+}
+
+/* below the desktop grid: a lone card takes the full width like the regular
+   cards, there's nothing to scroll to */
+@media only screen and (max-width: 959px) {
+  .ongoing__rail--single {
+    grid-auto-columns: 100%;
+  }
+
+  .ongoing__rail--single .event-compact {
+    max-width: none;
+  }
 }
 
 @media only screen and (min-width: 960px) {

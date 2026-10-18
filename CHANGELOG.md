@@ -1,3 +1,12 @@
+# 0.8.2 (18-10-2026)
+## Improvements
+- Group home page events by day, with sticky headers
+- Mobile: show more events per screen, make calendar more compact
+- Minor UI revamp (align ongoing and regular cards, show event tags in gray, highlight event cards on hover, use better toggles)
+
+## Fixes
+- Fix venue link underline starting before the venue name
+
 # 0.8.1 (18-10-2026)
 ## Improvements
 - Speed up previous/next event lookup on event pages

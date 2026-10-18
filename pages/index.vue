@@ -14,15 +14,21 @@
 
     <!-- Events -->
     <section id='events' class='mt-3' v-if='!$fetchState.pending'>
-      <v-lazy class='event v-card' :value='shouldLoadImmediately(idx)'
-        v-for='(event, idx) in upcomingEvents' :key='event.id'
-        :min-height='hide_thumbs ? 105 : undefined'
-        :options="{ threshold: .5, rootMargin: '500px' }"
-        :class="{ 'theme--dark': is_dark }"
-        :data-event-id="event.id"
-        @click.native="storeEventId(event)">
-        <Event :event='event' :lazy='!shouldLoadImmediately(idx)' />
-      </v-lazy>
+      <!-- one block per day, so its sticky header leaves with its last event -->
+      <div v-for='group in dayGroups' :key='`day-${group.key}`' class='day-group'>
+        <h2 v-if='group.label' class='day-header'>{{ group.label }}</h2>
+        <div class='day-group__events'>
+          <v-lazy class='event v-card' :value='shouldLoadImmediately(idx)'
+            v-for='{ event, idx } in group.items' :key='event.id'
+            :min-height='hide_thumbs ? 105 : undefined'
+            :options="{ threshold: .5, rootMargin: '500px' }"
+            :class="{ 'theme--dark': is_dark }"
+            :data-event-id="event.id"
+            @click.native="storeEventId(event)">
+            <Event :event='event' :lazy='!shouldLoadImmediately(idx)' />
+          </v-lazy>
+        </div>
+      </div>
     </section>
     <section class='text-center' v-else>
       <v-progress-circular class='mt-5 justify-center align-center mx-auto' color='primary' indeterminate model-value='20' />
@@ -148,6 +154,31 @@ export default {
 
     splitOngoing () {
       return !this.selectedDay
+    },
+
+    /**
+     * The list split by day, each with a TODAY / TOMORROW / SAT 25 OCT header.
+     * Items keep their index in upcomingEvents (see shouldLoadImmediately).
+     */
+    dayGroups () {
+      const items = this.upcomingEvents.map((event, idx) => ({ event, idx }))
+      // a selected day needs no header
+      if (this.selectedDay) return [{ key: 'selected', label: null, items }]
+
+      const zone = this.settings.instance_timezone
+      const today = DateTime.local({ zone }).startOf('day')
+      const groups = []
+      for (const item of items) {
+        let day = DateTime.fromSeconds(item.event.start_datetime, { zone }).startOf('day')
+        // started yesterday and still going (a party past midnight): today
+        if (this.isCurrentMonth && day < today) day = today
+        const key = day.toISODate()
+        if (groups[groups.length - 1]?.key !== key) {
+          groups.push({ key, label: this.dayLabel(day, today), items: [] })
+        }
+        groups[groups.length - 1].items.push(item)
+      }
+      return groups
     }
   },
   created () {
@@ -184,6 +215,13 @@ export default {
   },
   methods: {
     ...mapActions(['getEvents', 'getMoreEvents']),
+
+    dayLabel (day, today) {
+      const days = Math.round(day.diff(today, 'days').days)
+      if (days === 0) return this.$t('common.today')
+      if (days === 1) return this.$t('common.tomorrow')
+      return day.setLocale(this.$i18n.locale).toFormat('ccc d LLL')
+    },
 
     async loadMore () {
       if (this.loadingMore || this.$fetchState.pending || this.filter.query || !this.eventsPaging.hasMore) return

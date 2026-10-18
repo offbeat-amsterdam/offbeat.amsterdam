@@ -2,17 +2,13 @@
 <section class='collapsible' :class='`collapsible--${state}`'>
 
   <h2 class='collapsible__heading'>
-    <button type='button' class='section-toggle'
+    <button type='button' class='heading-toggle collapsible__toggle'
       :aria-expanded='ariaExpanded' :aria-controls='contentId'
       @click='toggle'>
-      <!-- both labels and icons are rendered: CSS shows the ones matching the state -->
-      <span>
-        <span class='collapsible__when-collapsed'>{{ showLabel }}</span>
-        <span class='collapsible__when-expanded'>{{ hideLabel }}</span>
-        <template v-if='count !== null'> ({{ count }})</template>
-      </span>
-      <v-icon small class='collapsible__when-collapsed' v-text='mdiChevronDown' />
-      <v-icon small class='collapsible__when-expanded' v-text='mdiChevronUp' />
+      <!-- both marks are rendered: CSS shows the one matching the state -->
+      <span class='heading-toggle__mark collapsible__when-collapsed' aria-hidden='true'>[+]</span>
+      <span class='heading-toggle__mark collapsible__when-expanded' aria-hidden='true'>[-]</span>
+      <span>{{ label }}</span>
     </button>
   </h2>
 
@@ -23,8 +19,6 @@
 </section>
 </template>
 <script>
-import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
-
 const MOBILE = '(max-width: 599px)'
 
 /**
@@ -39,15 +33,11 @@ export default {
   name: 'CollapsibleSection',
   props: {
     name: { type: String, required: true },
-    showLabel: { type: String, required: true },
-    hideLabel: { type: String, required: true },
-    count: { type: Number, default: null }
+    label: { type: String, required: true }
   },
   data () {
     const stored = this.$cookies?.get(`${this.name}_collapsed`)
     return {
-      mdiChevronDown,
-      mdiChevronUp,
       // true / false once chosen, null for the screen size default
       collapsed: typeof stored === 'boolean' ? stored : null,
       // what the CSS default currently shows, known only in the browser

@@ -1,7 +1,6 @@
 <template>
 <!-- the `collections` name keeps the cookie of earlier versions (collections_collapsed) -->
-<CollapsibleSection name='collections' :count='collections.length'
-  :show-label="$t('common.show_venues')" :hide-label="$t('common.hide_venues')">
+<CollapsibleSection name='collections' :label="$t('common.venues')">
   <div class='collections__list'>
     <v-btn small outlined v-for='collection in collections'
       color='primary' :key='collection.id'
