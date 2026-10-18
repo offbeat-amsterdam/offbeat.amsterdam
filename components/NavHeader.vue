@@ -1,7 +1,7 @@
 <template>
   <div class='d-flex pa-4'>
     <v-btn icon large nuxt to='/' :aria-label="settings.title">
-      <img :alt="settings.title" src='/logo.png' height='40' />
+      <img :alt="settings.title" src='/logo.webp' height='40' width='40' />
     </v-btn>
 
     <v-spacer/>

@@ -11,6 +11,7 @@ const path = require('path')
 const sharp = require('sharp')
 const axios = require('axios')
 const crypto = require('crypto')
+const fs = require('fs/promises')
 const Microformats = require('microformat-node')
 const get = require('lodash/get')
 
@@ -182,6 +183,37 @@ const Helpers = {
         return _staticCache[key].middleware(req, res, next)
       }
     }
+
+    // WebP copies of the logo and fallback image for <img> tags, made from the
+    // PNGs on first request and again after a new upload. Much smaller for
+    // gradients; the PNGs stay for favicon, og:image and touch icons
+    const _webpPending = {}
+    function webpCopy(key, getPngPath) {
+      return async (_req, res, next) => {
+        try {
+          const source = path.resolve(getPngPath())
+          const webp = path.resolve(config.upload_path, `${key}.webp`)
+          const [sourceStat, webpStat] = await Promise.all([
+            fs.stat(source),
+            fs.stat(webp).catch(() => null)
+          ])
+          if (!webpStat || webpStat.mtimeMs < sourceStat.mtimeMs) {
+            _webpPending[key] = _webpPending[key] ||
+              sharp(source).webp({ quality: 80 }).toFile(webp).finally(() => delete _webpPending[key])
+            await _webpPending[key]
+          }
+          res.sendFile(webp, { maxAge: '10m' })
+        } catch (e) {
+          next(e)
+        }
+      }
+    }
+
+    router.use('/logo.webp', webpCopy('logo',
+      () => (settingsController.settings.logo || './static/gancio') + '.png'))
+
+    router.use('/fallbackimage.webp', webpCopy('fallbackImage',
+      () => settingsController.settings.fallback_image || './static/noimg.svg'))
 
     router.use('/fallbackimage.png', cachedStatic(
       'fallback',

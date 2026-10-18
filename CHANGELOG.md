@@ -4,6 +4,7 @@
 - Add `page` and `past_page` parameters to `/api/tag/:tag` and `/api/place/:id`
 - Rename `Ongoing` to `Show ongoing` / `Hide ongoing`
 - Make venues collapsible, collapsed by default on mobile
+- Serve logo and fallback image as WebP
 
 ## Fixes
 - Fix ongoing events listed as past on tag pages
