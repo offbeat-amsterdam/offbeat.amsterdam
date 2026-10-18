@@ -99,20 +99,25 @@ module.exports = {
           changefreq: 'daily'
         }
       ]
+      // Loopback, like SSR API calls (plugins/axios.js): the public URL goes
+      // through nginx, which answers with an HTML error page while Gancio restarts
+      const getJSON = async path => {
+        const res = await fetch(`http://127.0.0.1:${config.server.port}/api${path}`)
+        if (!res.ok) throw new Error(`${path}: HTTP ${res.status}`)
+        return res.json()
+      }
       try {
         // Events
-        const eventsRes = await fetch(`${config.baseurl}/api/events`)
-        const events = await eventsRes.json()
+        const events = await getJSON('/events')
         routes.push(
           ...events.map(e => ({
-            url: `/event/${e.slug}`,
+            url: `/event/${e.slug || e.id}`,
             changefreq: 'weekly'
           }))
         )
 
         // Places
-        const placesRes = await fetch(`${config.baseurl}/api/places`)
-        const places = await placesRes.json()
+        const places = await getJSON('/places')
         routes.push(
           ...places.map(p => ({
             url: `/place/${p.id}/${encodeURIComponent(p.name)}`,

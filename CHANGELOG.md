@@ -7,6 +7,8 @@
 
 ## Fixes
 - Fix ongoing events listed as past on tag pages
+- Fix sitemap generation failing during restarts
+- Fix events without a slug listed as `/event/undefined` in sitemap
 
 # 0.7.6 (18-10-2026)
 ## Fixes
