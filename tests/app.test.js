@@ -775,6 +775,24 @@ describe('Export', () => {
     await request(app).get('/feed/pdf').expect(404)
   })
 
+  test('should search upcoming and past events separately', async () => {
+    const legacy = await request(app).get('/api/events?query=test').expect(200)
+    const response = await request(app).get('/api/events/search?query=test').expect(200)
+    const now = Math.floor(Date.now() / 1000)
+
+    expect(response.body.events.length).toBeGreaterThan(0)
+    expect(response.body.events.every(e => (e.end_datetime || e.start_datetime) >= now - 5)).toBe(true)
+    expect(response.body.pastEvents.every(e => e.start_datetime <= now + 5)).toBe(true)
+    expect(typeof response.body.hasMoreEvents).toBe('boolean')
+    expect(typeof response.body.hasMorePast).toBe('boolean')
+    // every match is in the legacy, any-date result
+    const legacyIds = new Set(legacy.body.map(e => e.id))
+    expect([...response.body.events, ...response.body.pastEvents].every(e => legacyIds.has(e.id))).toBe(true)
+
+    const empty = await request(app).get('/api/events/search?query=').expect(200)
+    expect(empty.body.events).toEqual([])
+  })
+
   test('should page past events of tag and place pages', async () => {
     for (const url of ['/api/tag/test', '/api/place/1']) {
       // without page/past_page: all events, as upstream

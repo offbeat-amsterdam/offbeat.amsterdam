@@ -810,10 +810,10 @@ const eventController = {
    * a page at a time, as a broad tag can have thousands of them; without one,
    * all of them, as upstream Gancio returns them
    */
-  async _selectPast ({ tags, places, page = null }) {
+  async _selectPast ({ tags, places, search, page = null }) {
     const paged = page !== null
     const pastEvents = await eventController._select({
-      tags, places, show_recurrent: true, show_multidate: true, show_federated: true,
+      tags, places, search, show_recurrent: true, show_multidate: true, show_federated: true,
       older: true, reverse: true, ...(paged && { limit: PAST_EVENTS_PAGE_SIZE, page })
     })
     return paged ? { pastEvents, hasMorePast: pastEvents.length === PAST_EVENTS_PAGE_SIZE } : { pastEvents }
@@ -824,14 +824,39 @@ const eventController = {
    * all of them as upstream Gancio returns them. Pages after the first pass
    * back the `eventsStart` of the first, so they stay aligned as events end
    */
-  async _selectUpcoming ({ tags, places, page = null, start }) {
+  async _selectUpcoming ({ tags, places, search, page = null, start }) {
     const paged = page !== null
     start = Number(start) || DateTime.local().toUnixInteger()
     const events = await eventController._select({
-      tags, places, start, show_recurrent: true, show_multidate: true, show_federated: true,
+      tags, places, search, start, show_recurrent: true, show_multidate: true, show_federated: true,
       ...(paged && { limit: UPCOMING_EVENTS_PAGE_SIZE, page })
     })
     return paged ? { events, hasMoreEvents: events.length === UPCOMING_EVENTS_PAGE_SIZE, eventsStart: start } : { events }
+  },
+
+  /**
+   * /api/events/search: upcoming matches first, then past ones most recent
+   * first, each a page at a time like tag and place pages. /api/events?query=
+   * keeps returning every match of any date, oldest first, as upstream
+   */
+  async search (req, res) {
+    const search = String(req.query.query || '').trim()
+    if (!search) {
+      return res.json({ events: [], hasMoreEvents: false, pastEvents: [], hasMorePast: false })
+    }
+    const page = eventController._pageParam(req, 'page') || 0
+    const pastPage = eventController._pageParam(req, 'past_page') || 0
+    if (page > 0) {
+      return res.json(await eventController._selectUpcoming({ search, page, start: req.query.start }))
+    }
+    if (pastPage > 0) {
+      return res.json(await eventController._selectPast({ search, page: pastPage }))
+    }
+    const [upcoming, past] = await Promise.all([
+      eventController._selectUpcoming({ search, page: 0, start: req.query.start }),
+      eventController._selectPast({ search, page: 0 })
+    ])
+    return res.json({ ...upcoming, ...past })
   },
 
   // `page` and `past_page` opt in to paged lists (tag and place pages)
@@ -843,6 +868,7 @@ const eventController = {
     start = DateTime.local().toUnixInteger(),
     end,
     query,
+    search,
     tags,
     places,
     show_recurrent,
@@ -866,7 +892,7 @@ const eventController = {
     }
 
     // do not include federated events in homepage
-    if (!query && !show_federated) {
+    if (!query && !search && !show_federated) {
       where.apUserApId = null
     }
 
@@ -916,18 +942,28 @@ const eventController = {
       where.placeId = places.split(',')
     }
 
+    // title, place name or tag
+    const textMatch = term => {
+      replacements.push(term)
+      return [
+        {
+          title: Sequelize.where(
+            Sequelize.fn('LOWER', Sequelize.col('title')), 'LIKE', Sequelize.fn('LOWER', `%${term}%`)),
+        },
+        Sequelize.where(
+          Sequelize.fn('LOWER', Sequelize.col('name')), 'LIKE', Sequelize.fn('LOWER', `%${term}%`)),
+        Sequelize.fn('EXISTS', Sequelize.literal(`SELECT 1 FROM event_tags WHERE ${Col('event_tags.eventId')}=${Col('event.id')} AND LOWER(${Col('tagTag')}) = LOWER(?)`))
+      ]
+    }
+
     if (query) {
-      replacements.push(query)
-      where[Op.or] =
-        [
-          {
-            title: Sequelize.where(
-              Sequelize.fn('LOWER', Sequelize.col('title')), 'LIKE', Sequelize.fn('LOWER', `%${query}%`)),
-          },
-          Sequelize.where(
-            Sequelize.fn('LOWER', Sequelize.col('name')), 'LIKE', Sequelize.fn('LOWER', `%${query}%`)),
-          Sequelize.fn('EXISTS', Sequelize.literal(`SELECT 1 FROM event_tags WHERE ${Col('event_tags.eventId')}=${Col('event.id')} AND LOWER(${Col('tagTag')}) = LOWER(?)`))
-        ]
+      // replaces the date condition, so it matches events of any date (upstream behavior)
+      where[Op.or] = textMatch(query)
+    }
+
+    if (search) {
+      // same match, but within the requested dates
+      where[Op.and] = [...[].concat(where[Op.and] || []), { [Op.or]: textMatch(search) }]
     }
 
     let pagination = {}

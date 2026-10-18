@@ -123,6 +123,7 @@ module.exports = () => {
 
     api.get('/events', cors, eventController.select)
     api.get('/events/mine', isAuth, eventController.mine)
+    api.get('/events/search', cors, eventController.search)
 
     /**
      * Add a new event

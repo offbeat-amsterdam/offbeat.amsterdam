@@ -6,6 +6,9 @@
       <Announcement v-for='announcement in announcements' :key='`a_${announcement.id}`' :announcement='announcement' />
     </section>
   
+    <SearchResults v-if='filter.query' :query='filter.query' @select='storeEventId' />
+
+    <template v-else>
     <OngoingRail class='mt-sm-4 mt-2' v-if='!$fetchState.pending' :events='ongoingEvents' @select='storeEventId' />
 
     <!-- Events -->
@@ -23,10 +26,11 @@
     <section class='text-center' v-else>
       <v-progress-circular class='mt-5 justify-center align-center mx-auto' color='primary' indeterminate model-value='20' />
     </section>
+    </template>
 
     <!-- Next page loads when this comes into view, the button is a fallback -->
     <div ref='more' class='text-center my-4'>
-      <v-btn v-if='eventsPaging.hasMore && !$fetchState.pending' text :loading='loadingMore' @click='loadMore'>
+      <v-btn v-if='eventsPaging.hasMore && !$fetchState.pending && !filter.query' text :loading='loadingMore' @click='loadMore'>
         {{ $t('common.load_more') }}
       </v-btn>
     </div>
@@ -39,6 +43,7 @@ import { mapState, mapActions, mapGetters  } from 'vuex'
 import { DateTime } from 'luxon'
 import Event from '@/components/Event'
 import OngoingRail from '@/components/OngoingRail'
+import SearchResults from '@/components/SearchResults'
 import Announcement from '@/components/Announcement'
 import ThemeView from '@/components/ThemeView'
 import { mdiMagnify, mdiCloseCircle } from '@mdi/js'
@@ -47,17 +52,13 @@ import { HOME_PAGE_SIZE, homeListStart } from '@/utils/eventUtils'
 
 export default {
   name: 'Index',
-  components: { Event, Announcement, ThemeView, OngoingRail },
+  components: { Event, Announcement, ThemeView, OngoingRail, SearchResults },
   mixins: [ongoingSplit],
   middleware: 'setup',
   fetch () {
     if (process.server) return
-    if (this.filter.query) {
-      return this.getEvents({
-        query: this.filter.query,
-        older: true
-      })
-    }
+    // searching: SearchResults loads its own results
+    if (this.filter.query) return
     // Back from an event page: keep the pages already loaded, so the scroll
     // position can be restored to an event further down the list
     if (this.canRestoreLoadedEvents()) return
@@ -184,7 +185,7 @@ export default {
     ...mapActions(['getEvents', 'getMoreEvents']),
 
     async loadMore () {
-      if (this.loadingMore || this.$fetchState.pending || !this.eventsPaging.hasMore) return
+      if (this.loadingMore || this.$fetchState.pending || this.filter.query || !this.eventsPaging.hasMore) return
       this.loadingMore = true
       try {
         await this.getMoreEvents()

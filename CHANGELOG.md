@@ -5,6 +5,9 @@
 - Rename `Ongoing` to `Show ongoing` / `Hide ongoing`
 - Make venues collapsible, collapsed by default on mobile
 - Serve logo and fallback image as WebP
+- Paginate search results, upcoming events first
+- Paginate events on collection pages
+- Add `/api/events/search`
 
 ## Fixes
 - Fix ongoing events listed as past on tag pages

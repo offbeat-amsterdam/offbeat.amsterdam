@@ -1,6 +1,7 @@
 {
     "common": {
         "load_more": "Load more",
+        "no_results": "No events found",
         "show_venues": "Show venues",
         "hide_venues": "Hide venues",
         "enabled": "Enabled",
