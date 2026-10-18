@@ -173,7 +173,8 @@ const eventController = {
     }
 
     // TODO: does next and prev make any sense in case of collection in home or home with federated events? should we remove this?
-    // get prev and next event
+    // get prev and next event. The start_datetime bound is implied by the
+    // Op.or, but lets the index start at this event instead of the oldest one
     const next = await Event.findOne({
       attributes: ['id', 'slug'],
       where: {
@@ -181,6 +182,7 @@ const eventController = {
         ...( !isAdminOrEditor && ({ is_visible: true })),
         ...( !res.locals.settings.collection_in_home && ({ ap_id: null }) ),
         recurrent: null,
+        start_datetime: { [Op.gte]: event.start_datetime },
         [Op.or]: [
           { start_datetime: { [Op.gt]: event.start_datetime } },
           {
@@ -199,6 +201,7 @@ const eventController = {
         ...(!res.locals.settings.collection_in_home && ({ ap_id: null }) ),
         id: { [Op.not]: event.id },
         recurrent: null,
+        start_datetime: { [Op.lte]: event.start_datetime },
         [Op.or]: [
           { start_datetime: { [Op.lt]: event.start_datetime } },
           {

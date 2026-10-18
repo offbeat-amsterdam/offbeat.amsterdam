@@ -1,4 +1,7 @@
 # 0.8.1 (unreleased)
+## Improvements
+- Speed up previous/next event lookup on event pages
+
 ## Fixes
 - Fix missing spacing between the ongoing and venues toggles and their content
 
