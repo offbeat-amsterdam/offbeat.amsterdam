@@ -1,3 +1,11 @@
+# 0.7.2 (18-10-2026)
+## Fixes
+- Event, tag, place and collection pages no longer load and embed the full upcoming event list on every
+  server render -- only the home, admin and add pages need it
+
+## Improvements
+- Cache the default RSS/ICS feeds for 30s, sharing one render between concurrent requests
+
 # 0.7.1 (18-10-2026)
 ## Fixes
 - Outbound HTTP requests (federation deliveries, nodeinfo lookups) time out after 15s instead of hanging forever when

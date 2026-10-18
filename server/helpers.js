@@ -323,21 +323,27 @@ const Helpers = {
   /**
    * Pre-load the data needed to load the first page saving the first 3 API calls from the server (the load goes from 0.8s to 0.2s)
   */
-  async initLocals (res) {
+  async initLocals (req, res) {
     if (config.status !== 'READY') return
     const announceController = require('./api/controller/announce')
     const collectionController = require('./api/controller/collection')
-    const eventController = require('./api/controller/event')
     const { DateTime } = require('luxon')
     const show_federated = res.locals.settings.federated_events_in_home
     const show_multidate = res.locals.settings.allow_multidate_event
     const show_recurrent = res.locals.settings.allow_recurrent_event && res.locals.settings.recurrent_event_visible
     const collection_in_home = res.locals.settings.collection_in_home
 
+    // The full event list is used by the home calendar and event forms, but
+    // loading it for every server-rendered page makes crawler traffic trigger
+    // the same large query on event, tag, place, and other pages.
+    const needsEvents = req.path === '/' || req.path === '/admin' ||
+      req.path === '/add' || req.path.startsWith('/add/')
+    const eventController = needsEvents ? require('./api/controller/event') : null
+
     const ret = await Promise.allSettled([
       announceController._getVisible(),
       collectionController._getVisible(),
-      collection_in_home ?
+      !needsEvents ? Promise.resolve([]) : collection_in_home ?
         collectionController._getEvents({ name: collection_in_home, start: DateTime.local().startOf('month').toUnixInteger(), show_recurrent }) :
         eventController._select({ start: DateTime.local().startOf('month').toUnixInteger(), show_multidate, show_recurrent, show_federated })
     ])

@@ -199,7 +199,9 @@ export default {
     } else {
       this.type = 'normal'
     }
-    if (!this.events) {
+    // Events are only preloaded on some server-rendered pages (see initLocals),
+    // so after client-side navigation the store may hold an empty list
+    if (!this.events?.length) {
       this.getEvents()
     }
   },

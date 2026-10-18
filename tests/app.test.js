@@ -720,6 +720,38 @@ describe('Export', () => {
       .expect('Content-Type', /text\/calendar/)
       .expect(200)
   })
+
+  test('should serve the cached feed on repeated requests', async () => {
+    const first = await request(app).get('/feed/ics').expect(200)
+    const second = await request(app).get('/feed/ics')
+      .expect('Content-Type', /text\/calendar/)
+      .expect(200)
+    expect(second.text).toBe(first.text)
+  })
+
+  test('should export filtered (uncached) feeds', async () => {
+    await request(app).get('/feed/rss?tags=test')
+      .expect('Content-Type', /application\/rss\+xml/)
+      .expect(200)
+
+    await request(app).get('/feed/ics?places=1')
+      .expect('Content-Type', /text\/calendar/)
+      .expect(200)
+  })
+
+  test('should export tag and place feeds', async () => {
+    await request(app).get('/feed/rss/tag/test')
+      .expect('Content-Type', /application\/rss\+xml/)
+      .expect(200)
+
+    await request(app).get('/feed/ics/place/1')
+      .expect('Content-Type', /text\/calendar/)
+      .expect(200)
+  })
+
+  test('should reject an unknown format', async () => {
+    await request(app).get('/feed/pdf').expect(404)
+  })
 })
 
 describe('Geocoding', () => {

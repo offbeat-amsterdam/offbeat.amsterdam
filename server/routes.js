@@ -82,8 +82,8 @@ async function main () {
 
   // remaining request goes to nuxt
   // first nuxt component is ./pages/index.vue (with ./layouts/default.vue)
-  app.use(async (_req, res, next) => {
-    await helpers.initLocals(res)
+  app.use(async (req, res, next) => {
+    await helpers.initLocals(req, res)
     res.locals.status = config.status
     next()
   })
