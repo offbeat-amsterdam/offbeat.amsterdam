@@ -1,3 +1,7 @@
+# 0.8.1 (unreleased)
+## Fixes
+- Fix missing spacing between the ongoing and venues toggles and their content
+
 # 0.8.0 (18-10-2026)
 ## Improvements
 - Paginate events on tag and venue pages

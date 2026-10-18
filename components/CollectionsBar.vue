@@ -79,6 +79,11 @@ export default {
   line-height: 0;
 }
 
+/* with the buttons' own 8px top margin, 12px below the toggle like the Ongoing rail */
+.collections__list {
+  margin-top: 4px;
+}
+
 .collections--collapsed .collections__list,
 .collections--collapsed .collections__when-expanded,
 .collections--expanded .collections__when-collapsed,

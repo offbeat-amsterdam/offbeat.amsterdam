@@ -74,6 +74,8 @@ export default {
   grid-auto-flow: column;
   grid-auto-columns: min(330px, 85vw);
   gap: 8px;
+  /* same 12px as between the search, venues and calendar (NavSearch.vue) */
+  margin-top: 12px;
   padding-bottom: 6px;
   overflow-x: auto;
   scrollbar-width: thin;
