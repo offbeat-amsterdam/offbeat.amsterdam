@@ -2,7 +2,7 @@
 <section class='ongoing' v-if='events.length'>
 
   <h2 class='ongoing__heading'>
-    <button type='button' class='ongoing__header'
+    <button type='button' class='section-toggle'
       :aria-expanded='String(!collapsed)' :aria-controls='railId'
       @click='toggle'>
       <span class='ongoing__title'>{{ $t(collapsed ? 'event.show_ongoing' : 'event.hide_ongoing') }} ({{ events.length }})</span>
@@ -65,29 +65,6 @@ export default {
 
 .ongoing__heading {
   margin: 0;
-}
-
-.ongoing__header {
-  display: flex;
-  cursor: pointer;
-  align-items: center;
-  gap: 6px;
-  width: 100%;
-  padding: 4px 2px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: 1rem;
-  opacity: 0.9;
-}
-
-.ongoing__header:hover,
-.ongoing__header:focus {
-  opacity: 1;
-}
-
-.ongoing__header:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 2px;
 }
 
 .ongoing__rail {

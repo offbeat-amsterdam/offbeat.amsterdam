@@ -279,6 +279,55 @@ h1 *, h2 a, a > h2, .event .title {
   border-radius: 0 !important;
 }
 
+/* Show/hide toggles of the Ongoing section and the venues list: boxy like the
+   tag chips, with the gray outline of the search field instead of their orange
+   (components/OngoingRail.vue, components/CollectionsBar.vue) */
+.section-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px 3px 10px;
+  border: 1px solid;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.875rem;
+  font-weight: normal;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.section-toggle:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.theme--light .section-toggle {
+  color: rgba(0, 0, 0, 0.87);
+  border-color: rgba(0, 0, 0, 0.38);
+}
+
+.theme--light .section-toggle .v-icon {
+  color: rgba(0, 0, 0, 0.38);
+}
+
+.theme--light .section-toggle:hover {
+  border-color: rgba(0, 0, 0, 0.86);
+}
+
+.theme--dark .section-toggle {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+.theme--dark .section-toggle .v-icon {
+  color: rgba(255, 255, 255, 0.24);
+}
+
+.theme--dark .section-toggle:hover {
+  border-color: #fff;
+}
+
 /* Fix exaggerated font size for event date in cards */
 .v-application .subtitle-1 {
   font-size: inherit !important;

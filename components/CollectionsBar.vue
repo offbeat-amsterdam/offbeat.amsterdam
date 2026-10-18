@@ -2,7 +2,7 @@
 <section class='collections mt-2' :class='`collections--${state}`'>
 
   <h2 class='collections__heading'>
-    <button type='button' class='collections__header'
+    <button type='button' class='section-toggle'
       :aria-expanded='ariaExpanded' aria-controls='collections-list'
       @click='toggle'>
       <!-- both labels and icons are rendered: CSS shows the ones matching the state -->
@@ -75,32 +75,7 @@ export default {
 </script>
 <style>
 .collections__heading {
-  margin: 0;
-}
-
-/* same look as the Ongoing rail header (components/OngoingRail.vue) */
-.collections__header {
-  display: flex;
-  cursor: pointer;
-  align-items: center;
-  gap: 6px;
-  width: 100%;
-  padding: 4px 2px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: 1rem;
-  font-weight: normal;
-  opacity: 0.9;
-}
-
-.collections__header:hover,
-.collections__header:focus {
-  opacity: 1;
-}
-
-.collections__header:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 2px;
+  margin: 8px 0 0;
 }
 
 .collections--collapsed .collections__list,
