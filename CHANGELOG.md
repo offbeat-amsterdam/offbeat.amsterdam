@@ -1,3 +1,7 @@
+# 0.7.6 (18-10-2026)
+## Fixes
+- Text shows right away on slow connections instead of staying invisible until the custom fonts load
+
 # 0.7.5 (18-10-2026)
 ## Fixes
 - Browsers now always get the right JavaScript bundle

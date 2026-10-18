@@ -25,6 +25,11 @@ module.exports = {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ],
+    // fonts are otherwise only found once the main CSS is parsed (assets/style.css)
+    link: [
+      { rel: 'preload', as: 'font', type: 'font/woff', href: '/vt323-latin-400-normal.woff', crossorigin: 'anonymous' },
+      { rel: 'preload', as: 'font', type: 'font/woff2', href: '/share-tech-mono-v15-latin-regular.woff2', crossorigin: 'anonymous' }
+    ]
   },
   dev: isDev,
   server: config.server,

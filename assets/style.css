@@ -232,20 +232,25 @@ pre {
   white-space: normal;
 }
 
+/* Absolute URLs so these are served as-is from static/ and can be preloaded
+   (see head in nuxt.config.js). swap: show text in the fallback font until the
+   font arrives, instead of hiding it for up to 3s */
 @font-face {
   font-family: 'VT323';
   font-style: normal;
   font-weight: normal;
-  src: url('../static/vt323-latin-400-normal.woff') format('woff'),
-       url('../static/vt323-latin-400-normal.woff2') format('woff2');
+  font-display: swap;
+  src: url('/vt323-latin-400-normal.woff') format('woff'),
+       url('/vt323-latin-400-normal.woff2') format('woff2');
 }
 
 @font-face {
   font-family: 'Share Tech Mono';
   font-style: normal;
   font-weight: normal;
+  font-display: swap;
   src:
-    url('../static/share-tech-mono-v15-latin-regular.woff2') format('woff2');
+    url('/share-tech-mono-v15-latin-regular.woff2') format('woff2');
 }
 
 body, .v-application, * {
