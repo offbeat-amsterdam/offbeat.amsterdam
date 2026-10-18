@@ -1,4 +1,4 @@
-# 0.8.1 (unreleased)
+# 0.8.1 (18-10-2026)
 ## Improvements
 - Speed up previous/next event lookup on event pages
 - Compact header on mobile
