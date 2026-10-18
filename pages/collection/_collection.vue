@@ -11,6 +11,11 @@
         <Event :event='event' :lazy='idx>9' />
       </v-lazy>
     </div>
+
+    <!-- Next page loads when this comes into view, the button is a fallback -->
+    <div ref='moreEvents' class='text-center my-4'>
+      <v-btn v-if='hasMoreEvents' text :loading='loadingMoreEvents' @click='loadMoreEvents'>{{ $t('common.load_more') }}</v-btn>
+    </div>
   </v-container>
 </template>
 <script>
@@ -19,11 +24,15 @@ import { mapState, mapGetters } from 'vuex'
 import Event from '@/components/Event'
 import OngoingRail from '@/components/OngoingRail'
 import ongoingSplit from '@/assets/ongoingSplit'
+import pagedEvents from '@/assets/pagedEvents'
+
+// collections already page with max/page/start_at, upstream API included
+const PAGE_SIZE = 50
 
 export default {
   name: 'Collection',
   components: { Event, OngoingRail },
-  mixins: [ongoingSplit],
+  mixins: [ongoingSplit, pagedEvents],
   head () {
     const title = `${this.collection} events | ${this.settings.title}`
     return {
@@ -42,13 +51,25 @@ export default {
     ...mapGetters(['hide_thumbs', 'is_dark']),
     eventsToSplit () {
       return this.events
+    },
+    eventsUrl () {
+      return `/collections/${encodeURIComponent(this.collection)}`
+    }
+  },
+  methods: {
+    async fetchMoreEvents (page) {
+      const events = await this.$axios.$get(this.eventsUrl, { params: { max: PAGE_SIZE, page, start_at: this.eventsStart } })
+      return { events, hasMoreEvents: events.length === PAGE_SIZE }
     }
   },
   async asyncData ({ $axios, params, error }) {
     try {
       const collection = params.collection
-      const events = await $axios.$get(`/collections/${encodeURIComponent(collection)}`)
-      return { events, collection }
+      // fixed start, so later pages stay aligned as events end
+      const eventsStart = Math.floor(Date.now() / 1000)
+      const events = await $axios.$get(`/collections/${encodeURIComponent(collection)}`,
+        { params: { max: PAGE_SIZE, start_at: eventsStart } })
+      return { events, hasMoreEvents: events.length === PAGE_SIZE, eventsStart, collection }
     } catch (e) {
       error({
         statusCode: e?.response?.status ?? 500,

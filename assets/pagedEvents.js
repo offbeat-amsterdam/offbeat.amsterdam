@@ -1,10 +1,11 @@
 /**
- * Upcoming events of a tag or place page, loaded a page at a time while
- * scrolling.
+ * Upcoming events of a tag, place or collection page (or search results),
+ * loaded a page at a time while scrolling.
  *
  * A page supplies `eventsUrl` and, from asyncData, the first page: `events`,
  * `hasMoreEvents` and `eventsStart`. Its template puts `ref='moreEvents'` on an
- * element right after the list.
+ * element right after the list. An endpoint with another paging API can be
+ * used by defining `fetchMoreEvents(page)`, returning { events, hasMoreEvents }.
  */
 export default {
   data () {
@@ -36,9 +37,9 @@ export default {
       if (this.loadingMoreEvents || !this.hasMoreEvents) return
       this.loadingMoreEvents = true
       try {
-        const { events, hasMoreEvents } = await this.$axios.$get(this.eventsUrl, {
-          params: { page: this.eventsPage + 1, start: this.eventsStart }
-        })
+        const { events, hasMoreEvents } = this.fetchMoreEvents
+          ? await this.fetchMoreEvents(this.eventsPage + 1)
+          : await this.$axios.$get(this.eventsUrl, { params: { page: this.eventsPage + 1, start: this.eventsStart } })
         const loaded = new Set(this.events.map(e => e.id))
         this.events = [...this.events, ...events.filter(e => !loaded.has(e.id))]
         this.hasMoreEvents = hasMoreEvents
