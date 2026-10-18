@@ -1,9 +1,14 @@
 # 0.8.1 (unreleased)
 ## Improvements
 - Speed up previous/next event lookup on event pages
+- Compact header on mobile
+- Make the calendar collapsible, collapsed by default on mobile
+- Scroll to the events after selecting a day or venue
+- Move feeds and embedding to the menu as `Subscribe & embed`
 
 ## Fixes
 - Fix missing spacing between the ongoing and venues toggles and their content
+- Fix header glow moving when venues or calendar open
 
 # 0.8.0 (18-10-2026)
 ## Improvements

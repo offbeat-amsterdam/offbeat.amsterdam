@@ -1,5 +1,5 @@
 <template>
-  <div class='d-flex pa-4'>
+  <div class='d-flex pa-2 pa-sm-4'>
     <v-btn class='navheader__logo' icon large nuxt to='/' :aria-label="settings.title">
       <img :alt="settings.title" src='/logo.webp' height='40' width='40' />
     </v-btn>
@@ -23,6 +23,11 @@
             <v-list-item nuxt to='/about'>
               <v-list-item-content>
                 <v-list-item-title v-text="$t('common.about')"/>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item nuxt to='/export'>
+              <v-list-item-content>
+                <v-list-item-title v-text="$t('common.subscribe_embed')"/>
               </v-list-item-content>
             </v-list-item>
             <v-list-item

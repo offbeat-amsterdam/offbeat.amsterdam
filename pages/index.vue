@@ -9,10 +9,11 @@
     <SearchResults v-if='filter.query' :query='filter.query' @select='storeEventId' />
 
     <template v-else>
-    <OngoingRail class='mt-sm-4 mt-2' v-if='!$fetchState.pending' :events='ongoingEvents' @select='storeEventId' />
+    <!-- 12px, like the spacing between the toggles above (NavSearch.vue) -->
+    <OngoingRail class='mt-3' v-if='!$fetchState.pending' :events='ongoingEvents' @select='storeEventId' />
 
     <!-- Events -->
-    <section id='events' class='mt-sm-4 mt-2' v-if='!$fetchState.pending'>
+    <section id='events' class='mt-3' v-if='!$fetchState.pending'>
       <v-lazy class='event v-card' :value='shouldLoadImmediately(idx)'
         v-for='(event, idx) in upcomingEvents' :key='event.id'
         :min-height='hide_thumbs ? 105 : undefined'
@@ -338,6 +339,10 @@ export default {
       this.$nuxt.$loading.start()
       await this.$fetch()
       this.$nuxt.$loading.finish()
+      // the calendar sits above the list: bring the day's events into view
+      if (this.selectedDay) {
+        this.$nextTick(() => document.getElementById('events')?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
+      }
     }
   }
 }

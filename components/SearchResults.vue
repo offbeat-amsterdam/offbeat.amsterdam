@@ -5,7 +5,7 @@
   </div>
   <template v-else>
     <p v-if='!events.length && !pastEvents.length' class='text-center mt-8'>{{ $t('common.no_results') }}</p>
-    <section id='events' class='mt-sm-4 mt-2'>
+    <section id='events' class='mt-3'>
       <v-lazy class='event v-card' :value='idx<9' v-for='(event, idx) in events' :key='event.id'
         :min-height='hide_thumbs ? 105 : undefined'
         :options="{ threshold: .5, rootMargin: '500px' }"

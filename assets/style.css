@@ -302,9 +302,12 @@ h1 *, h2 a, a > h2, .event .title {
   outline-offset: 2px;
 }
 
+/* filled like the search field, so they look the same on the patterned
+   header and on the plain page below it */
 .theme--light .section-toggle {
   color: rgba(0, 0, 0, 0.87);
   border-color: rgba(0, 0, 0, 0.38);
+  background: #ffffff;
 }
 
 .theme--light .section-toggle .v-icon {
@@ -318,6 +321,7 @@ h1 *, h2 a, a > h2, .event .title {
 .theme--dark .section-toggle {
   color: #fff;
   border-color: rgba(255, 255, 255, 0.24);
+  background: #1e1e1e;
 }
 
 .theme--dark .section-toggle .v-icon {

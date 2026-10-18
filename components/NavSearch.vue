@@ -8,13 +8,16 @@
 
     CollectionsBar(v-if='showCollectionsBar && collections.length' :collections='collections')
 
-    Calendar(v-if='showCalendar')
+    CollapsibleSection(v-if='showCalendar' name='calendar'
+      :show-label='$t("common.show_calendar")' :hide-label='$t("common.hide_calendar")')
+      Calendar
 </template>
 <script>
 import { mapState, mapActions } from 'vuex'
 import debounce from 'lodash/debounce'
 import Calendar from '@/components/Calendar'
 import CollectionsBar from '@/components/CollectionsBar'
+import CollapsibleSection from '@/components/CollapsibleSection'
 import { mdiClose, mdiMagnify } from '@mdi/js'
 
 // search while typing, from this many characters
@@ -26,7 +29,7 @@ export default {
     // the active search, e.g. when coming back from an event
     query: $store.state.filter.query || ''
   }),
-  components: { Calendar, CollectionsBar },
+  components: { Calendar, CollectionsBar, CollapsibleSection },
   computed: {
     ...mapState(['collections', 'settings', 'filter']),
     showSearchBar () {
