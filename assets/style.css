@@ -47,6 +47,47 @@ li {
   letter-spacing: normal !important;
 }
 
+/* Event descriptions (sanitized HTML from organizers): the reset leaves
+   headings with no space around them and the line height of the text */
+.p-description h1,
+.p-description h2,
+.p-description h3,
+.p-description h4,
+.p-description h5,
+.p-description h6 {
+  margin: 1.5em 0 0.5em;
+  line-height: 1.3;
+  font-weight: bold;
+}
+
+.p-description h1 { font-size: 1.5rem; }
+.p-description h2 { font-size: 1.3rem; }
+.p-description h3 { font-size: 1.15rem; }
+.p-description h4,
+.p-description h5,
+.p-description h6 { font-size: 1rem; }
+
+/* the site-title font rule (h1 *, h2 a) is not meant for these */
+.p-description h1 *,
+.p-description h2 a {
+  font-family: 'Share Tech Mono', monospace !important;
+}
+
+.p-description > :first-child {
+  margin-top: 0;
+}
+
+.p-description ul,
+.p-description ol,
+.p-description blockquote {
+  margin-bottom: 16px;
+}
+
+.p-description blockquote {
+  padding-left: 12px;
+  border-left: 2px solid rgba(128, 128, 128, 0.4);
+}
+
 /* https://github.com/vuetifyjs/vuetify/issues/8875#issuecomment-559900683 */
 .v-slide-group__prev {
   display: none !important;
@@ -422,25 +463,87 @@ h1 *, h2 a, a > h2, .event .title {
   font-family: 'VT323', monospace !important;
 }
 
+/* Links of the event page (source, tickets): square and as tall as the
+   small tag chips (24px) */
+.v-btn.event__link {
+  border-radius: 0;
+  height: 24px !important;
+}
+
 /* Tags in gray, so titles and venues are what stands out */
-.theme--light .event .event__tag.v-chip--outlined {
+.theme--light .event__tag.v-chip--outlined {
   color: rgba(0, 0, 0, 0.6) !important;
   border-color: rgba(0, 0, 0, 0.24) !important;
 }
 
-.theme--dark .event .event__tag.v-chip--outlined {
+.theme--dark .event__tag.v-chip--outlined {
   color: rgba(255, 255, 255, 0.7) !important;
   border-color: rgba(255, 255, 255, 0.24) !important;
 }
 
-.theme--light .event .event__tag.v-chip--outlined:hover {
+.theme--light .event__tag.v-chip--outlined:hover {
   color: #DB3B00 !important;
   border-color: #DB3B00 !important;
 }
 
-.theme--dark .event .event__tag.v-chip--outlined:hover {
+.theme--dark .event__tag.v-chip--outlined:hover {
   color: #FF6E40 !important;
   border-color: #FF6E40 !important;
+}
+
+/* Details card of the event page (pages/event/_slug.vue): small icons in
+   line with the text, the lines under the date and venue (relative time,
+   address) lined up with their text, actions (copy link, map, ...) as plain
+   rows in the same column */
+.eventDetails .v-icon {
+  vertical-align: -2px;
+}
+
+.eventDetails__sub {
+  padding-left: 24px;
+  font-size: 0.875rem;
+}
+
+.event__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+/* buttons and links alike: same font, height and gray as the tags */
+.event__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 0;
+  font: inherit;
+  font-size: 0.875rem;
+  line-height: 20px;
+  text-decoration: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.theme--light .event__action,
+.theme--light .event__action .v-icon {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.theme--dark .event__action,
+.theme--dark .event__action .v-icon {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.theme--light .event__action:hover,
+.theme--light .event__action:hover .v-icon {
+  color: #DB3B00 !important;
+}
+
+.theme--dark .event__action:hover,
+.theme--dark .event__action:hover .v-icon {
+  color: #FF6E40 !important;
 }
 
 /* Cards outlined in the accent color on hover (primary of the light/dark themes) */

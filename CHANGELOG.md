@@ -1,3 +1,11 @@
+# 0.8.3 (26-10-2026)
+## Improvements
+- Event page: show tags like on the cards, rename the `Info` link to `Source`, make the ticket link stand out, compact the details card
+
+## Fixes
+- Fix headings in event descriptions having almost no spacing
+- Align event descriptions with the flyer
+
 # 0.8.2 (18-10-2026)
 ## Improvements
 - Group home page events by day, with sticky headers

@@ -5,10 +5,11 @@
     //- and microdata https://schema.org/Event
     h1.title.text-center.text-md-h4.text-h5.pa-6
       strong.p-name.text--primary {{event.title}}
+
     v-row
       v-col.col-12.col-md-8.pr-sm-2.pr-md-0
         MyPicture(v-if='hasMedia' :event='event')
-        .p-description.text-body-1.pa-3.rounded(v-if='event.description' v-html='event.description')
+        .p-description.text-body-1.py-3.px-2.px-sm-0(v-if='event.description' v-html='event.description')
 
       v-col.col-12.col-md-4
         v-card(outlined)
@@ -16,84 +17,64 @@
             v-icon.float-right(v-if='event.parentId' color='success' v-text='mdiRepeat')
             v-icon.float-right.mr-1(v-if='isPast' color='warning' v-text='mdiTimerSandComplete')
             time.dt-start(:datetime='$time.unixFormat(event.start_datetime, "yyyy-MM-dd HH:mm")' :content='$time.unixFormat(event.start_datetime, "yyyy-MM-dd\'T\'HH:mm")')
-              v-icon(v-text='mdiCalendar')
+              v-icon(small v-text='mdiCalendar')
               span.ml-2.text-uppercase {{$time.when(event)}}
               .d-none.dt-end(v-if='event.end_datetime' :content='$time.unixFormat(event.end_datetime,"yyyy-MM-dd\'T\'HH:mm")') {{$time.unixFormat(event.end_datetime,'yyyy-MM-dd\'T\'HH:mm')}}
-            div.font-weight-light.mb-3 {{$time.from(event.start_datetime)}}
+            .eventDetails__sub.font-weight-light.mb-3 {{$time.from(event.start_datetime)}}
               small(v-if='event.parentId')  ({{$time.recurrentDetail(event)}})
 
             .p-location.h-adr
-              v-icon(v-text='isOnline ? mdiMapMarkerMultiple : mdiMapMarker')
+              v-icon(small v-text='isOnline ? mdiMapMarkerMultiple : mdiMapMarker')
               template(v-if='isOnline')
                 span.ml-2.p-name {{$t('common.multiple_locations')}}
               template(v-else)
                 nuxt-link.vcard.ml-2.p-name.text-decoration-none.text-uppercase(:to='`/place/${event?.place?.id}/${encodeURIComponent(event?.place?.name)}`')
                   span {{event?.place?.name}}
-                .font-weight-light.p-street-address {{event?.place?.address}}
+                .eventDetails__sub.font-weight-light.p-street-address {{event?.place?.address}}
 
             //- a.d-block(v-if='event.ap_object?.url' :href="event.ap_object?.url") {{ event.ap_object?.url }}
             a(v-if='event?.original_url'  :href="event?.original_url") {{event.original_url}}
 
+          //- source, tickets and other links, lined up with the tags below:
+          //- tickets filled as the main action, the others outlined
+          v-container.pt-0(v-if='hasOnlineLocations')
+            v-btn.event__link.ml-1.mt-1(v-for='(url, index) in formattedOnlineLocations' :key='index'
+              :href='url.href' target='_blank' rel='noopener' small
+              color='primary' :outlined='!url.main' :depressed='url.main')
+              v-icon(left small v-text='url.icon')
+              span {{ url.label }}
+
           //- tags, hashtags
           v-container.pt-0(v-if='event?.tags?.length')
-            v-chip.p-category.ml-1.mt-1(v-for='tag in event.tags' small label color='primary'
+            v-chip.event__tag.p-category.ml-1.mt-1(v-for='tag in event.tags' small label
               outlined :key='tag' :to='`/tag/${encodeURIComponent(tag)}`') {{tag}}
 
-          //- online events
-          v-list(nav dense v-if="hasOnlineLocations")
-            v-list-item(v-for="(url, index) in formattedOnlineLocations" :key="index" target="_blank" :href="url.href")
-              v-list-item-icon
-                v-icon(v-text="url.icon")
-              v-list-item-content.text-uppercase
-                v-list-item-title(v-text="$t(url.label)")
-
           v-divider
-          //- info & actions
-          v-list(dense nav color='transparent')
+          //- actions: plain rows laid out like the date and venue above
+          v-container.event__actions
+            button.event__action(type='button' @click='clipboard(`${settings.baseurl}/event/${event.slug || event.id}`)')
+              v-icon(small v-text='mdiContentCopy')
+              span {{$t('common.copy_link')}}
 
-              //- copy link
-              v-list-item(@click='clipboard(`${settings.baseurl}/event/${event.slug || event.id}`)')
-                v-list-item-icon
-                  v-icon(v-text='mdiContentCopy')
-                v-list-item-content
-                  v-list-item-title(v-text="$t('common.copy_link')")
+            button.event__action(v-if='settings.allow_geolocation && event.place?.latitude && event.place?.longitude' type='button' @click='mapModal = true')
+              v-icon(small v-text='mdiMap')
+              span {{$t('common.show_map')}}
 
-              //- map
-              v-list-item(v-if='settings.allow_geolocation && event.place?.latitude && event.place?.longitude' @click="mapModal = true")
-                v-list-item-icon
-                  v-icon(v-text='mdiMap')
-                v-list-item-content
-                  v-list-item-title(v-text="$t('common.show_map')")
+            a.event__action(:href='`/api/event/detail/${event.slug || event.id}.ics`')
+              v-icon(small v-text='mdiCalendarImport')
+              span {{$t('common.add_to_calendar')}}
 
-              //- calendar
-              v-list-item(:href='`/api/event/detail/${event.slug || event.id}.ics`')
-                v-list-item-icon
-                  v-icon(v-text='mdiCalendarImport')
-                v-list-item-content
-                  v-list-item-title(v-text="$t('common.add_to_calendar')")
+            button.event__action(v-if='settings.enable_moderation && settings.enable_report && !showModeration' type='button' @click='report')
+              v-icon(small v-text='mdiMessageTextOutline')
+              span {{$t('common.report')}}
 
-              //- Report
-              v-list-item(v-if='settings.enable_moderation && settings.enable_report && !showModeration' @click='report')
-                v-list-item-icon
-                  v-icon(v-text='mdiMessageTextOutline')
-                v-list-item-content
-                  v-list-item-title(v-text="$t('common.report')")
+            a.event__action(v-if='hasMedia && settings.show_download_media' :href='$helper.mediaURL(event, "download")')
+              v-icon(small v-text='mdiFileDownloadOutline')
+              span {{$t('event.download_flyer')}}
 
-              //- download flyer
-              v-list-item(v-if='hasMedia && settings.show_download_media' :href='$helper.mediaURL(event, "download")')
-                v-list-item-icon
-                  v-icon(v-text='mdiFileDownloadOutline')
-                v-list-item-content
-                  v-list-item-title(v-text="$t('event.download_flyer')")
-
-              //- embed
-              v-list-item(@click='showEmbed=true')
-                v-list-item-icon
-                  v-icon(v-text='mdiCodeTags')
-                v-list-item-content
-                  v-list-item-title(v-text="$t('common.embed')")
-
-
+            button.event__action(type='button' @click='showEmbed=true')
+              v-icon(small v-text='mdiCodeTags')
+              span {{$t('common.embed')}}
 
           //- admin actions
           template(v-if='can_edit')
@@ -138,7 +119,7 @@ import EventModeration from '@/components/EventModeration'
 import { mdiArrowLeft, mdiArrowRight, mdiDotsVertical, mdiCodeTags, mdiClose, mdiMap, mdiMessageTextOutline,
   mdiEye, mdiEyeOff, mdiDelete, mdiRepeat, mdiLock, mdiFileDownloadOutline, mdiShareAll, mdiTimerSandComplete,
   mdiCalendarImport, mdiCalendar, mdiContentCopy, mdiMapMarker, mdiMapMarkerMultiple, mdiChevronUp, mdiMonitorAccount, mdiBookmark, mdiStar,
-  mdiLinkVariant, mdiInformation, mdiTicketConfirmationOutline} from '@mdi/js'
+  mdiLinkVariant, mdiTicketConfirmationOutline} from '@mdi/js'
 import { buildEventJsonLd } from '../../utils/eventUtils'
 
 export default {
@@ -168,7 +149,7 @@ export default {
     return {
       mdiArrowLeft, mdiArrowRight, mdiDotsVertical, mdiCodeTags, mdiCalendarImport, mdiCalendar, mdiFileDownloadOutline, mdiMessageTextOutline, mdiTimerSandComplete,
       mdiMapMarker, mdiMapMarkerMultiple, mdiContentCopy, mdiClose, mdiDelete, mdiEye, mdiEyeOff, mdiRepeat, mdiMap, mdiChevronUp, mdiMonitorAccount, mdiBookmark, mdiStar, mdiShareAll, mdiLinkVariant,
-      mdiInformation, mdiTicketConfirmationOutline,
+      mdiTicketConfirmationOutline,
       currentAttachment: 0,
       event: {},
       showEmbed: false,
@@ -304,8 +285,10 @@ export default {
     formattedOnlineLocations() {
       return this.event.online_locations.map((url, index) => ({
         href: url,
-        icon: index === 0 ? mdiInformation : index === 1 ? mdiTicketConfirmationOutline : mdiLinkVariant,
-        label: index === 0 ? "Info" : index === 1 ? "Tickets" : url
+        icon: index === 1 ? mdiTicketConfirmationOutline : mdiLinkVariant,
+        // the first link is where the event was taken from
+        label: index === 0 ? 'Source' : index === 1 ? 'Tickets' : this.hostname(url),
+        main: index === 1
       }))
     },
     isOnline() {
@@ -319,6 +302,14 @@ export default {
     window.removeEventListener('keydown', this.keyDown)
   },
   methods: {
+    /** Short label for extra links: the site name instead of the full URL */
+    hostname (url) {
+      try {
+        return new URL(url).hostname.replace(/^www\./, '')
+      } catch {
+        return url
+      }
+    },
     async report () {
       this.reporting = true
       const message = await this.$root.$prompt(this.$t('event.report_message_confirmation'), { title: this.$t('common.report') })
