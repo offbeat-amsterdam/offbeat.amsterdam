@@ -52,33 +52,28 @@ module.exports = (sequelize, DataTypes) => {
     
     // https://framagit.org/les/gancio/-/issues/304
     // https://www.w3.org/TR/activitystreams-vocabulary/#dfn-summary
-    const summary = `<p>${this.place && this.place.name}, ${datetime}</p>${this.description}`
+    // The 'online' place is how a multi-venue event is stored
+    const isMultiVenue = this.place?.name?.toLowerCase() === 'online'
+    const placeLabel = isMultiVenue ? 'Multiple Locations' : this.place?.name
+    const summary = `<p>${placeLabel}, ${datetime}</p>${this.description}`
     
-    let attachment = []
-    let location = []
+    // online_locations holds the event's links (venue page, tickets), not
+    // virtual venues, so they go out as Link attachments only. Emitting them
+    // as nameless VirtualLocations crashed clients like Holos (issue #20).
+    let attachment = (this?.online_locations ?? []).map(href => ({
+      type: 'Link',
+      mediaType: 'text/html',
+      name: href,
+      href
+    }))
 
-    if (this?.online_locations?.length) {
-      location = this.online_locations.map(url => ({
-        type: 'VirtualLocation',
-        url
-      }))
-      attachment = this.online_locations.map( href => ({
-        type: 'Link',
-        mediaType: 'text/html',
-        name: href,
-        href
-      }))
-    }
+    // For multi-venue events send a named Place rather than no location, so
+    // receivers (Gancio drops events without one) still import it
+    const location = isMultiVenue
+      ? { type: 'Place', name: placeLabel }
+      : this.place.toAP()
 
-    if (this.place.name !== 'online') {
-      location.push(this.place.toAP())
-    }
 
-    // in case we only have a single location (the common case) do not use an array to simplify federation parser
-    if (location.length === 1) {
-      location = location[0]
-    }
-        
     if (this?.media?.length) {
       attachment.push({
         type: 'Document',
