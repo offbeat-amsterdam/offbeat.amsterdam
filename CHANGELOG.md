@@ -1,3 +1,8 @@
+# 0.8.4 (26-11-2026)
+## Fixes
+- Fix the relay account crashing fediverse apps like Holos: event links are now federated as link attachments instead of online locations
+- Federate multi-venue events with `Multiple Locations` as their location instead of `online`
+
 # 0.8.3 (26-10-2026)
 ## Improvements
 - Event page: show tags like on the cards, rename the `Info` link to `Source`, make the ticket link stand out, compact the details card
